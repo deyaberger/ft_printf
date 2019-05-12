@@ -6,24 +6,63 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 15:48:54 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/10 17:23:52 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/12 18:13:49 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		main(void)
+#include "ft_printf.h"
+
+char	*ft_add_result(char *buf, char *res, int *j)
 {
-	va_list va;
-	va_start (va, n);
+	int		i;
 
-	int i;
-
-	for (i = 0; i < n; i++)
+	i = 0;
+	while (res[i] != '\0')
 	{
-		int c = va_arg (va, int);
-		putchar (c);
+		if (*j == BUFF_SIZE && (*j = 0) == 0)
+			printf("%s", buf);
+		buf[*j] = res[i];
+		i++;
+		*j = *j + 1;
 	}
-	putchar ('\n');
-	va_end (va);
+	return (buf);
+}
 
+void	ft_process(char *buf, const char *restrict format, va_list ap)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (format[i])
+	{
+		while (format[i] && format[i] != '%')
+		{
+			if (j == BUFF_SIZE && (j = 0) == 0)
+				printf("%s", buf);
+			buf[j] = format[i];
+			i++;
+			j++;
+		}
+		if (format[i] == '%')
+		{
+			buf = ft_add_result(buf, ft_convert((char*)&format[i], ap), &j);
+			i += 2;
+		}
+	}
+	buf[j - 1] = '\0';
+}
+
+int		ft_printf(const char *restrict format, ...)
+{
+	va_list	ap;
+	char	buf[BUFF_SIZE + 1];
+
+	va_start(ap, format);
+	buf[BUFF_SIZE] = '\0';
+	ft_process(buf, format, ap);
+	printf("%s\n", buf);
+	va_end(ap);
 	return (0);
 }
