@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 15:48:54 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/12 18:13:49 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/13 11:30:54 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_process(char *buf, const char *restrict format, va_list ap)
 		while (format[i] && format[i] != '%')
 		{
 			if (j == BUFF_SIZE && (j = 0) == 0)
-				printf("%s", buf);
+				printf("%s*", buf);
 			buf[j] = format[i];
 			i++;
 			j++;
@@ -51,7 +51,7 @@ void	ft_process(char *buf, const char *restrict format, va_list ap)
 			i += 2;
 		}
 	}
-	buf[j - 1] = '\0';
+	buf[j] = '\0';
 }
 
 int		ft_printf(const char *restrict format, ...)
