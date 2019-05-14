@@ -6,14 +6,13 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 15:33:24 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/14 17:53:09 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/14 18:16:41 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-/*A REVOIR*/
-void		ft_flags(char *str, t_printf save, int *i)
+t_printf		ft_flags(char *str, t_printf save, int *i)
 {
 	while (str[*i] == '#' || str[*i] == '0' || str[*i] == '+'
 			|| str[*i] == ' ' || str[*i] == '-')
@@ -30,9 +29,10 @@ void		ft_flags(char *str, t_printf save, int *i)
 			save.flags = save.flags | F_MINUS;
 		*i += 1;
 	}
+	return (save);
 }
 
-int			ft_width(char *str, t_printf save, int *i)
+int			ft_width(char *str, t_printf *save, int *i)
 {
 	char	res[1];
 
@@ -41,7 +41,7 @@ int			ft_width(char *str, t_printf save, int *i)
 		while (str[*i] >= '0' && str[*i] <= '9')
 		{
 			res[0] = str[*i];
-			save.width = (save.width * 10) + ft_atoi(res);
+			save->width = (save->width * 10) + ft_atoi(res);
 			*i += 1;
 		}
 	}
@@ -56,38 +56,38 @@ int			ft_width(char *str, t_printf save, int *i)
 		while (str[*i] >= '0' && str[*i] <= '9')
 		{
 			res[0] = str[*i];
-			save.precision = (save.precision * 10) + ft_atoi(res);
+			save->precision = (save->precision * 10) + ft_atoi(res);
 			*i += 1;
 		}
 	}
 	return (1);
 }
 
-int			ft_modif(char *str, t_printf save, int *i)
+int			ft_modif(char *str, t_printf *save, int *i)
 {
 	if (str[*i] == 'h' && str[*i + 1] == 'h')
 	{
-		save.modif = save.modif | M_HH;
+		save->modif = save->modif | M_HH;
 		*i += 2;
 	}
 	else if (str[*i] == 'h' && str[*i + 1] != 'h')
 	{
-		save.modif = save.modif | M_H;
+		save->modif = save->modif | M_H;
 		*i += 1;
 	}
 	else if (str[*i] == 'l' && str[*i + 1] == 'l')
 	{
-		save.modif = save.modif | M_LL;
+		save->modif = save->modif | M_LL;
 		*i += 2;
 	}
 	else if (str[*i] == 'l' && str[*i + 1] != 'l')
 	{
-		save.modif = save.modif | M_L;
+		save->modif = save->modif | M_L;
 		*i += 1;	
 	}
 	else if (str[*i] == 'L')
 	{
-		save.modif = save.modif | M_BIGL;
+		save->modif = save->modif | M_BIGL;
 		*i += 1;
 	}
 	if (str[*i] != 'd' && str[*i] != 'i' && str[*i] != 'o' && str[*i] != 'u'
@@ -97,20 +97,21 @@ int			ft_modif(char *str, t_printf save, int *i)
 	return (1);
 }
 
-void		ft_format(char c, t_printf save, va_list ap, int *j)
+t_printf		ft_format(char c, t_printf save, va_list ap, int *j)
 {
 	if (c == 'c' || c == 's' || c == 'p')
-		ft_format_csp(save, ap, j);
+		save = ft_format_csp(save, ap, j);
 	else if (c == 'd' || c == 'i')
-		ft_format_di(save, ap, j);
+		save = ft_format_di(save, ap, j);
 	else if (c == 'x' || c == 'X')
-		ft_format_xX(save, ap, j);
+		save = ft_format_xX(save, ap, j);
 	else if (c == 'f')
-		ft_format_f(save, ap, j);
+		save = ft_format_f(save, ap, j);
 	else if (c == 'o')
-		ft_format_o(save, ap, j);
+		save = ft_format_o(save, ap, j);
 	else if (c == 'u')
-		ft_format_u(save, ap, j);
+		save = ft_format_u(save, ap, j);
+	return (save);
 }
 
 t_printf	ft_convert(t_printf save, char *str, va_list ap, int *j)
@@ -122,14 +123,14 @@ t_printf	ft_convert(t_printf save, char *str, va_list ap, int *j)
 	save.width = 0;
 	save.precision = 0;
 	save.modif = 0;
-	ft_flags(str, save, &i);
-	if (ft_width(str, save, &i) == 0 || ft_modif(str, save, &i) == 0)
+	save = ft_flags(str, save, &i);
+	if (ft_width(str, &save, &i) == 0 || ft_modif(str, &save, &i) == 0)
 	{
 		save.buf[*j] = '%';
 		*j += 1;
 		return (save);
 	}
 	save.index = i + 1;
-	ft_format(str[i], save, ap, j);
+	save = ft_format(str[i], save, ap, j);
 	return (save);
 }
