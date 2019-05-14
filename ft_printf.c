@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 15:48:54 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/14 19:01:38 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/14 20:35:31 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ int		ft_printf(const char *restrict format, ...)
 	save = ft_process(save, format, ap);
 	printf("%s\n", save.buf);
 	va_end(ap);
-	printf("\nflags : [%d]\nwidth : [%d]\nprecision : [%d]\nmodif : [%d]\nbuf : [%s]\n", save.flags, save.width, save.precision, save.modif, save.buf);
+//	printf("\nflags : [%d]\nwidth : [%d]\nprecision : [%d]\nmodif : [%d]\nbuf : [%s]\n", save.flags, save.width, save.precision, save.modif, save.buf);
 	return (0);
 }
 
 int		main(void)
 {
-	ft_printf("bonjour les %#0.10d personnes", 257);
+	ft_printf("bonjour les %.56d personnes", 27);
 	return (0);
 }
