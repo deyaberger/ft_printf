@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 15:48:54 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/13 19:39:28 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/14 17:53:12 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_printf	ft_process(t_printf save, const char *restrict format, va_list ap)
 {
 	int		i;
 	int		j;
-	int		count;
 
 	i = 0;
 	j = 0;
@@ -33,8 +32,7 @@ t_printf	ft_process(t_printf save, const char *restrict format, va_list ap)
 		if (format[i] == '%')
 		{
 			save = ft_convert(save, (char*)&format[i + 1], ap, &j);
-			i += 2;
-			// il faudrait refaire un calcul du i
+			i += 1;
 		}
 	}
 	save.buf[j] = '\0';
@@ -51,5 +49,12 @@ int		ft_printf(const char *restrict format, ...)
 	save = ft_process(save, format, ap);
 	printf("%s\n", save.buf);
 	va_end(ap);
+	printf("\nflags : [%d]\nwidth : [%d]\nprecision : [%d]\nmodif : [%d]\nbuf : [%s]\n", save.flags, save.width, save.precision, save.modif, save.buf);
+	return (0);
+}
+
+int		main(void)
+{
+	ft_printf("bonjour les %#10.4d personnes\n", 10);
 	return (0);
 }

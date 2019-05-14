@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 18:04:24 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/13 19:47:10 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/14 17:53:11 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <unistd.h>
 # include <stdarg.h>
 
-# define BUFF_SIZE 1
+# define BUFF_SIZE 500
 
 # define F_SPACE	(1 << 0)
 # define F_HASH		(1 << 1)
@@ -40,11 +40,16 @@ typedef struct		s_printf
 	int				precision;
 	int				modif;
 	int				index;
-	char			buf[BUFF_SIZE];
+	char			buf[BUFF_SIZE + 1];
 }					t_printf;
 
 int					ft_printf(const char *restrict format, ...);
-t_printf			ft_convert(t_printf save, char *str, va_list ap, int *j)
+t_printf			ft_convert(t_printf save, char *str, va_list ap, int *j);
 t_printf			ft_format_di(t_printf save, va_list ap, int *j);
+t_printf			ft_format_csp(t_printf save, va_list ap, int *j);
+t_printf			ft_format_xX(t_printf save, va_list ap, int *j);
+t_printf			ft_format_f(t_printf save, va_list ap, int *j);
+t_printf			ft_format_o(t_printf save, va_list ap, int *j);
+t_printf			ft_format_u(t_printf save, va_list ap, int *j);
 
 #endif
