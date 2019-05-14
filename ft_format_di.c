@@ -6,13 +6,13 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 13:17:49 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/14 17:53:13 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/14 19:00:48 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-t_printf	ft_format_di(t_printf save, va_list ap, int *j)
+t_printf	ft_format_di(t_printf save, va_list ap, int *j, char c)
 {
 	int		type;
 	int		s;

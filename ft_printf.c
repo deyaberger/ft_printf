@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 15:48:54 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/14 18:25:59 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/14 19:01:38 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ t_printf	ft_process(t_printf save, const char *restrict format, va_list ap)
 		if (format[i] == '%')
 		{
 			save = ft_convert(save, (char*)&format[i + 1], ap, &j);
-			printf("%d\n", save.index);
 			i = i + save.index;
 		}
 	}

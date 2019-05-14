@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-t_printf		ft_format_o(t_printf save, va_list ap, int *j)
+t_printf		ft_format_o(t_printf save, va_list ap, int *j, char c)
 {
 	(void)ap;
 	(void)*j;

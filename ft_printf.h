@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 18:04:24 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/14 17:53:11 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/14 19:00:19 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ typedef struct		s_printf
 }					t_printf;
 
 int					ft_printf(const char *restrict format, ...);
-t_printf			ft_convert(t_printf save, char *str, va_list ap, int *j);
-t_printf			ft_format_di(t_printf save, va_list ap, int *j);
-t_printf			ft_format_csp(t_printf save, va_list ap, int *j);
-t_printf			ft_format_xX(t_printf save, va_list ap, int *j);
-t_printf			ft_format_f(t_printf save, va_list ap, int *j);
-t_printf			ft_format_o(t_printf save, va_list ap, int *j);
-t_printf			ft_format_u(t_printf save, va_list ap, int *j);
+t_printf			ft_convert(t_printf save, char *str, va_list ap, int *j, char c);
+t_printf			ft_format_di(t_printf save, va_list ap, int *j, char c);
+t_printf			ft_format_csp(t_printf save, va_list ap, int *j, char c);
+t_printf			ft_format_xX(t_printf save, va_list ap, int *j, char c);
+t_printf			ft_format_f(t_printf save, va_list ap, int *j, char c);
+t_printf			ft_format_o(t_printf save, va_list ap, int *j, char c);
+t_printf			ft_format_u(t_printf save, va_list ap, int *j, char c);
 
 #endif
