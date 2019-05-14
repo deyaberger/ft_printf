@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 15:33:24 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/14 18:16:41 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/14 18:52:28 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,17 +100,17 @@ int			ft_modif(char *str, t_printf *save, int *i)
 t_printf		ft_format(char c, t_printf save, va_list ap, int *j)
 {
 	if (c == 'c' || c == 's' || c == 'p')
-		save = ft_format_csp(save, ap, j);
+		save = ft_format_csp(save, ap, j, c);
 	else if (c == 'd' || c == 'i')
-		save = ft_format_di(save, ap, j);
+		save = ft_format_di(save, ap, j, c);
 	else if (c == 'x' || c == 'X')
-		save = ft_format_xX(save, ap, j);
+		save = ft_format_xX(save, ap, j, c);
 	else if (c == 'f')
-		save = ft_format_f(save, ap, j);
+		save = ft_format_f(save, ap, j, c);
 	else if (c == 'o')
-		save = ft_format_o(save, ap, j);
+		save = ft_format_o(save, ap, j,c);
 	else if (c == 'u')
-		save = ft_format_u(save, ap, j);
+		save = ft_format_u(save, ap, j, c);
 	return (save);
 }
 
@@ -130,7 +130,7 @@ t_printf	ft_convert(t_printf save, char *str, va_list ap, int *j)
 		*j += 1;
 		return (save);
 	}
-	save.index = i + 1;
+	save.index = i + 2;
 	save = ft_format(str[i], save, ap, j);
 	return (save);
 }
