@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 13:17:49 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/15 18:49:05 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/15 19:25:44 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,56 +51,6 @@ t_printf	ft_width_di(t_printf save, int *j, long long type)
 			*j += 1;
 		}
 	}
-	return (save);
-}
-
-t_printf	ft_ditoa(t_printf save, int *j, long long type)
-{
-	long long	s;
-	long long	count;
-
-	s = ft_sizenb_ll(type);
-	count = s;
-	save.buf[*j + s] = '\0';
-	if ((save.modif & M_H))
-		s = ft_sizenb_ll(type);
-	if (type == 0)
-	{
-		if (*j == BUFF_SIZE && (*j = 0) == 0)
-			write (1, &save.buf, BUFF_SIZE);
-		save.buf[*j] = '0';
-		*j += 1;
-		return (save);
-	}
-	if (type < 0)
-	{
-		if (*j == BUFF_SIZE && (*j = 0) == 0)
-			write (1, &save.buf, BUFF_SIZE);
-		if (!save.precision)
-		{
-			save.buf[*j] = '-';
-			*j += 1;
-		}
-		type = -type;
-		s--;
-	}
-	if (*j == BUFF_SIZE && (*j = 0) == 0)
-		write (1, &save.buf, BUFF_SIZE);
-	if (type > 0 && !save.precision && (save.flags & F_PLUS))
-	{	
-		save.buf[*j] = '+';
-		*j += 1;
-	}
-	s--;
-	while (s >= 0)
-	{
-		if (*j + s == BUFF_SIZE && (*j = 0) == 0)
-			write (1, &save.buf, BUFF_SIZE);
-		save.buf[*j + s] = (type % 10 + '0');
-		s--;
-		type = type / 10;
-	}
-	*j = *j + count;
 	return (save);
 }
 
@@ -172,7 +122,7 @@ t_printf	ft_format_di(t_printf save, va_list ap, int *j)
 		save = ft_width_di(save, j, type);
 	if (save.precision)
 		save = ft_precision_di(save, j, type);
-	save = ft_ditoa(save, j, type);
+	save = ft_lltoa(save, j, type);
 	if (save.width && (save.flags & F_MINUS))
 		save = ft_width_di(save, j, type);
 	return (save);
