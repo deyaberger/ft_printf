@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 13:17:49 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/15 19:25:44 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/15 20:41:22 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ t_printf	ft_width_di(t_printf save, int *j, long long type)
 		{
 			while (w - count)
 			{
-				if (*j == BUFF_SIZE && (*j = 0) == 0)
-					write (1, &save.buf, BUFF_SIZE);
+				ft_check(save, j);
 				save.buf[*j] = '0';
 				w--;
 				*j += 1;
@@ -44,8 +43,7 @@ t_printf	ft_width_di(t_printf save, int *j, long long type)
 		}
 		while (w - count)
 		{
-			if (*j == BUFF_SIZE && (*j = 0) == 0)
-				write (1, &save.buf, BUFF_SIZE);
+			ft_check(save, j);
 			save.buf[*j] = ' ';
 			w--;
 			*j += 1;
@@ -63,27 +61,23 @@ t_printf 	ft_precision_di(t_printf save, int *j, long long type)
 	p = save.precision;
 	if (s < p)
 	{
-		if (*j == BUFF_SIZE && (*j = 0) == 0)
-			write (1, &save.buf, BUFF_SIZE);
+		ft_check(save, j);
 		if (type < 0)
 		{
 			save.buf[*j] = '-';
 			*j += 1;
 			type = -type;
 		}
-		if (*j == BUFF_SIZE && (*j = 0) == 0)
-			write (1, &save.buf, BUFF_SIZE);
+		ft_check(save, j);
 		if (type > 0 &&  (save.flags & F_PLUS))
 		{	
 			save.buf[*j] = '+';
 			*j += 1;
 		}
-		if (*j == BUFF_SIZE && (*j = 0) == 0)
-			write (1, &save.buf, BUFF_SIZE);
+		ft_check(save, j);
 		while (p - s > 0)
 		{
-			if (*j == BUFF_SIZE && (*j = 0) == 0)
-				write (1, &save.buf, BUFF_SIZE);
+			ft_check(save, j);
 			save.buf[*j] = '0';
 			*j += 1;
 			p--;

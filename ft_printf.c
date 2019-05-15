@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/10 15:48:54 by ncoursol          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/05/15 16:46:35 by ncoursol         ###   ########.fr       */
-=======
-/*   Updated: 2019/05/15 19:08:36 by dberger          ###   ########.fr       */
->>>>>>> a206342340fcac3e078de249d5867dd2d88d2cec
+/*   Created: 2019/05/15 19:48:39 by dberger           #+#    #+#             */
+/*   Updated: 2019/05/15 20:43:35 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +23,8 @@ t_printf	ft_process(t_printf save, const char *restrict format, va_list ap)
 	{
 		while (format[i] && format[i] != '%')
 		{
-			if (j == BUFF_SIZE && (j = 0) == 0)
-				write(1, save.buf, BUFF_SIZE);
+			if ((j == BUFF_SIZE) && (j = 0) == 0)
+				write(1, &save.buf, BUFF_SIZE);
 			save.buf[j] = format[i];
 			i++;
 			j++;
@@ -63,7 +59,7 @@ int		main(void)
 	int	i;
 
 	i = 21;
-	ft_printf("bonjour les %d personnes\n", i);
-	//	printf("bonjour les %d personnes\n", &c);
+	ft_printf("bonjour les %p personnes\n", &i);
+	printf("bonjour les %p personnes\n", &i);
 	return (0);
 }

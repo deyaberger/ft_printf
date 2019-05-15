@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 15:33:24 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/15 14:04:59 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/15 15:33:23 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,6 @@ t_printf	ft_convert(t_printf save, char *str, va_list ap, int *j)
 	int			i;
 
 	i = 0;
-	save.flags = 0;
-	save.width = 0;
-	save.precision = 0;
-	save.modif = 0;
 	save = ft_flags(str, save, &i);
 	if (ft_width(str, &save, &i) == 0 || ft_modif(str, &save, &i) == 0)
 	{
