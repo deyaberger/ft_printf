@@ -6,20 +6,20 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 13:17:49 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/15 15:15:21 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/15 18:49:05 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-t_printf	ft_width_di(t_printf save, int *j, int type)
+t_printf	ft_width_di(t_printf save, int *j, long long type)
 {
-	int		count;
-	int		s;
-	int		w;
+	int			count;
+	long long	s;
+	int			w;
 
 	w = save.width;
-	s = ft_sizenb(type);
+	s = ft_sizenb_ll(type);
 	if (save.precision && s < save.precision)
 		count = save.precision;
 	else
@@ -54,14 +54,16 @@ t_printf	ft_width_di(t_printf save, int *j, int type)
 	return (save);
 }
 
-t_printf	ft_ditoa(t_printf save, int *j, int type)
+t_printf	ft_ditoa(t_printf save, int *j, long long type)
 {
-	int		s;
-	int		count;
+	long long	s;
+	long long	count;
 
-	s = ft_sizenb(type);
+	s = ft_sizenb_ll(type);
 	count = s;
 	save.buf[*j + s] = '\0';
+	if ((save.modif & M_H))
+		s = ft_sizenb_ll(type);
 	if (type == 0)
 	{
 		if (*j == BUFF_SIZE && (*j = 0) == 0)
@@ -81,7 +83,6 @@ t_printf	ft_ditoa(t_printf save, int *j, int type)
 		}
 		type = -type;
 		s--;
-		count--;
 	}
 	if (*j == BUFF_SIZE && (*j = 0) == 0)
 		write (1, &save.buf, BUFF_SIZE);
@@ -103,12 +104,12 @@ t_printf	ft_ditoa(t_printf save, int *j, int type)
 	return (save);
 }
 
-t_printf 	ft_precision_di(t_printf save, int *j, int type)
+t_printf 	ft_precision_di(t_printf save, int *j, long long type)
 {
-	int		s;
-	int		p;
+	long long s;
+	int p;
 
-	s = ft_sizenb(type);
+	s = ft_sizenb_ll(type);
 	p = save.precision;
 	if (s < p)
 	{
@@ -142,11 +143,26 @@ t_printf 	ft_precision_di(t_printf save, int *j, int type)
 	return (save);
 }
 
+long long	ft_modif_di(t_printf save, va_list ap)
+{
+	long long	number;
+
+	if (save.modif && (save.modif & M_HH))
+		return (number = (char)va_arg(ap, int));
+	if (save.modif && (save.modif & M_H))
+		return (number = (short)va_arg(ap, int));
+	if (save.modif && (save.modif & M_L))
+		return (number = va_arg(ap, long));
+	if (save.modif && (save.modif & M_LL))
+		return (number = va_arg(ap, long long));
+	return (number = va_arg(ap, int));
+}
+
 t_printf	ft_format_di(t_printf save, va_list ap, int *j)
 {
-	int		type;
+	long long	type;
 
-	type = va_arg(ap, int);
+	type = ft_modif_di(save, ap);
 	if (type > 0 && (save.flags & F_SPACE))
 	{
 		save.buf[*j] = ' ';
