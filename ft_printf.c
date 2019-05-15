@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 15:48:54 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/14 20:35:31 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/15 15:19:17 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_printf	ft_process(t_printf save, const char *restrict format, va_list ap)
 		while (format[i] && format[i] != '%')
 		{
 			if (j == BUFF_SIZE && (j = 0) == 0)
-				printf("%s", save.buf);
+				write(1, save.buf, BUFF_SIZE);
 			save.buf[j] = format[i];
 			i++;
 			j++;
@@ -36,6 +36,7 @@ t_printf	ft_process(t_printf save, const char *restrict format, va_list ap)
 		}
 	}
 	save.buf[j] = '\0';
+	save.index = j;
 	return (save);
 }
 
@@ -47,7 +48,7 @@ int		ft_printf(const char *restrict format, ...)
 	save.buf[BUFF_SIZE] = '\0';
 	va_start(ap, format);
 	save = ft_process(save, format, ap);
-	printf("%s\n", save.buf);
+	write(1, save.buf, save.index);
 	va_end(ap);
 //	printf("\nflags : [%d]\nwidth : [%d]\nprecision : [%d]\nmodif : [%d]\nbuf : [%s]\n", save.flags, save.width, save.precision, save.modif, save.buf);
 	return (0);
@@ -55,6 +56,10 @@ int		ft_printf(const char *restrict format, ...)
 
 int		main(void)
 {
-	ft_printf("bonjour les %.56d personnes", 27);
+	char	c;
+
+	c = 'c';
+	ft_printf("bonjour les %p personnes\n", &c);
+	printf("bonjour les %p personnes\n", &c);
 	return (0);
 }
