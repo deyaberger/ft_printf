@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 13:17:49 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/14 20:34:46 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/15 13:20:10 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,22 @@ t_printf	ft_ditoa(t_printf save, int *j, int type)
 {
 	int		s;
 	int		count;
-	
+
 	s = ft_sizenb(type);
 	count = s;
 	save.buf[*j + s] = '\0';
 	if (type == 0)
 	{
+		if (*j == BUFF_SIZE && (*j = 0) == 0)
+			printf("%s", save.buf);
 		save.buf[*j] = '0';
 		*j += 1;
 		return (save);
 	}
 	if (type < 0)
 	{
+		if (*j == BUFF_SIZE && (*j = 0) == 0)
+			printf("%s", save.buf);
 		type = -type;
 		save.buf[*j] = '-';
 		*j += 1;
@@ -37,6 +41,8 @@ t_printf	ft_ditoa(t_printf save, int *j, int type)
 	s--;
 	while (s >= 0)
 	{
+		if (*j + s == BUFF_SIZE && (*j = 0) == 0)
+			printf("%s", save.buf);
 		save.buf[*j + s] = (type % 10 + '0');
 		s--;
 		type = type / 10;
@@ -56,6 +62,8 @@ t_printf 	ft_precision_di(t_printf save, int *j, int type)
 	{
 		while (p - s > 0)
 		{
+			if (*j == BUFF_SIZE && (*j = 0) == 0)
+				printf("%s", save.buf);
 			save.buf[*j] = '0';
 			*j += 1;
 			p--;
