@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 15:33:24 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/14 19:22:46 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/15 14:04:59 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_printf		ft_flags(char *str, t_printf save, int *i)
 		else if (str[*i] == '0')
 			save.flags = save.flags | F_ZERO;
 		else if (str[*i] == '+')
-			save.flags = save.flags | F_MINUS;
+			save.flags = save.flags | F_PLUS;
 		else if (str[*i] == ' ')
 			save.flags = save.flags | F_SPACE;
 		else if (str[*i] == '-')
