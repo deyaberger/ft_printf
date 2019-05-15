@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 13:17:49 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/15 15:06:14 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/15 15:15:21 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ t_printf	ft_width_di(t_printf save, int *j, int type)
 		{
 			while (w - count)
 			{
+				if (*j == BUFF_SIZE && (*j = 0) == 0)
+					write (1, &save.buf, BUFF_SIZE);
 				save.buf[*j] = '0';
 				w--;
 				*j += 1;
@@ -42,6 +44,8 @@ t_printf	ft_width_di(t_printf save, int *j, int type)
 		}
 		while (w - count)
 		{
+			if (*j == BUFF_SIZE && (*j = 0) == 0)
+				write (1, &save.buf, BUFF_SIZE);
 			save.buf[*j] = ' ';
 			w--;
 			*j += 1;
@@ -79,6 +83,8 @@ t_printf	ft_ditoa(t_printf save, int *j, int type)
 		s--;
 		count--;
 	}
+	if (*j == BUFF_SIZE && (*j = 0) == 0)
+		write (1, &save.buf, BUFF_SIZE);
 	if (type > 0 && !save.precision && (save.flags & F_PLUS))
 	{	
 		save.buf[*j] = '+';
@@ -114,13 +120,19 @@ t_printf 	ft_precision_di(t_printf save, int *j, int type)
 			*j += 1;
 			type = -type;
 		}
+		if (*j == BUFF_SIZE && (*j = 0) == 0)
+			write (1, &save.buf, BUFF_SIZE);
 		if (type > 0 &&  (save.flags & F_PLUS))
 		{	
 			save.buf[*j] = '+';
 			*j += 1;
 		}
+		if (*j == BUFF_SIZE && (*j = 0) == 0)
+			write (1, &save.buf, BUFF_SIZE);
 		while (p - s > 0)
 		{
+			if (*j == BUFF_SIZE && (*j = 0) == 0)
+				write (1, &save.buf, BUFF_SIZE);
 			save.buf[*j] = '0';
 			*j += 1;
 			p--;
