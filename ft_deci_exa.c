@@ -6,13 +6,13 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 16:50:20 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/15 19:10:16 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/15 19:38:35 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "ft_printf.h"
 
-char    ft_bin_exa(int a, int b, int c, int d)
+char		ft_bin_exa(int a, int b, int c, int d)
 {
 	int		res;
 
@@ -24,7 +24,7 @@ char    ft_bin_exa(int a, int b, int c, int d)
 	return (res);
 }
 
-char	*ft_deci_exa(unsigned long int k, t_printf save, int *j)
+t_printf	ft_deci_hexa(t_printf save, int *j, unsigned long int k)
 {
 	int		i;
 	char	c;

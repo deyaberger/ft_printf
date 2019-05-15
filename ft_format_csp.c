@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 20:37:05 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/15 19:19:35 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/15 19:38:51 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ t_printf	ft_form_p(t_printf save, int *j, void *p)
 	i = 0;
 	(void)*j;
 	(void)p;
-	/if (save.flags != 0)
+	if (save.flags != 0)
 	{
 		ft_check(save, j);
-		save = ft_deci_exa((unsigned long int)p, save, j);
+		save = ft_deci_hexa(save, j, (unsigned long int)p);
 		*j += 1;
 	}
 	while (i++ < save.width - 1)
@@ -67,7 +67,7 @@ t_printf	ft_form_p(t_printf save, int *j, void *p)
 	if (save.flags == 0)
 	{
 		ft_check(save, j);
-		save.buf[*j] = c;
+		save = ft_deci_hexa(save, j, (unsigned long int)p);
 		*j += 1;
 	}	
 	return (save);
