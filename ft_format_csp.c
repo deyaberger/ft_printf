@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 20:37:05 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/15 15:06:23 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/15 19:19:35 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,19 @@ t_printf	ft_form_c(t_printf save, int *j, char c)
 	i = 0;
 	if (save.flags != 0)
 	{
-		if (*j == BUFF_SIZE && (*j = 0) == 0)
-			write(1, save.buf, BUFF_SIZE);
+		ft_check(save, j);
 		save.buf[*j] = c;
 		*j += 1;
 	}
 	while (i++ < save.width - 1)
 	{
-		if (*j == BUFF_SIZE && (*j = 0) == 0)
-			write(1, save.buf, BUFF_SIZE);
+		ft_check(save, j);
 		save.buf[*j] = ' ';
 		*j += 1;
 	}
 	if (save.flags == 0)
 	{
-		if (*j == BUFF_SIZE && (*j = 0) == 0)
-			write(1, save.buf, BUFF_SIZE);
+		ft_check(save, j);
 		save.buf[*j] = c;
 		*j += 1;
 	}	
@@ -52,9 +49,27 @@ t_printf	ft_form_p(t_printf save, int *j, void *p)
 {
 	int		i;
 
-	(void)*j;
 	i = 0;
-	printf("len : [%s]\n", (char*)&p);
+	(void)*j;
+	(void)p;
+	/if (save.flags != 0)
+	{
+		ft_check(save, j);
+		save = ft_deci_exa((unsigned long int)p, save, j);
+		*j += 1;
+	}
+	while (i++ < save.width - 1)
+	{
+		ft_check(save, j);
+		save.buf[*j] = ' ';
+		*j += 1;
+	}
+	if (save.flags == 0)
+	{
+		ft_check(save, j);
+		save.buf[*j] = c;
+		*j += 1;
+	}	
 	return (save);
 }
 
