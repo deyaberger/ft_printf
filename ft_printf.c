@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 15:48:54 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/15 15:19:17 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/15 19:08:36 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ int		ft_printf(const char *restrict format, ...)
 
 int		main(void)
 {
-	char	c;
+	int	i;
 
-	c = 'c';
-	ft_printf("bonjour les %p personnes\n", &c);
-	printf("bonjour les %p personnes\n", &c);
+	i = 21;
+	ft_printf("bonjour les %d personnes\n", i);
+	//	printf("bonjour les %d personnes\n", &c);
 	return (0);
 }
