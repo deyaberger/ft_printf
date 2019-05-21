@@ -12,6 +12,14 @@
 
 #include "ft_printf.h"
 
+t_printf	ft_add_char(t_printf save, int *j, char c)
+{
+	ft_check(save, j);
+	save.buf[*j] = c;
+	*j += 1;
+	return (save);
+}
+
 t_printf	ft_width_di(t_printf save, int *j, long long type)
 {
 	int			count;
@@ -20,34 +28,28 @@ t_printf	ft_width_di(t_printf save, int *j, long long type)
 
 	w = save.width;
 	s = ft_sizenb_ll(type);
-	if (save.precision && s < save.precision)
+	count = s;
+	if (save.precision && s < save.precision && w < save.precision)
 		count = save.precision;
-	else
-		count = s;
+	else if (s < w)
+		count = w;
 	if (type > 0 && (save.flags & F_PLUS))
 		count++;
 	if (type > 0 && (save.flags & F_SPACE))
-		count++;
-	if (count < w)
+		count--;
+	if ((save.flags & F_ZERO) && !(save.precision) && !(save.flags & F_MINUS))
 	{
-		if ((save.flags & F_ZERO) && !(save.precision) && !(save.flags & F_MINUS))
+		while (count - s)
 		{
-			while (w - count)
-			{
-				ft_check(save, j);
-				save.buf[*j] = '0';
-				w--;
-				*j += 1;
-			}
-			return (save);
+			save = ft_add_char(save, j, '0');
+			count--;
 		}
-		while (w - count)
-		{
-			ft_check(save, j);
-			save.buf[*j] = ' ';
-			w--;
-			*j += 1;
-		}
+		return (save);
+	}
+	while (count - s)
+	{
+		save = ft_add_char(save, j, ' ');
+		count--;
 	}
 	return (save);
 }
@@ -64,22 +66,15 @@ t_printf 	ft_precision_di(t_printf save, int *j, long long type)
 		ft_check(save, j);
 		if (type < 0)
 		{
-			save.buf[*j] = '-';
-			*j += 1;
+			save = ft_add_char(save, j, '-');
 			type = -type;
 		}
 		ft_check(save, j);
 		if (type > 0 &&  (save.flags & F_PLUS))
-		{	
-			save.buf[*j] = '+';
-			*j += 1;
-		}
-		ft_check(save, j);
+			save = ft_add_char(save, j, '+');
 		while (p - s > 0)
 		{
-			ft_check(save, j);
-			save.buf[*j] = '0';
-			*j += 1;
+			save = ft_add_char(save, j, '0');
 			p--;
 		}
 		save.buf[*j] = '\0';
@@ -108,10 +103,7 @@ t_printf	ft_format_di(t_printf save, va_list ap, int *j)
 
 	type = ft_modif_di(save, ap);
 	if (type > 0 && (save.flags & F_SPACE))
-	{
-		save.buf[*j] = ' ';
-		*j += 1;
-	}
+		save = ft_add_char(save, j, ' ');
 	if (save.width && !(save.flags & F_MINUS))
 		save = ft_width_di(save, j, type);
 	if (save.precision)
