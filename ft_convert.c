@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 15:33:24 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/22 16:51:47 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/22 18:14:16 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,11 @@ t_printf	ft_flags(char *str, t_printf save, int *i)
 
 int			ft_width(char *str, t_printf *save, int *i)
 {
-	char	res[1];
-
 	if (str[*i] >= '0' && str[*i] <= '9')
 	{
 		while (str[*i] >= '0' && str[*i] <= '9')
 		{
-			res[0] = str[*i];
-			save->width = (save->width * 10) + ft_atoi(res);
+			save->width = (save->width * 10) + (str[*i] - '0');
 			*i += 1;
 		}
 	}
@@ -50,8 +47,7 @@ int			ft_width(char *str, t_printf *save, int *i)
 		*i += 1;
 		while (str[*i] >= '0' && str[*i] <= '9')
 		{
-			res[0] = str[*i];
-			save->precision = (save->precision * 10) + ft_atoi(res);
+			save->precision = (save->precision * 10) + (str[*i] - '0');
 			*i += 1;
 		}
 	}
@@ -87,7 +83,6 @@ int			ft_modif(char *str, t_printf *save, int *i)
 
 t_printf	ft_format(char c, t_printf save, va_list ap, int *j)
 {
-	printf("BONJOUR 2\n");
 	if (c == 'c' || c == 's' || c == 'p')
 		save = ft_format_csp(save, ap, j, c);
 	else if (c == 'd' || c == 'i')

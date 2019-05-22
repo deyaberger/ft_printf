@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 19:48:39 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/22 16:57:03 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/22 18:13:12 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ t_printf	ft_process(t_printf save, const char *restrict format, va_list ap)
 		}
 		if (format[i] == '%')
 		{
-			printf("BONJOUR 1\n");
 			save = ft_convert(save, (char*)&format[i + 1], ap, &j);
 			i = i + save.index;
 		}
@@ -46,13 +45,18 @@ int		ft_printf(const char *restrict format, ...)
 {
 	va_list		ap;
 	t_printf	save;
-
+	
+	save.flags = 0;
+	save.width = 0;
+	save.precision = 0;
+	save.modif = 0;
+	save.index = 0;
 	save.buf[BUFF_SIZE] = '\0';
 	va_start(ap, format);
 	save = ft_process(save, format, ap);
 	write(1, save.buf, save.index);
+	//	printf("\nflags : [%d]\nwidth : [%d]\nprecision : [%d]\nmodif : [%d]\n", save.flags, save.width, save.precision, save.modif);
 	va_end(ap);
-//	printf("\nflags : [%d]\nwidth : [%d]\nprecision : [%d]\nmodif : [%d]\nbuf : [%s]\n", save.flags, save.width, save.precision, save.modif, save.buf);
 	return (0);
 }
 
@@ -61,7 +65,7 @@ int		main(void)
 	int	i;
 
 	i = 21;
-	ft_printf("bonjour les %20p personnes\n", &i);
-	   printf("bonjour les %20p personnes\n", &i);
+	ft_printf("bonjour les %9d personnes\n", i);
+	printf("bonjour les %9d personnes\n", i);
 	return (0);
 }
