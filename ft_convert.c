@@ -6,13 +6,13 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 15:33:24 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/15 15:33:23 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/22 11:37:49 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-t_printf		ft_flags(char *str, t_printf save, int *i)
+t_printf	ft_flags(char *str, t_printf save, int *i)
 {
 	while (str[*i] == '#' || str[*i] == '0' || str[*i] == '+'
 			|| str[*i] == ' ' || str[*i] == '-')
@@ -48,7 +48,7 @@ int			ft_width(char *str, t_printf *save, int *i)
 	if (str[*i] == '.')
 	{
 		*i += 1;
-		if ((str[*i] <= '0' || str[*i] >= '9') && str[*i] != 'd'
+		if ((str[*i] < '0' || str[*i] > '9') && str[*i] != 'd'
 				&& str[*i] != 'i' && str[*i] != 'o' && str[*i] != 'u'
 				&& str[*i] != 'x' && str[*i] != 'X' && str[*i] != 'f'
 				&& str[*i] != 'c' && str[*i] != 's' && str[*i] != 'p')
@@ -83,7 +83,7 @@ int			ft_modif(char *str, t_printf *save, int *i)
 	else if (str[*i] == 'l' && str[*i + 1] != 'l')
 	{
 		save->modif = save->modif | M_L;
-		*i += 1;	
+		*i += 1;
 	}
 	else if (str[*i] == 'L')
 	{
@@ -97,7 +97,7 @@ int			ft_modif(char *str, t_printf *save, int *i)
 	return (1);
 }
 
-t_printf		ft_format(char c, t_printf save, va_list ap, int *j)
+t_printf	ft_format(char c, t_printf save, va_list ap, int *j)
 {
 	if (c == 'c' || c == 's' || c == 'p')
 		save = ft_format_csp(save, ap, j, c);
@@ -108,7 +108,7 @@ t_printf		ft_format(char c, t_printf save, va_list ap, int *j)
 	else if (c == 'f')
 		save = ft_format_f(save, ap, j, c);
 	else if (c == 'o')
-		save = ft_format_o(save, ap, j,c);
+		save = ft_format_o(save, ap, j, c);
 	else if (c == 'u')
 		save = ft_format_u(save, ap, j, c);
 	return (save);
@@ -116,7 +116,7 @@ t_printf		ft_format(char c, t_printf save, va_list ap, int *j)
 
 t_printf	ft_convert(t_printf save, char *str, va_list ap, int *j)
 {
-	int			i;
+	int		i;
 
 	i = 0;
 	save = ft_flags(str, save, &i);

@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 13:17:49 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/15 20:41:22 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/22 11:28:45 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,19 @@ t_printf	ft_width_di(t_printf save, int *j, long long type)
 		count--;
 	if ((save.flags & F_ZERO) && !(save.precision) && !(save.flags & F_MINUS))
 	{
-		while (count - s)
-		{
+		while ((count--) - s)
 			save = ft_add_char(save, j, '0');
-			count--;
-		}
 		return (save);
 	}
-	while (count - s)
-	{
+	while ((count--) - s)
 		save = ft_add_char(save, j, ' ');
-		count--;
-	}
 	return (save);
 }
 
-t_printf 	ft_precision_di(t_printf save, int *j, long long type)
+t_printf	ft_precision_di(t_printf save, int *j, long long type)
 {
-	long long s;
-	int p;
+	long long	s;
+	int			p;
 
 	s = ft_sizenb_ll(type);
 	p = save.precision;
@@ -70,7 +64,7 @@ t_printf 	ft_precision_di(t_printf save, int *j, long long type)
 			type = -type;
 		}
 		ft_check(save, j);
-		if (type > 0 &&  (save.flags & F_PLUS))
+		if (type > 0 && (save.flags & F_PLUS))
 			save = ft_add_char(save, j, '+');
 		while (p - s > 0)
 		{

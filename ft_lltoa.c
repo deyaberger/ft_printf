@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 18:55:26 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/15 20:41:37 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/22 11:31:18 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ t_printf	ft_lltoa(t_printf save, int *j, long long type)
 
 	s = ft_sizenb_ll(type);
 	count = s;
-	save.buf[*j + s] = '\0';
 	if ((save.modif & M_H))
 		s = ft_sizenb_ll(type);
 	if (type >= 0 && !save.precision && !save.width && (save.flags & F_PLUS))
