@@ -6,7 +6,7 @@
 #    By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/30 19:03:50 by ncoursol          #+#    #+#              #
-#    Updated: 2019/05/15 20:15:51 by dberger          ###   ########.fr        #
+#    Updated: 2019/05/22 13:57:16 by ncoursol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ ft_check.c\
 ft_convert.c\
 ft_printf.c\
 ft_lltoa.c\
-ft_deci_hexa.c\
+ft_dtoh.c\
 
 OBJ = $(SOURCES:.c=.o)
 

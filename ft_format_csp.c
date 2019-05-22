@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 20:37:05 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/15 20:42:56 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/22 11:49:49 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ t_printf	ft_form_c(t_printf save, int *j, char c)
 	{
 		ft_check(save, j);
 		save.buf[*j] = c;
+		i++;
 		*j += 1;
 	}
-	while (i++ < save.width - 1)
+	while (i++ < save.width)
 	{
 		ft_check(save, j);
 		save.buf[*j] = ' ';
@@ -31,7 +32,7 @@ t_printf	ft_form_c(t_printf save, int *j, char c)
 	}
 	if (save.flags == 0)
 	{
-		ft_check(save, j);
+		*j -= 1;
 		save.buf[*j] = c;
 		*j += 1;
 	}	
@@ -48,28 +49,19 @@ t_printf	ft_form_s(t_printf save, int *j, char *str)
 t_printf	ft_form_p(t_printf save, int *j, void *p)
 {
 	int		i;
+	int		k;
+	int		s;
 
-	i = 0;
-	(void)*j;
-	(void)p;
-	if (save.flags != 0)
-	{
-		ft_check(save, j);
-		save = ft_deci_hexa(save, j, (unsigned long int)p);
-		*j += 1;
-	}
-	while (i++ < save.width - 1)
-	{
-		ft_check(save, j);
-		save.buf[*j] = ' ';
-		*j += 1;
-	}
-	if (save.flags == 0)
-	{
-		ft_check(save, j);
-		save = ft_deci_hexa(save, j, (unsigned long int)p);
-		*j += 1;
-	}	
+	k = (unsigned long int)p;
+	i = 63;
+	while (k >> i == 0 && k >> (i - 1) == 0 && k >> (i - 2) == 0
+			&& k >> (i - 3) == 0)
+		i -= 4;
+	while (i % 4 != 0)
+		i++;
+	s = (i / 4) + 2;
+	i--;
+	save = ft_dtoh(save, j, k, i);
 	return (save);
 }
 
