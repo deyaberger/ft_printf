@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 13:17:49 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/22 11:28:45 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/22 15:29:11 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_printf	ft_add_char(t_printf save, int *j, char c)
 	ft_check(save, j);
 	save.buf[*j] = c;
 	*j += 1;
+	ft_check(save, j);
 	return (save);
 }
 
@@ -28,22 +29,22 @@ t_printf	ft_width_di(t_printf save, int *j, long long type)
 
 	w = save.width;
 	s = ft_sizenb_ll(type);
-	count = s;
+	count = w - s;
+	if (save.precision && w > save.precision && s < save.precision)
+		count = w - save.precision;
 	if (save.precision && s < save.precision && w < save.precision)
-		count = save.precision;
-	else if (s < w)
-		count = w;
-	if (type > 0 && (save.flags & F_PLUS))
-		count++;
+		return (save);
+	if ((save.flags & F_PLUS && type > 0) || type < 0)
+		count--;
 	if (type > 0 && (save.flags & F_SPACE))
 		count--;
 	if ((save.flags & F_ZERO) && !(save.precision) && !(save.flags & F_MINUS))
 	{
-		while ((count--) - s)
+		while (s < w && (count--) > 0)
 			save = ft_add_char(save, j, '0');
 		return (save);
 	}
-	while ((count--) - s)
+	while (s < w && (count--) > 0)
 		save = ft_add_char(save, j, ' ');
 	return (save);
 }
@@ -55,17 +56,17 @@ t_printf	ft_precision_di(t_printf save, int *j, long long type)
 
 	s = ft_sizenb_ll(type);
 	p = save.precision;
+	ft_check(save, j);
+	if (type > 0 && (save.flags & F_PLUS))
+		save = ft_add_char(save, j, '+');
+	if (type < 0)
+	{
+		save = ft_add_char(save, j, '-');
+		type = -type;
+		s--;
+	}
 	if (s < p)
 	{
-		ft_check(save, j);
-		if (type < 0)
-		{
-			save = ft_add_char(save, j, '-');
-			type = -type;
-		}
-		ft_check(save, j);
-		if (type > 0 && (save.flags & F_PLUS))
-			save = ft_add_char(save, j, '+');
 		while (p - s > 0)
 		{
 			save = ft_add_char(save, j, '0');
