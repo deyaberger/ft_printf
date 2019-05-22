@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 13:17:49 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/22 16:23:33 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/22 16:36:06 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 
 t_printf	ft_add_char(t_printf save, int *j, char c)
 {
-	ft_check(save, j);
-	save.buf[*j] = c;
-	*j += 1;
-	ft_check(save, j);
+	ft_check_add(save, j, c);
 	return (save);
 }
 
@@ -56,7 +53,6 @@ t_printf	ft_precision_di(t_printf save, int *j, long long type)
 
 	s = ft_sizenb_ll(type);
 	p = save.precision;
-	ft_check(save, j);
 	if (type > 0 && (save.flags & F_PLUS))
 		save = ft_add_char(save, j, '+');
 	if (type < 0)

@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 15:33:24 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/22 12:14:19 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/22 16:51:47 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int			ft_modif(char *str, t_printf *save, int *i)
 
 t_printf	ft_format(char c, t_printf save, va_list ap, int *j)
 {
+	printf("BONJOUR 2\n");
 	if (c == 'c' || c == 's' || c == 'p')
 		save = ft_format_csp(save, ap, j, c);
 	else if (c == 'd' || c == 'i')
@@ -110,10 +111,8 @@ t_printf	ft_convert(t_printf save, char *str, va_list ap, int *j)
 	save = ft_flags(str, save, &i);
 	if (ft_width(str, &save, &i) == 0 || ft_modif(str, &save, &i) == 0)
 	{
-		ft_check(save, j);
-		save.buf[*j] = '%';
+		save = ft_check_add(save, j, '%');
 		save.index = 1;
-		*j += 1;
 		return (save);
 	}
 	save.index = i + 2;

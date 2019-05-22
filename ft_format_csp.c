@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 20:37:05 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/22 16:17:52 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/22 16:57:18 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,15 @@ t_printf	ft_form_c(t_printf save, int *j, char c)
 	i = 0;
 	if (save.flags != 0)
 	{
-		ft_check(save, j);
-		save.buf[*j] = c;
+		save = ft_check_add(save, j, c);
 		i++;
-		*j += 1;
 	}
 	while (i++ < save.width)
-	{
-		ft_check(save, j);
-		save.buf[*j] = ' ';
-		*j += 1;
-	}
+		save = ft_check_add(save, j, ' ');
 	if (save.flags == 0)
 	{
 		*j -= 1;
-		save.buf[*j] = c;
-		*j += 1;
+		save = ft_check_add(save, j, c);
 	}	
 	return (save);
 }
@@ -66,20 +59,13 @@ t_printf	ft_form_p(t_printf save, int *j, void *p)
 	{
 		save = ft_dtoh(save, j, k, i);
 		while (s-- != 0)
-		{
-			ft_check(save, j);
-			save.buf[*j] = ' ';
-			*j += 1;
-		}
+			save = ft_check_add(save, j, ' ');
 	}
 	else if (save.width != 0 && save.flags == 0)
 	{
+	printf("BONJOUR 3\n");
 		while (s-- != 0)
-		{
-			ft_check(save, j);
-			save.buf[*j] = ' ';
-			*j += 1;
-		}
+			save = ft_check_add(save, j, ' ');
 		save = ft_dtoh(save, j, k, i);
 	}
 	return (save);

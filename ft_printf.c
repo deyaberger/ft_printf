@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 19:48:39 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/22 12:15:27 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/22 16:57:03 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,13 @@ t_printf	ft_process(t_printf save, const char *restrict format, va_list ap)
 		}
 		if (format[i] == '%')
 		{
+			printf("BONJOUR 1\n");
 			save = ft_convert(save, (char*)&format[i + 1], ap, &j);
 			i = i + save.index;
 		}
 	}
-	save.buf[j] = '\0';
+	save = ft_check_add(save, &j, '\0');
+	j--;
 	save.index = j;
 	return (save);
 }
@@ -59,7 +61,7 @@ int		main(void)
 	int	i;
 
 	i = 21;
-	ft_printf("bonjour les % ersonnes\n");
-//	printf("bonjour les %h personnes\n");
+	ft_printf("bonjour les %20p personnes\n", &i);
+	   printf("bonjour les %20p personnes\n", &i);
 	return (0);
 }

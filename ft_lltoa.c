@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 18:55:26 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/22 11:31:18 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/22 16:35:20 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 t_printf	ft_add_check(t_printf save, int *j, char c)
 {
-	ft_check(save, j);
-	save.buf[*j] = c;
-	*j += 1;
+	ft_check_add(save, j, c);
 	return (save);
 }
 
@@ -44,7 +42,6 @@ t_printf	ft_lltoa(t_printf save, int *j, long long type)
 		return (ft_add_check(save, j, '0'));
 	if (type < 0)
 		save = ft_neg(save, j, &type, &s);
-	ft_check(save, j);
 	s--;
 	while (s >= 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 18:04:24 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/22 12:19:06 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/22 16:39:13 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct		s_printf
 	char			buf[BUFF_SIZE + 1];
 }					t_printf;
 
-void				ft_check(t_printf save, int *j);
+t_printf			ft_check_add(t_printf save, int *j, char c);
 int					ft_printf(const char *restrict format, ...);
 t_printf			ft_convert(t_printf save, char *str, va_list ap, int *j);
 t_printf			ft_lltoa(t_printf save, int *j, long long type);
