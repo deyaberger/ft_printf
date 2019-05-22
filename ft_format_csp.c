@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 20:37:05 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/22 11:49:49 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/22 16:17:52 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,40 @@ t_printf	ft_form_s(t_printf save, int *j, char *str)
 
 t_printf	ft_form_p(t_printf save, int *j, void *p)
 {
-	int		i;
-	int		k;
-	int		s;
+	int					i;
+	unsigned long int	k;
+	int					s;
 
 	k = (unsigned long int)p;
 	i = 63;
-	while (k >> i == 0 && k >> (i - 1) == 0 && k >> (i - 2) == 0
-			&& k >> (i - 3) == 0)
+	while ((k >> i | k >> (i - 1) | k >> (i - 2) | k >> (i - 3)) == 0)
 		i -= 4;
 	while (i % 4 != 0)
 		i++;
-	s = (i / 4) + 2;
+	s = save.width - ((i / 4) + 2);
 	i--;
-	save = ft_dtoh(save, j, k, i);
+	if (save.width == 0)
+		save = ft_dtoh(save, j, k, i);
+	else if (save.width != 0 && save.flags == 4)
+	{
+		save = ft_dtoh(save, j, k, i);
+		while (s-- != 0)
+		{
+			ft_check(save, j);
+			save.buf[*j] = ' ';
+			*j += 1;
+		}
+	}
+	else if (save.width != 0 && save.flags == 0)
+	{
+		while (s-- != 0)
+		{
+			ft_check(save, j);
+			save.buf[*j] = ' ';
+			*j += 1;
+		}
+		save = ft_dtoh(save, j, k, i);
+	}
 	return (save);
 }
 

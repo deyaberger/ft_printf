@@ -6,18 +6,11 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 11:50:41 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/22 12:15:54 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/22 15:39:23 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-void		ft_check_p()
-{
-
-
-
-}
 
 char		ft_bin_hexa(int a, int b, int c, int d)
 {
@@ -33,7 +26,6 @@ char		ft_bin_hexa(int a, int b, int c, int d)
 
 t_printf	ft_init(t_printf save, int *j)
 {
-	*j += 1;
 	ft_check(save, j);
 	save.buf[*j] = '0';
 	*j += 1;
@@ -47,6 +39,7 @@ t_printf	ft_dtoh(t_printf save, int *j, unsigned long int k, int i)
 {
 	char	c;
 
+	save = ft_init(save, j);
 	while (i >= 0)
 	{
 		c = ft_bin_hexa(k >> i, k >> (i - 1), k >> (i - 2), k >> (i - 3));
