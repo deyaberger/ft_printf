@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 19:48:39 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/15 20:43:35 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/22 12:15:27 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		main(void)
 	int	i;
 
 	i = 21;
-	ft_printf("bonjour les %p personnes\n", &i);
-	printf("bonjour les %p personnes\n", &i);
+	ft_printf("bonjour les % ersonnes\n");
+//	printf("bonjour les %h personnes\n");
 	return (0);
 }

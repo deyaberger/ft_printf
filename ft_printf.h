@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 18:04:24 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/15 20:35:22 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/22 12:14:33 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <unistd.h>
 # include <stdarg.h>
 
-# define BUFF_SIZE 500
+# define BUFF_SIZE 550
 
 # define F_SPACE	(1 << 0)
 # define F_HASH		(1 << 1)

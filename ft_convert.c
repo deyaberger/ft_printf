@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 15:33:24 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/22 11:37:49 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/22 12:14:19 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,6 @@ int			ft_width(char *str, t_printf *save, int *i)
 	if (str[*i] == '.')
 	{
 		*i += 1;
-		if ((str[*i] < '0' || str[*i] > '9') && str[*i] != 'd'
-				&& str[*i] != 'i' && str[*i] != 'o' && str[*i] != 'u'
-				&& str[*i] != 'x' && str[*i] != 'X' && str[*i] != 'f'
-				&& str[*i] != 'c' && str[*i] != 's' && str[*i] != 'p')
-			return (0);
 		while (str[*i] >= '0' && str[*i] <= '9')
 		{
 			res[0] = str[*i];
@@ -68,28 +63,21 @@ int			ft_modif(char *str, t_printf *save, int *i)
 	if (str[*i] == 'h' && str[*i + 1] == 'h')
 	{
 		save->modif = save->modif | M_HH;
-		*i += 2;
-	}
-	else if (str[*i] == 'h' && str[*i + 1] != 'h')
-	{
-		save->modif = save->modif | M_H;
 		*i += 1;
 	}
+	else if (str[*i] == 'h' && str[*i + 1] != 'h')
+		save->modif = save->modif | M_H;
 	else if (str[*i] == 'l' && str[*i + 1] == 'l')
 	{
 		save->modif = save->modif | M_LL;
-		*i += 2;
+		*i += 1;
 	}
 	else if (str[*i] == 'l' && str[*i + 1] != 'l')
-	{
 		save->modif = save->modif | M_L;
-		*i += 1;
-	}
 	else if (str[*i] == 'L')
-	{
 		save->modif = save->modif | M_BIGL;
+	if (str[*i] == 'h' || str[*i] == 'l' || str[*i] == 'L')
 		*i += 1;
-	}
 	if (str[*i] != 'd' && str[*i] != 'i' && str[*i] != 'o' && str[*i] != 'u'
 			&& str[*i] != 'x' && str[*i] != 'X' && str[*i] != 'f'
 			&& str[*i] != 'c' && str[*i] != 's' && str[*i] != 'p')
@@ -122,7 +110,9 @@ t_printf	ft_convert(t_printf save, char *str, va_list ap, int *j)
 	save = ft_flags(str, save, &i);
 	if (ft_width(str, &save, &i) == 0 || ft_modif(str, &save, &i) == 0)
 	{
+		ft_check(save, j);
 		save.buf[*j] = '%';
+		save.index = 1;
 		*j += 1;
 		return (save);
 	}
