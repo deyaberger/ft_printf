@@ -6,17 +6,11 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 13:17:49 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/22 16:36:06 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/22 17:17:33 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-t_printf	ft_add_char(t_printf save, int *j, char c)
-{
-	ft_check_add(save, j, c);
-	return (save);
-}
 
 t_printf	ft_width_di(t_printf save, int *j, long long type)
 {
@@ -38,11 +32,11 @@ t_printf	ft_width_di(t_printf save, int *j, long long type)
 	if ((save.flags & F_ZERO) && !(save.precision) && !(save.flags & F_MINUS))
 	{
 		while (s < w && (count--) > 0)
-			save = ft_add_char(save, j, '0');
+			save = ft_check_add(save, j, '0');
 		return (save);
 	}
 	while (s < w && (count--) > 0)
-		save = ft_add_char(save, j, ' ');
+		save = ft_check_add(save, j, ' ');
 	return (save);
 }
 
@@ -54,10 +48,10 @@ t_printf	ft_precision_di(t_printf save, int *j, long long type)
 	s = ft_sizenb_ll(type);
 	p = save.precision;
 	if (type > 0 && (save.flags & F_PLUS))
-		save = ft_add_char(save, j, '+');
+		save = ft_check_add(save, j, '+');
 	if (type < 0)
 	{
-		save = ft_add_char(save, j, '-');
+		save = ft_check_add(save, j, '-');
 		type = -type;
 		s--;
 	}
@@ -65,7 +59,7 @@ t_printf	ft_precision_di(t_printf save, int *j, long long type)
 	{
 		while (p - s > 0)
 		{
-			save = ft_add_char(save, j, '0');
+			save = ft_check_add(save, j, '0');
 			p--;
 		}
 		save.buf[*j] = '\0';
@@ -94,7 +88,7 @@ t_printf	ft_format_di(t_printf save, va_list ap, int *j)
 
 	type = ft_modif_di(save, ap);
 	if (type > 0 && (save.flags & F_SPACE))
-		save = ft_add_char(save, j, ' ');
+		save = ft_check_add(save, j, ' ');
 	if (save.width && !(save.flags & F_MINUS))
 		save = ft_width_di(save, j, type);
 	if (save.precision)
