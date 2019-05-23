@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_format_u.c                                      :+:      :+:    :+:   */
+/*   ft_format_ou.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/23 12:53:58 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/23 14:09:54 by dberger          ###   ########.fr       */
+/*   Created: 2019/05/23 16:14:57 by dberger           #+#    #+#             */
+/*   Updated: 2019/05/23 16:18:37 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-t_printf	ft_width_u(t_printf save, int *j, long long type)
+t_printf	ft_width_ou(t_printf save, int *j, long long type)
 {
 	int			count;
 	long long	s;
@@ -36,7 +36,7 @@ t_printf	ft_width_u(t_printf save, int *j, long long type)
 	return (save);
 }
 
-t_printf	ft_precision_u(t_printf save, int *j, long long type)
+t_printf	ft_precision_ou(t_printf save, int *j, long long type)
 {
 	long long	s;
 	int			p;
@@ -54,7 +54,7 @@ t_printf	ft_precision_u(t_printf save, int *j, long long type)
 	return (save);
 }
 
-long long	ft_modif_u(t_printf save, va_list ap)
+long long	ft_modif_ou(t_printf save, va_list ap)
 {
 	long long	number;
 
@@ -69,17 +69,20 @@ long long	ft_modif_u(t_printf save, va_list ap)
 	return (number = va_arg(ap, unsigned int));
 }
 
-t_printf	ft_format_u(t_printf save, va_list ap, int *j)
+t_printf		ft_format_ou(t_printf save, va_list ap, int *j, char c)
 {
 	long long	type;
 
-	type = ft_modif_u(save, ap);
+	type = ft_modif_ou(save, ap);
 	if (save.width && !(save.flags & F_MINUS))
-		save = ft_width_u(save, j, type);
+		save = ft_width_ou(save, j, type);
 	if (save.precision)
-		save = ft_precision_u(save, j, type);
-	save = ft_lltoa(save, j, type);
+		save = ft_precision_ou(save, j, type);
+	if (c == 'o')
+		save = ft_otoa(save, j, type);
+	if (c == 'u')
+		save = ft_lltoa(save, j, type);
 	if (save.width && (save.flags & F_MINUS))
-		save = ft_width_u(save, j, type);
+		save = ft_width_ou(save, j, type);
 	return (save);
 }
