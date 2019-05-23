@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 18:55:26 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/23 10:24:09 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/23 11:50:27 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int			ft_ten(long long s)
 	ten = 10;
 	while (t < s)
 	{
-		ten = ten * ten;
+		ten = ten * 10;
 		t++;
 	}
 	return (ten);
