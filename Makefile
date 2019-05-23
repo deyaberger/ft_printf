@@ -6,7 +6,7 @@
 #    By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/30 19:03:50 by ncoursol          #+#    #+#              #
-#    Updated: 2019/05/23 11:35:36 by ncoursol         ###   ########.fr        #
+#    Updated: 2019/05/23 16:14:15 by dberger          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,14 +27,14 @@ LIB_DIR = ./libft
 SOURCES = ft_format_csp.c\
 ft_format_di.c\
 ft_format_f.c\
-ft_format_o.c\
-ft_format_u.c\
+ft_format_ou.c\
 ft_format_xx.c\
 ft_check_add.c\
 ft_convert.c\
 ft_printf.c\
 ft_lltoa.c\
 ft_dtoh.c\
+ft_otoa.c\
 
 OBJ = $(SOURCES:.c=.o)
 
