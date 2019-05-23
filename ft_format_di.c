@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 13:17:49 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/22 17:17:33 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/22 18:10:59 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ t_printf	ft_precision_di(t_printf save, int *j, long long type)
 			save = ft_check_add(save, j, '0');
 			p--;
 		}
-		save.buf[*j] = '\0';
 	}
 	return (save);
 }

@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 18:55:26 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/22 17:18:26 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/23 10:24:09 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,28 @@ t_printf	ft_neg(t_printf save, int *j, long long *type, long long *s)
 	return (save);
 }
 
+int			ft_ten(long long s)
+{
+	int	t;
+	int	ten;
+
+	t = 1;
+	ten = 10;
+	while (t < s)
+	{
+		ten = ten * ten;
+		t++;
+	}
+	return (ten);
+}
+
 t_printf	ft_lltoa(t_printf save, int *j, long long type)
 {
 	long long	s;
-	long long	count;
+	int			ten;
+	char		c;
 
 	s = ft_sizenb_ll(type);
-	count = s;
 	if ((save.modif & M_H))
 		s = ft_sizenb_ll(type);
 	if (type >= 0 && !save.precision && !save.width && (save.flags & F_PLUS))
@@ -37,14 +52,15 @@ t_printf	ft_lltoa(t_printf save, int *j, long long type)
 	if (type < 0)
 		save = ft_neg(save, j, &type, &s);
 	s--;
-	while (s >= 0)
+	ten = ft_ten(s);
+	while (ten >= 10)
 	{
-		if (*j + s == BUFF_SIZE && (*j = 0) == 0)
-			write(1, &save.buf, BUFF_SIZE);
-		save.buf[*j + s] = (type % 10 + '0');
-		s--;
-		type = type / 10;
+		c = (type / ten) + '0';
+		type = type - ((type / ten) * ten);
+		save = ft_check_add(save, j, c);
+		ten = ten / 10;
 	}
-	*j = *j + count;
+	c = type + '0';
+	save = ft_check_add(save, j, c);
 	return (save);
 }
