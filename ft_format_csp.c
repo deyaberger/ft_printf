@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 20:37:05 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/22 16:57:18 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/23 11:15:28 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,52 @@ t_printf	ft_form_c(t_printf save, int *j, char c)
 	int		i;
 
 	i = 0;
-	if (save.flags != 0)
+	if (save.flags == 4)
 	{
 		save = ft_check_add(save, j, c);
 		i++;
 	}
-	while (i++ < save.width)
-		save = ft_check_add(save, j, ' ');
-	if (save.flags == 0)
+	else
+		save.width--;
+	while (i < save.width)
 	{
-		*j -= 1;
+		save = ft_check_add(save, j, ' ');
+		i++;
+	}
+	if (save.flags == 0)
 		save = ft_check_add(save, j, c);
-	}	
+	return (save);
+}
+
+t_printf	ft_print(t_printf save, int *j, char *str, int *i)
+{
+	while (str[*i] && *i != save.precision)
+	{
+		save = ft_check_add(save, j, str[*i]);
+		*i += 1;
+	}
 	return (save);
 }
 
 t_printf	ft_form_s(t_printf save, int *j, char *str)
 {
-	(void)*j;
-	(void)str;
+	int		i;
+
+	i = 0;
+	if ((save.flags & F_POINT) != F_POINT)
+		save.precision = -1;
+	if ((save.flags & F_MINUS) == F_MINUS)
+		save = ft_print(save, j, str, &i);
+	if (save.precision >= 0)
+		save.width -= (ft_strlen(str) - (ft_strlen(str) - save.precision));
+	else
+		save.width -= ft_strlen(str);
+	i = 0;
+	while (i++ < save.width)
+		save = ft_check_add(save, j, ' ');
+	i = 0;
+	if ((save.flags & F_MINUS) != F_MINUS)
+		save = ft_print(save, j, str, &i);
 	return (save);
 }
 
@@ -51,23 +78,17 @@ t_printf	ft_form_p(t_printf save, int *j, void *p)
 		i -= 4;
 	while (i % 4 != 0)
 		i++;
-	s = save.width - ((i / 4) + 2);
+	s = (save.width - ((i / 4) + 2));
+	s < 0 ? s = 0 : 0;
 	i--;
 	if (save.width == 0)
 		save = ft_dtoh(save, j, k, i);
-	else if (save.width != 0 && save.flags == 4)
-	{
+	if (save.width != 0 && (save.flags & F_MINUS) == F_MINUS)
 		save = ft_dtoh(save, j, k, i);
-		while (s-- != 0)
-			save = ft_check_add(save, j, ' ');
-	}
-	else if (save.width != 0 && save.flags == 0)
-	{
-	printf("BONJOUR 3\n");
-		while (s-- != 0)
-			save = ft_check_add(save, j, ' ');
+	while (s-- != 0)
+		save = ft_check_add(save, j, ' ');
+	if (save.width != 0 && (save.flags & F_MINUS) != F_MINUS)
 		save = ft_dtoh(save, j, k, i);
-	}
 	return (save);
 }
 

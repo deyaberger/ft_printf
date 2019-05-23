@@ -6,7 +6,7 @@
 #    By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/30 19:03:50 by ncoursol          #+#    #+#              #
-#    Updated: 2019/05/22 16:33:20 by ncoursol         ###   ########.fr        #
+#    Updated: 2019/05/23 11:22:11 by ncoursol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ $(NAME): $(OBJ)
 
 all: $(NAME)
 
-norme:
+norme: fclean
 	norminette $(SRC)
 
 clean:

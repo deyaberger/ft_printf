@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 18:04:24 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/22 16:39:13 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/23 10:35:32 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,14 @@
 # include <unistd.h>
 # include <stdarg.h>
 
-# define BUFF_SIZE 550
+# define BUFF_SIZE 1
 
 # define F_SPACE	(1 << 0)
 # define F_HASH		(1 << 1)
 # define F_MINUS	(1 << 2)
 # define F_PLUS		(1 << 3)
 # define F_ZERO		(1 << 4)
+# define F_POINT	(1 << 5)
 
 # define M_HH		(1 << 0)
 # define M_H		(1 << 1)
