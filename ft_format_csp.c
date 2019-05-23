@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 20:37:05 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/23 11:15:28 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/23 11:31:51 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_printf	ft_form_c(t_printf save, int *j, char c)
 	int		i;
 
 	i = 0;
-	if (save.flags == 4)
+	if ((save.flags & F_MINUS) == F_MINUS)
 	{
 		save = ft_check_add(save, j, c);
 		i++;
@@ -29,7 +29,7 @@ t_printf	ft_form_c(t_printf save, int *j, char c)
 		save = ft_check_add(save, j, ' ');
 		i++;
 	}
-	if (save.flags == 0)
+	if ((save.flags & F_MINUS) != F_MINUS)
 		save = ft_check_add(save, j, c);
 	return (save);
 }
