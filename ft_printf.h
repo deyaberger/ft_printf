@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 18:04:24 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/23 10:35:32 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/23 11:35:27 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_printf			ft_lltoa(t_printf save, int *j, long long type);
 t_printf			ft_dtoh(t_printf save, int *j, unsigned long int k, int i);
 t_printf			ft_format_di(t_printf save, va_list ap, int *j);
 t_printf			ft_format_csp(t_printf save, va_list ap, int *j, char c);
-t_printf			ft_format_xX(t_printf save, va_list ap, int *j, char c);
+t_printf			ft_format_xx(t_printf save, va_list ap, int *j, char c);
 t_printf			ft_format_f(t_printf save, va_list ap, int *j, char c);
 t_printf			ft_format_o(t_printf save, va_list ap, int *j, char c);
 t_printf			ft_format_u(t_printf save, va_list ap, int *j, char c);

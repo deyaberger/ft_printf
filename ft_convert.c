@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 15:33:24 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/23 10:43:08 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/23 11:37:02 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_printf	ft_format(char c, t_printf save, va_list ap, int *j)
 	else if (c == 'd' || c == 'i')
 		save = ft_format_di(save, ap, j);
 	else if (c == 'x' || c == 'X')
-		save = ft_format_xX(save, ap, j, c);
+		save = ft_format_xx(save, ap, j, c);
 	else if (c == 'f')
 		save = ft_format_f(save, ap, j, c);
 	else if (c == 'o')
