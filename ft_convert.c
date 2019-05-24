@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 15:33:24 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/23 16:16:27 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/24 18:53:41 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_printf	ft_flags(char *str, t_printf save, int *i)
 {
-	while (str[*i] == '#' || str[*i] == '0' || str[*i] == '+'
-			|| str[*i] == ' ' || str[*i] == '-')
+	while (str[*i] && (str[*i] == '#' || str[*i] == '0' || str[*i] == '+'
+			|| str[*i] == ' ' || str[*i] == '-'))
 	{
 		if (str[*i] == '#')
 			save.flags = save.flags | F_HASH;
@@ -46,7 +46,7 @@ int			ft_width(char *str, t_printf *save, int *i)
 	{
 		save->flags |= F_POINT;
 		*i += 1;
-		while (str[*i] >= '0' && str[*i] <= '9')
+		while (str[*i] && str[*i] >= '0' && str[*i] <= '9')
 		{
 			save->precision = (save->precision * 10) + (str[*i] - '0');
 			*i += 1;
@@ -100,18 +100,37 @@ t_printf	ft_format(char c, t_printf save, va_list ap, int *j)
 t_printf	ft_convert(t_printf save, char *str, va_list ap, int *j)
 {
 	int		i;
+//	int		k;
 
 	i = 0;
+//	k = i;
 	save.flags = 0;
 	save.width = 0;
 	save.precision = 0;
 	save.modif = 0;
-	save.index = 0;
+	save.index = 1;
 	save = ft_flags(str, save, &i);
+/*	while (str[i] && (str[i] != 'd' && str[i] != 'i' && str[i] != 'o' && str[i] != 'u'
+				&& str[i] != 'x' && str[i] != 'X' && str[i] != 'f'
+				&& str[i] != 'c' && str[i] != 's' && str[i] != 'p'))
+	{
+		save = ft_flags(str, save, &i);
+		ft_width(str, &save, &i);
+		ft_modif(str, &save, &i);
+		if (i == k)
+			i++;
+	} NE MARCHE PAS AVEC 42FILE CHECKER...MEME SI CA MARCHE AVEC MES TESTS*/
 	if (ft_width(str, &save, &i) == 0 || ft_modif(str, &save, &i) == 0)
 	{
-		save = ft_check_add(save, j, '%');
-		save.index = 1;
+		if (str[i] == '%' && str[i - 1] == '%')
+			save = ft_check_add(save, j, '%');
+		i = 0;
+		while (str[i] && (str[i] == '%' || str[i] == ' ' || str[i] == 'h'
+					|| str[i] == 'l' || str[i] == 'L'))
+		{
+			save.index += 1;
+			i++;
+		}
 		return (save);
 	}
 	save.index = i + 2;

@@ -6,7 +6,7 @@
 #    By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/30 19:03:50 by ncoursol          #+#    #+#              #
-#    Updated: 2019/05/23 16:14:15 by dberger          ###   ########.fr        #
+#    Updated: 2019/05/24 14:36:31 by dberger          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,11 +16,9 @@ BIN_COLOR = \033[32m
 BIN2_COLOR = \033[36m
 PROG_COLOR = \033[35m
 
-NAME = ft_printf
+NAME = libftprintf.a
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
-
-LIB_SRC = libftprintf.a
 
 LIB_DIR = ./libft
 
@@ -44,10 +42,9 @@ INCLUDE = ft_printf.h
 
 $(NAME): $(OBJ)
 	(cd $(LIB_DIR) && $(MAKE))
-	$(CC) $(FLAGS) -c $(SOURCES)
-	ar rc $(LIB_SRC) $(OBJ)
-	ranlib $(LIB_SRC)
-	$(CC) $(FLAGS) -o $(NAME) $(LIB_SRC) $(LIB_DIR)/libft.a
+	cp libft/libft.a ./$(NAME)
+	ar rc $(NAME) $(OBJ)
+	ranlib $(NAME)
 	@echo "$(COMP_COLOR)   --- Compiled ! ---  $(NO_COLOR)"
 
 all: $(NAME)

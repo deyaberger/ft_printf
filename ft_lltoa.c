@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 18:55:26 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/23 11:50:27 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/24 19:03:27 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,19 @@ t_printf	ft_lltoa(t_printf save, int *j, long long type)
 	int			ten;
 	char		c;
 
+	ten = 0;
 	s = ft_sizenb_ll(type);
 	if ((save.modif & M_H))
 		s = ft_sizenb_ll(type);
-	if (type >= 0 && !save.precision && !save.width && (save.flags & F_PLUS))
+	if (type >= 0 && !save.precision && (save.flags & F_PLUS))
 		save = ft_check_add(save, j, '+');
 	if (type == 0)
 		return (ft_check_add(save, j, '0'));
 	if (type < 0)
 		save = ft_neg(save, j, &type, &s);
 	s--;
-	ten = ft_ten(s);
+	if (type >= 10)
+		ten = ft_ten(s);
 	while (ten >= 10)
 	{
 		c = (type / ten) + '0';
