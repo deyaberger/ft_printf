@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 18:04:24 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/24 19:00:39 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/26 18:45:02 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ t_printf			ft_format_csp(t_printf save, va_list ap, int *j, char c);
 t_printf			ft_format_xx(t_printf save, va_list ap, int *j, char c);
 t_printf			ft_format_f(t_printf save, va_list ap, int *j);
 t_printf			ft_format_ou(t_printf save, va_list ap, int *j, char c);
+t_printf			ft_format_pct(t_printf save, int *j);
 
 #endif

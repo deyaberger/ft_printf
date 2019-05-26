@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 15:33:24 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/24 18:53:41 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/26 18:56:21 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ t_printf	ft_format(char c, t_printf save, va_list ap, int *j)
 		save = ft_format_f(save, ap, j);
 	else if (c == 'o' || c == 'u')
 		save = ft_format_ou(save, ap, j, c);
+	else if (c == '%')
+		save = ft_format_pct(save, j);
 	return (save);
 }
 
@@ -120,7 +122,9 @@ t_printf	ft_convert(t_printf save, char *str, va_list ap, int *j)
 		if (i == k)
 			i++;
 	} NE MARCHE PAS AVEC 42FILE CHECKER...MEME SI CA MARCHE AVEC MES TESTS*/
-	if (ft_width(str, &save, &i) == 0 || ft_modif(str, &save, &i) == 0)
+	ft_width(str, &save, &i);
+	ft_modif(str, &save, &i);
+	if (ft_width(str, &save, &i) == 0 && ft_modif(str, &save, &i) == 0)
 	{
 		if (str[i] == '%' && str[i - 1] == '%')
 			save = ft_check_add(save, j, '%');

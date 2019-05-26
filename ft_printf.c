@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 19:48:39 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/24 19:03:40 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/26 18:57:11 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,7 @@ int		ft_printf(const char *restrict format, ...)
 	int	i;
 
 	i = 21;
-//	ft_printf("test");
-//	ft_printf("%5+d", 42);
-	ft_printf("%d%d%d%d%d", 1, -2, 3, -4, 5);
-	printf("\n%d%d%d%d%d", 1, -2, 3, -4, 5);
-//	printf("test");
+	ft_printf("%hd", 32767);
+	printf("%hd",(short)32767);
 	return (0);
 }*/
