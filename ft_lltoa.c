@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 18:55:26 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/24 19:03:27 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/26 17:19:49 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,27 @@
 
 t_printf	ft_neg(t_printf save, int *j, long long *type, long long *s)
 {
-	if (!save.precision)
+	if (!save.precision && save.width && !(save.flags & F_MINUS) 
+			&& !(save.flags & F_ZERO))
+		save = ft_check_add(save, j, '-');
+	if (!save.precision && save.width && (save.flags & F_MINUS))
+		save = ft_check_add(save, j, '-');
+	if (!save.precision && (save.flags & F_MINUS) && !save.width)
+		save = ft_check_add(save, j, '-');
+	if (!save.precision && !save.width && !(save.flags & F_ZERO))
+		save = ft_check_add(save, j, '-');
+	if (!save.precision && !(save.width) && (save.flags & F_ZERO) 
+		&& !(save.flags & F_MINUS))
 		save = ft_check_add(save, j, '-');
 	*type = -*type;
 	*s -= 1;
 	return (save);
 }
 
-int			ft_ten(long long s)
+long long			ft_ten(long long s)
 {
 	int	t;
-	int	ten;
+	long long	ten;
 
 	t = 1;
 	ten = 10;
@@ -39,17 +49,25 @@ int			ft_ten(long long s)
 t_printf	ft_lltoa(t_printf save, int *j, long long type)
 {
 	long long	s;
-	int			ten;
+	long long	ten;
 	char		c;
 
 	ten = 0;
 	s = ft_sizenb_ll(type);
 	if ((save.modif & M_H))
 		s = ft_sizenb_ll(type);
-	if (type >= 0 && !save.precision && (save.flags & F_PLUS))
+	if (type >= 0 && !save.precision && !save.width && (save.flags & F_PLUS))
+		save = ft_check_add(save, j, '+');
+	if (type >= 0 && !save.precision && save.width && (save.flags & F_PLUS) && !(save.flags & F_ZERO) && !(save.flags & F_MINUS))
+		save = ft_check_add(save, j, '+');
+	if (type >= 0 && !save.precision && save.width && (save.flags & F_PLUS) && (save.flags & F_MINUS))
 		save = ft_check_add(save, j, '+');
 	if (type == 0)
+	{
+		if (save.precision || save.flags & F_POINT)
+			return (save);
 		return (ft_check_add(save, j, '0'));
+	}
 	if (type < 0)
 		save = ft_neg(save, j, &type, &s);
 	s--;
