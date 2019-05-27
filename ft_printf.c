@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 19:48:39 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/27 15:21:59 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/27 19:36:14 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,7 @@ int			ft_printf(const char *restrict format, ...)
 
 /*int		main(void)
 {
-	int	i;
-
-	i = 21;
-	ft_printf("%-05%\n");
-	printf("%-05%");
+	ft_printf("moulitest: %#5.o %#5.0o\n", 0, 0);
+	printf("moulitest: %#5.o %#5.0o\n", 0, 0);
 	return (0);
 }*/
