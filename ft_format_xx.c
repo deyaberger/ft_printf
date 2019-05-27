@@ -6,14 +6,16 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 11:34:43 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/24 18:35:52 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/26 00:43:46 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-t_printf	ft_print_ox(t_printf save, int *j, int mode)
+t_printf	ft_print_ox(t_printf save, int *j, int nb, int mode)
 {
+	if (nb == 0)
+		return (save);
 	if ((save.flags & F_HASH) == F_HASH)
 	{
 		save = ft_check_add(save, j, '0');
@@ -30,24 +32,24 @@ int			ft_len(t_printf save, unsigned long long nb, int mode)
 
 	i = 63;
 	if (nb != 0)
+	{
 		while ((nb >> i | nb >> (i - 1) | nb >> (i - 2) | nb >> (i - 3)) == 0)
 			i -= 4;
-	while (i % 4 != 0)
-		i++;
-	if (mode == 0)
-	{
-		k = (save.precision - (i / 4));
-		k < 0 ? k = 0 : 0;
-		s = (save.width - ((i / 4) + 2)) - k;
-		s < 0 ? s = 0 : 0;
-	}
-	else if (mode == 1)
-	{
-		s = (save.precision - (i / 4));
-		s < 0 ? s = 0 : 0;
+		while (i % 4 != 0)
+			i++;
 	}
 	else
-		((i - 1) < 0) ? (s = 0) : (s = i - 1);
+		i = 4;
+	if (mode == 0)
+	{
+		(k = (save.precision - (i / 4))) < 0 ? (k = 0) : 0;
+		(s = (save.width - ((i / 4) + 2)) - k) < 0 ? (s = 0) : 0;
+		(nb == 0) ? (s += 2) : 0;
+	}
+	else if (mode == 1)
+		(s = (save.precision - (i / 4))) < 0 ? (s = 0) : 0;
+	else
+		((i - 1) <= 0) ? (s = 0) : (s = i - 1);
 	return (s);
 }
 
@@ -64,24 +66,13 @@ t_printf	ft_print_h(t_printf save, int *j, unsigned long long nb, int mode)
 		c = c | (((nb >> (i - 1)) & 1) << 2);
 		c = c | (((nb >> (i - 2)) & 1) << 1);
 		c = c | (((nb >> (i - 3)) & 1) << 0);
-		//printf("\n\033[31m c : [%d]		mode : [%d]		i : [%d]\033[0m\n", c, mode, i);
 		if (c >= 10)
-		{
 			save = ft_check_add(save, j, ((c - 10) + mode));
-		printf("save.buf111=%c\n", save.buf[*j - 1]);
-		printf("c11111=%d\n", c);
-		}
 		else
-		{
 			save = ft_check_add(save, j, (c + '0'));
-		printf("save.buf=%c\n", save.buf[*j - 1]);
-		printf("c2222=%d\n", c);
-		}
 		i -= 4;
 		c = 0;
 	}
-	(void)mode;
-	(void)*j;
 	return (save);
 }
 
@@ -94,25 +85,25 @@ t_printf	ft_form_xx(t_printf save, int *j, unsigned long long nb, int mode)
 	s2 = ft_len(save, nb, 1);
 	if ((save.flags & F_MINUS) == F_MINUS)
 	{
-		save = ft_print_ox(save, j, mode);
+		save = ft_print_ox(save, j, nb, mode);
 		if (save.precision != 0)
 			while (s2-- != 0)
 				save = ft_check_add(save, j, '0');
-		ft_print_h(save, j, nb, mode);
+		save = ft_print_h(save, j, nb, mode);
 	}
 	if (save.width != 0 && (save.flags & F_ZERO) != F_ZERO)
 		while (s-- != 0)
 			save = ft_check_add(save, j, ' ');
 	if ((save.flags & F_MINUS) != F_MINUS)
 	{
-		save = ft_print_ox(save, j, mode);
+		save = ft_print_ox(save, j, nb, mode);
 		if (save.width != 0 && (save.flags & F_ZERO) == F_ZERO)
 			while (s-- != 0)
 				save = ft_check_add(save, j, '0');
 		if (save.precision != 0)
 			while (s2-- != 0)
 				save = ft_check_add(save, j, '0');
-		ft_print_h(save, j, nb, mode);
+		save = ft_print_h(save, j, nb, mode);
 	}
 	return (save);
 }
