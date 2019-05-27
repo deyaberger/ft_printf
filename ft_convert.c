@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 15:33:24 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/27 15:07:35 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/27 17:04:14 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int			ft_width(char *str, t_printf *save, int *i)
 		}
 	}
 	if (str[*i] != 'd' && str[*i] != 'i' && str[*i] != 'o' && str[*i] != 'u'
-		&& str[*i] != 'x' && str[*i] != 'X' && str[*i] != 'f'
-		&& str[*i] != 'c' && str[*i] != 's' && str[*i] != 'p' && str[*i] != '%')
+		&& str[*i] != 'x' && str[*i] != 'X' && str[*i] != 'f' && str[*i] != 'c'
+		&& str[*i] != 's' && str[*i] != 'p' && str[*i] != '%' && str[*i] != 'b')
 		return (0);
 	return (1);
 }
@@ -82,7 +82,7 @@ int			ft_modif(char *str, t_printf *save, int *i)
 	if (str[*i] != 'd' && str[*i] != 'i' && str[*i] != 'o'
 		&& str[*i] != 'u' && str[*i] != 'x' && str[*i] != 'X'
 		&& str[*i] != 'f' && str[*i] != 'c' && str[*i] != 's'
-		&& str[*i] != 'p' && str[*i] != '%')
+		&& str[*i] != 'p' && str[*i] != '%' && str[*i] != 'b')
 		return (0);
 	return (1);
 }
@@ -99,6 +99,8 @@ t_printf	ft_format(char c, t_printf save, va_list ap, int *j)
 		save = ft_format_f(save, ap, j);
 	else if (c == 'o' || c == 'u')
 		save = ft_format_ou(save, ap, j, c);
+	else if (c == 'b')
+		save = ft_format_b(save, ap, j);
 	else if (c == '%')
 		save = ft_format_pct(save, j);
 	return (save);
