@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 11:34:43 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/26 00:43:46 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/27 11:54:41 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,19 @@ int			ft_len(t_printf save, unsigned long long nb, int mode)
 			i++;
 	}
 	else
-		i = 4;
+		(save.precision == 0 && (save.flags & F_POINT)) ? (i = -1) : (i = 4);
 	if (mode == 0)
 	{
 		(k = (save.precision - (i / 4))) < 0 ? (k = 0) : 0;
-		(s = (save.width - ((i / 4) + 2)) - k) < 0 ? (s = 0) : 0;
+		(s = (save.width - ((i / 4))) - k) < 0 ? (s = 0) : 0;
 		(nb == 0) ? (s += 2) : 0;
+		(save.flags & F_HASH)
+		|| (save.precision == 0 && (save.flags & F_POINT)) ? s -= 2 : 0;
 	}
 	else if (mode == 1)
 		(s = (save.precision - (i / 4))) < 0 ? (s = 0) : 0;
 	else
-		((i - 1) <= 0) ? (s = 0) : (s = i - 1);
+		((i - 1) < 0) ? (s = -1) : (s = i - 1);
 	return (s);
 }
 
@@ -120,7 +122,8 @@ t_printf	ft_format_xx(t_printf save, va_list ap, int *j, char c)
 		number = va_arg(ap, unsigned long);
 	else if (save.modif && (save.modif & M_LL) == M_LL)
 		number = va_arg(ap, unsigned long long);
-	number = va_arg(ap, unsigned int);
+	else
+		number = va_arg(ap, unsigned int);
 	if ((save.flags & F_MINUS) == F_MINUS && (save.flags & F_ZERO) == F_ZERO)
 		save.flags -= F_ZERO;
 	if (save.precision != 0 && (save.flags & F_ZERO) == F_ZERO)

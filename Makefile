@@ -6,7 +6,7 @@
 #    By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/30 19:03:50 by ncoursol          #+#    #+#              #
-#    Updated: 2019/05/26 18:45:20 by dberger          ###   ########.fr        #
+#    Updated: 2019/05/27 11:54:59 by ncoursol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ INCLUDE = ft_printf.h
 $(NAME): $(OBJ)
 	(cd $(LIB_DIR) && $(MAKE))
 	cp libft/libft.a ./$(NAME)
+#	$(CC) $(FLAGS) $(SOURCES) $(NAME) -o ft_printf
 	ar rc $(NAME) $(OBJ)
 	ranlib $(NAME)
 	@echo "$(COMP_COLOR)   --- Compiled ! ---  $(NO_COLOR)"
