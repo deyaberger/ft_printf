@@ -6,16 +6,14 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 18:13:39 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/27 19:00:38 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/27 19:36:03 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-t_printf	ft_print_pref(t_printf save, int *j, int nb)
+t_printf	ft_print_pref(t_printf save, int *j)
 {
-	if (nb == 0)
-		return (save);
 	if ((save.flags & F_HASH) == F_HASH)
 		save = ft_check_add(save, j, '0');
 	return (save);
@@ -38,8 +36,8 @@ int			ft_len3(t_printf save, unsigned long long nb, int mode)
 	if (mode == 0)
 	{
 		k = ((save.precision - (i / 3)) < 0 ? 0 : save.precision - (i / 3));
-		s = ((save.width - ((i / 3) - k)) < 0 ? 0 : save.width - ((i / 3) - k));
-		(nb == 0) ? (s++) : 0;
+		s = ((save.width - (i / 3) - k) < 0 ? 0 : save.width - (i / 3) - k);
+		((nb == 0) && (save.flags & F_HASH)) ? (s--) : 0;
 		s = (save.flags & F_HASH)
 			|| (save.precision == 0 && (save.flags & F_POINT)) ? s-- : s;
 	}
@@ -81,19 +79,19 @@ t_printf	ft_form_o(t_printf save, int *j, unsigned long long nb)
 	s = ft_len3(save, nb, 0);
 	if ((save.flags & F_MINUS))
 	{
-		save = ft_print_pref(save, j, nb);
+		save = ft_print_pref(save, j);
 		save = ft_print_o(save, j, nb);
 	}
 	if (save.width != 0 && !(save.flags & F_ZERO))
 	{
 		if (save.flags & F_HASH && nb != 0)
-				s--;
+			s--;
 		while (s-- != 0)
 			save = ft_check_add(save, j, ' ');
 	}
 	if (!(save.flags & F_MINUS))
 	{
-		save = ft_print_pref(save, j, nb);
+		save = ft_print_pref(save, j);
 		if (save.width != 0 && (save.flags & F_ZERO))
 			while (s-- != 0)
 				save = ft_check_add(save, j, '0');
