@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 11:50:41 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/22 16:52:09 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/27 15:24:36 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_printf	ft_dtoh(t_printf save, int *j, unsigned long int k, int i)
 {
 	char	c;
 
-	printf("BONJOUR 4\n");
 	save = ft_check_add(save, j, '0');
 	save = ft_check_add(save, j, 'x');
 	while (i >= 0)
