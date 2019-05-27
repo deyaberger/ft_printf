@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/23 16:14:57 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/23 16:18:37 by dberger          ###   ########.fr       */
+/*   Created: 2019/05/27 16:54:04 by dberger           #+#    #+#             */
+/*   Updated: 2019/05/27 17:44:09 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,18 @@ t_printf	ft_width_ou(t_printf save, int *j, long long type)
 	count = w - s;
 	if (save.precision && w > save.precision && s < save.precision)
 		count = w - save.precision;
-	if (save.precision && s < save.precision && w < save.precision)
+	if (save.precision && s < save.precision && w <= save.precision)
 		return (save);
+	if (save.flags & F_PLUS && type >= 0)
+		count--;
 	if ((save.flags & F_ZERO) && !(save.precision) && !(save.flags & F_MINUS))
 	{
 		while (s < w && (count--) > 0)
 			save = ft_check_add(save, j, '0');
 		return (save);
 	}
+	if (type == 0 && !(save.precision) && save.flags & F_POINT)
+		save = ft_check_add(save, j, ' ');
 	while (s < w && (count--) > 0)
 		save = ft_check_add(save, j, ' ');
 	return (save);
@@ -51,6 +55,8 @@ t_printf	ft_precision_ou(t_printf save, int *j, long long type)
 			p--;
 		}
 	}
+	if (type == 0 && save.precision > 0)
+		save = ft_check_add(save, j, '0');
 	return (save);
 }
 
@@ -69,7 +75,7 @@ long long	ft_modif_ou(t_printf save, va_list ap)
 	return (number = va_arg(ap, unsigned int));
 }
 
-t_printf		ft_format_ou(t_printf save, va_list ap, int *j, char c)
+t_printf	ft_format_ou(t_printf save, va_list ap, int *j, char c)
 {
 	long long	type;
 
@@ -78,10 +84,15 @@ t_printf		ft_format_ou(t_printf save, va_list ap, int *j, char c)
 		save = ft_width_ou(save, j, type);
 	if (save.precision)
 		save = ft_precision_ou(save, j, type);
-	if (c == 'o')
-		save = ft_otoa(save, j, type);
+	//	if (c == 'o')
+	//		save = ft_otoa(save, j, type);
+	//	else
 	if (c == 'u')
+	{
+		if (save.flags & F_PLUS)
+			save.flags -= F_PLUS;
 		save = ft_lltoa(save, j, type);
+	}
 	if (save.width && (save.flags & F_MINUS))
 		save = ft_width_ou(save, j, type);
 	return (save);
