@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 20:37:05 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/23 11:31:51 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/27 16:18:06 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,16 @@ t_printf	ft_form_c(t_printf save, int *j, char c)
 
 t_printf	ft_print(t_printf save, int *j, char *str, int *i)
 {
+	if (!str)
+	{
+		save = ft_check_add(save, j, '(');
+		save = ft_check_add(save, j, 'n');
+		save = ft_check_add(save, j, 'u');
+		save = ft_check_add(save, j, 'l');
+		save = ft_check_add(save, j, 'l');
+		save = ft_check_add(save, j, ')');
+		return (save);
+	}
 	while (str[*i] && *i != save.precision)
 	{
 		save = ft_check_add(save, j, str[*i]);
@@ -49,11 +59,16 @@ t_printf	ft_form_s(t_printf save, int *j, char *str)
 	int		i;
 
 	i = 0;
-	if ((save.flags & F_POINT) != F_POINT)
-		save.precision = -1;
-	if ((save.flags & F_MINUS) == F_MINUS)
+	if (!str)
+	{
 		save = ft_print(save, j, str, &i);
-	if (save.precision >= 0)
+		return (save);
+	}
+	if (!(save.flags & F_POINT))
+		save.precision = -1;
+	if (save.flags & F_MINUS)
+		save = ft_print(save, j, str, &i);
+	if (save.precision >= 0 && ft_strlen(str) != 0)
 		save.width -= (ft_strlen(str) - (ft_strlen(str) - save.precision));
 	else
 		save.width -= ft_strlen(str);
@@ -61,7 +76,7 @@ t_printf	ft_form_s(t_printf save, int *j, char *str)
 	while (i++ < save.width)
 		save = ft_check_add(save, j, ' ');
 	i = 0;
-	if ((save.flags & F_MINUS) != F_MINUS)
+	if (!(save.flags & F_MINUS))
 		save = ft_print(save, j, str, &i);
 	return (save);
 }
