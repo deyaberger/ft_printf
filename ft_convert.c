@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 15:33:24 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/27 18:22:12 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/28 17:36:51 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ t_printf	ft_format(char c, t_printf save, va_list ap, int *j)
 t_printf	ft_convert(t_printf save, char *str, va_list ap, int *j)
 {
 	int		i;
+	int		s;
 
 	i = 0;
 	save.flags = 0;
@@ -118,9 +119,18 @@ t_printf	ft_convert(t_printf save, char *str, va_list ap, int *j)
 	save.precision = 0;
 	save.modif = 0;
 	save.index = 1;
-	save = ft_flags(str, save, &i);
-	ft_width(str, &save, &i);
-	ft_modif(str, &save, &i);
+	while (str[i] && str[i] != 'd' && str[i] != 'i' && str[i] != 'o'
+		&& str[i] != 'u' && str[i] != 'x' && str[i] != 'X'
+		&& str[i] != 'f' && str[i] != 'c' && str[i] != 's'
+		&& str[i] != 'p' && str[i] != '%' && str[i] != 'b')
+	{
+		s = i;
+		save = ft_flags(str, save, &i);
+		ft_width(str, &save, &i);
+		ft_modif(str, &save, &i);
+		if (i == s)
+			i++;
+	}
 	if (ft_width(str, &save, &i) == 0 && ft_modif(str, &save, &i) == 0)
 	{
 		i = 0;
