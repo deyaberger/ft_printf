@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 19:48:39 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/27 19:36:14 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/29 13:13:25 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int			ft_printf(const char *restrict format, ...)
 
 /*int		main(void)
 {
-	ft_printf("moulitest: %#5.o %#5.0o\n", 0, 0);
-	printf("moulitest: %#5.o %#5.0o\n", 0, 0);
+	ft_printf("%010s is a string", "this");
+	printf("%010s is a string", "this");
 	return (0);
 }*/
