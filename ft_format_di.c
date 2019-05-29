@@ -6,19 +6,19 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 13:17:49 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/27 16:44:35 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/29 12:56:25 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-t_printf	ft_w_add(t_printf save, long long type, int *j, int count)
+t_printf	ft_w_add(t_printf save, long type, int *j, int count)
 {
-	long long	s;
-	int			w;
+	long	s;
+	int		w;
 
 	w = save.width;
-	s = ft_sizenb_ll(type);
+	s = ft_sizenb_l(type);
 	if (type < 0 && (save.flags & F_ZERO) && !(save.flags & F_MINUS)
 		&& !(save.precision))
 		save = ft_check_add(save, j, '-');
@@ -35,14 +35,14 @@ t_printf	ft_w_add(t_printf save, long long type, int *j, int count)
 	return (save);
 }
 
-t_printf	ft_width_di(t_printf save, int *j, long long type)
+t_printf	ft_width_di(t_printf save, int *j, long type)
 {
-	int			count;
-	long long	s;
-	int			w;
+	int		count;
+	long	s;
+	int		w;
 
 	w = save.width;
-	s = ft_sizenb_ll(type);
+	s = ft_sizenb_l(type);
 	count = w - s;
 	if (save.precision && w > save.precision && s < save.precision)
 		count = w - save.precision;
@@ -61,12 +61,12 @@ t_printf	ft_width_di(t_printf save, int *j, long long type)
 	return (save);
 }
 
-t_printf	ft_precision_di(t_printf save, int *j, long long type)
+t_printf	ft_precision_di(t_printf save, int *j, long type)
 {
-	long long	s;
-	int			p;
+	long	s;
+	int		p;
 
-	s = ft_sizenb_ll(type);
+	s = ft_sizenb_l(type);
 	p = save.precision;
 	if (type >= 0 && (save.flags & F_PLUS))
 		save = ft_check_add(save, j, '+');
@@ -91,7 +91,7 @@ t_printf	ft_precision_di(t_printf save, int *j, long long type)
 
 t_printf	ft_format_di(t_printf save, va_list ap, int *j)
 {
-	long long	type;
+	long	type;
 
 	type = 0;
 	if (save.modif && (save.modif & M_HH))
@@ -110,7 +110,7 @@ t_printf	ft_format_di(t_printf save, va_list ap, int *j)
 		save = ft_width_di(save, j, type);
 	if (save.precision)
 		save = ft_precision_di(save, j, type);
-	save = ft_lltoa(save, j, type);
+	save = ft_ltoa(save, j, type);
 	if (save.width && (save.flags & F_MINUS))
 		save = ft_width_di(save, j, type);
 	return (save);

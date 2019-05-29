@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 18:04:24 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/27 18:12:54 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/29 12:47:18 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ typedef struct		s_printf
 t_printf			ft_check_add(t_printf save, int *j, char c);
 int					ft_printf(const char *restrict format, ...);
 t_printf			ft_convert(t_printf save, char *str, va_list ap, int *j);
-t_printf			ft_lltoa(t_printf save, int *j, long long type);
-t_printf			ft_otoa(t_printf save, int *j, long long type);
+t_printf			ft_ltoa(t_printf save, int *j, long type);
 t_printf			ft_dtoh(t_printf save, int *j, unsigned long int k, int i);
 t_printf			ft_format_di(t_printf save, va_list ap, int *j);
 t_printf			ft_format_csp(t_printf save, va_list ap, int *j, char c);

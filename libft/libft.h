@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 15:42:42 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/15 18:34:19 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/29 12:43:35 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ int					ft_word(const char *str, char c);
 long				ft_sizenb(int n);
 char				*ft_strjoin_f(char *s1, char *s2, int i);
 int					ft_sqrt(int nb);
-long long			ft_sizenb_ll(long long n);
+long				ft_sizenb_l(long n);
 
 #endif

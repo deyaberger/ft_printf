@@ -6,20 +6,20 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 18:11:54 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/27 18:12:38 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/29 12:57:30 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-t_printf	ft_width_u(t_printf save, int *j, long long type)
+t_printf	ft_width_u(t_printf save, int *j, long type)
 {
-	int			count;
-	long long	s;
-	int			w;
+	int		count;
+	long	s;
+	int		w;
 
 	w = save.width;
-	s = ft_sizenb_ll(type);
+	s = ft_sizenb_l(type);
 	count = w - s;
 	if (save.precision && w > save.precision && s < save.precision)
 		count = w - save.precision;
@@ -40,12 +40,12 @@ t_printf	ft_width_u(t_printf save, int *j, long long type)
 	return (save);
 }
 
-t_printf	ft_precision_u(t_printf save, int *j, long long type)
+t_printf	ft_precision_u(t_printf save, int *j, long type)
 {
-	long long	s;
-	int			p;
+	long	s;
+	int		p;
 
-	s = ft_sizenb_ll(type);
+	s = ft_sizenb_l(type);
 	p = save.precision;
 	if (s < p)
 	{
@@ -60,9 +60,9 @@ t_printf	ft_precision_u(t_printf save, int *j, long long type)
 	return (save);
 }
 
-long long	ft_modif_u(t_printf save, va_list ap)
+long		ft_modif_u(t_printf save, va_list ap)
 {
-	long long	number;
+	long	number;
 
 	if (save.modif && (save.modif & M_HH))
 		return (number = (unsigned char)va_arg(ap, unsigned int));
@@ -77,7 +77,7 @@ long long	ft_modif_u(t_printf save, va_list ap)
 
 t_printf	ft_format_u(t_printf save, va_list ap, int *j)
 {
-	long long	type;
+	long	type;
 
 	type = ft_modif_u(save, ap);
 	if (save.width && !(save.flags & F_MINUS))
@@ -86,7 +86,7 @@ t_printf	ft_format_u(t_printf save, va_list ap, int *j)
 		save = ft_precision_u(save, j, type);
 	if (save.flags & F_PLUS)
 		save.flags -= F_PLUS;
-	save = ft_lltoa(save, j, type);
+	save = ft_ltoa(save, j, type);
 	if (save.width && (save.flags & F_MINUS))
 		save = ft_width_u(save, j, type);
 	return (save);

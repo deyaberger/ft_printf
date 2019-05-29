@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sizenb_ll.c                                     :+:      :+:    :+:   */
+/*   ft_sizenb_l.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/15 18:33:42 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/15 18:33:49 by dberger          ###   ########.fr       */
+/*   Created: 2019/05/29 12:43:07 by dberger           #+#    #+#             */
+/*   Updated: 2019/05/29 12:51:08 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-long long	ft_sizenb_ll(long long n)
+long	ft_sizenb_l(long n)
 {
-	long long	i;
-	long long	nb;
+	long	i;
+	long	nb;
 
 	i = 0;
 	nb = n;

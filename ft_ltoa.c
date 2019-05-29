@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lltoa.c                                         :+:      :+:    :+:   */
+/*   ft_ltoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/15 18:55:26 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/27 16:06:24 by dberger          ###   ########.fr       */
+/*   Created: 2019/05/29 12:44:58 by dberger           #+#    #+#             */
+/*   Updated: 2019/05/29 12:58:05 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-t_printf	ft_neg(t_printf save, int *j, long long *type, long long *s)
+t_printf	ft_neg(t_printf save, int *j, long *type, long *s)
 {
 	if (!save.precision && save.width && !(save.flags & F_MINUS)
 			&& !(save.flags & F_ZERO))
@@ -42,11 +42,11 @@ t_printf	ft_plus(t_printf save, int *j)
 	return (save);
 }
 
-t_printf	ft_num(t_printf save, long long s, long long type, int *j)
+t_printf	ft_num(t_printf save, long s, long type, int *j)
 {
-	int			t;
-	long long	ten;
-	char		c;
+	int		t;
+	long	ten;
+	char	c;
 
 	t = 1;
 	ten = 0;
@@ -71,15 +71,15 @@ t_printf	ft_num(t_printf save, long long s, long long type, int *j)
 	return (save);
 }
 
-t_printf	ft_lltoa(t_printf save, int *j, long long type)
+t_printf	ft_ltoa(t_printf save, int *j, long type)
 {
-	long long	s;
-	long long	ten;
+	long	s;
+	long	ten;
 
 	ten = 0;
-	s = ft_sizenb_ll(type);
+	s = ft_sizenb_l(type);
 	if ((save.modif & M_H))
-		s = ft_sizenb_ll(type);
+		s = ft_sizenb_l(type);
 	if (type >= 0 && !save.precision && (save.flags & F_PLUS))
 		save = ft_plus(save, j);
 	if (type == 0)
