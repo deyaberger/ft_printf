@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 13:17:49 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/29 12:56:25 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/29 16:18:19 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,11 @@ t_printf	ft_format_di(t_printf save, va_list ap, int *j)
 	long	type;
 
 	type = 0;
-	if (save.modif && (save.modif & M_HH))
+	if (save.modif && (save.modif & M_HH) && !(save.modif & M_L)
+		&& !(save.modif & M_LL))
 		type = (char)va_arg(ap, int);
-	if (save.modif && (save.modif & M_H))
+	if (save.modif && (save.modif & M_H) && !(save.modif & M_L)
+		&& !(save.modif & M_LL))
 		type = (short)va_arg(ap, int);
 	if (save.modif && (save.modif & M_L))
 		type = va_arg(ap, long);
