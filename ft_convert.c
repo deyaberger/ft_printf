@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 15:33:24 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/29 15:07:20 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/29 16:21:01 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,63 +87,31 @@ int			ft_modif(char *str, t_printf *save, int *i)
 	return (1);
 }
 
-t_printf	ft_format(char c, t_printf save, va_list ap, int *j)
+t_printf	ft_convert(t_printf save, char *str, int *i, int *s)
 {
-	if (c == 'c' || c == 's' || c == 'p')
-		save = ft_format_csp(save, ap, j, c);
-	else if (c == 'd' || c == 'i')
-		save = ft_format_di(save, ap, j);
-	else if (c == 'x' || c == 'X')
-		save = ft_format_xx(save, ap, j, c);
-	else if (c == 'f')
-		save = ft_format_f(save, ap, j);
-	else if (c == 'o')
-		save = ft_format_o(save, ap, j);
-	else if (c == 'u')
-		save = ft_format_u(save, ap, j);
-	else if (c == 'b')
-		save = ft_format_b(save, ap, j);
-	else if (c == '%')
-		save = ft_format_pct(save, j);
-	return (save);
-}
-
-t_printf	ft_convert(t_printf save, char *str, va_list ap, int *j)
-{
-	int		i;
-	int		s;
-
-	i = 0;
-	save.flags = 0;
-	save.width = 0;
-	save.precision = 0;
-	save.modif = 0;
-	save.min = 0;
-	save.index = 1;
-	while (str[i] && str[i] != 'd' && str[i] != 'i' && str[i] != 'o'
-		&& str[i] != 'u' && str[i] != 'x' && str[i] != 'X'
-		&& str[i] != 'f' && str[i] != 'c' && str[i] != 's'
-		&& str[i] != 'p' && str[i] != '%' && str[i] != 'b')
+	while (str[*i] && str[*i] != 'd' && str[*i] != 'i' && str[*i] != 'o'
+		&& str[*i] != 'u' && str[*i] != 'x' && str[*i] != 'X'
+		&& str[*i] != 'f' && str[*i] != 'c' && str[*i] != 's'
+		&& str[*i] != 'p' && str[*i] != '%' && str[*i] != 'b')
 	{
-		s = i;
-		save = ft_flags(str, save, &i);
-		ft_width(str, &save, &i);
-		ft_modif(str, &save, &i);
-		if (i == s)
-			i++;
+		*s = *i;
+		save = ft_flags(str, save, i);
+		ft_width(str, &save, i);
+		ft_modif(str, &save, i);
+		*i = ((*i == *s) ? (*i + 1) : *i);
 	}
-	if (ft_width(str, &save, &i) == 0 && ft_modif(str, &save, &i) == 0)
+	if (ft_width(str, &save, i) == 0 && ft_modif(str, &save, i) == 0)
 	{
-		i = 0;
-		while (str[i] && (str[i] == ' ' || str[i] == 'h'
-					|| str[i] == 'l' || str[i] == 'L'))
+		*i = 0;
+		while (str[*i] && (str[*i] == ' ' || str[*i] == 'h'
+					|| str[*i] == 'l' || str[*i] == 'L'))
 		{
-			save.index += 1;
-			i++;
+			save.index++;
+			*i += 1;
 		}
+		*s = 1;
 		return (save);
 	}
-	save.index = i + 2;
-	save = ft_format(str[i], save, ap, j);
+	*s = 2;
 	return (save);
 }
