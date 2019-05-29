@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 18:04:24 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/29 12:47:18 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/29 15:07:07 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct		s_printf
 	int				modif;
 	int				index;
 	int				ret;
+	int				min;
 	char			buf[BUFF_SIZE + 1];
 }					t_printf;
 

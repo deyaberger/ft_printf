@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 15:33:24 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/28 17:36:51 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/29 15:07:20 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ t_printf	ft_convert(t_printf save, char *str, va_list ap, int *j)
 	save.width = 0;
 	save.precision = 0;
 	save.modif = 0;
+	save.min = 0;
 	save.index = 1;
 	while (str[i] && str[i] != 'd' && str[i] != 'i' && str[i] != 'o'
 		&& str[i] != 'u' && str[i] != 'x' && str[i] != 'X'
