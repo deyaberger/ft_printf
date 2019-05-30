@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sizenb.c                                        :+:      :+:    :+:   */
+/*   ft_sizenb_u.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/11 17:37:37 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/29 16:10:40 by dberger          ###   ########.fr       */
+/*   Created: 2019/05/29 15:56:40 by dberger           #+#    #+#             */
+/*   Updated: 2019/05/29 15:58:54 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-long		ft_sizenb(int n)
+unsigned long	ft_sizenb_u(unsigned long n)
 {
-	long	i;
-	long	nb;
+	unsigned long	i;
 
 	i = 0;
-	nb = n;
 	if (n == 0)
 		return (1);
-	if (n < 0)
+	while (n != 0)
 	{
-		i++;
-		nb = -nb;
-	}
-	while (nb != 0)
-	{
-		nb = nb / 10;
+		n = n / 10;
 		i++;
 	}
 	return (i++);
