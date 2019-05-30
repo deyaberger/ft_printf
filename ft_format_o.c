@@ -6,29 +6,28 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 18:13:39 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/27 19:36:03 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/30 18:19:50 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-t_printf	ft_print_pref(t_printf save, int *j)
+t_printf	ft_print_pref(t_printf save, int *j, unsigned long long nb)
 {
 	if ((save.flags & F_HASH) == F_HASH)
 		save = ft_check_add(save, j, '0');
 	return (save);
 }
 
-int			ft_len3(t_printf save, unsigned long long nb, int mode)
+int			ft_len3(t_printf save, unsigned long long nb, int mode, int i)
 {
-	int		i;
 	int		s;
 	int		k;
 
-	i = 63;
 	if (nb != 0)
 		while ((nb >> i | nb >> (i - 1) | nb >> (i - 2)) == 0)
 			i -= 3;
+	i = ((nb >> i == 1) ? i + 3 : i);
 	while (i % 3 != 0)
 		i++;
 	if (nb == 0)
@@ -55,11 +54,11 @@ t_printf	ft_print_o(t_printf save, int *j, unsigned long long nb)
 	int		s2;
 
 	c = 0;
-	s2 = ft_len3(save, nb, 1);
+	s2 = ft_len3(save, nb, 1, 63);
 	if (save.precision != 0)
 		while (s2-- != 0)
 			save = ft_check_add(save, j, '0');
-	i = ft_len3(save, nb, 2);
+	i = ft_len3(save, nb, 2, 63);
 	while (i > -1)
 	{
 		c = c | (((nb >> i) & 1) << 2);
@@ -76,10 +75,10 @@ t_printf	ft_form_o(t_printf save, int *j, unsigned long long nb)
 {
 	int		s;
 
-	s = ft_len3(save, nb, 0);
+	s = ft_len3(save, nb, 0, 63);
 	if ((save.flags & F_MINUS))
 	{
-		save = ft_print_pref(save, j);
+		save = ft_print_pref(save, j, nb);
 		save = ft_print_o(save, j, nb);
 	}
 	if (save.width != 0 && !(save.flags & F_ZERO))
@@ -91,7 +90,7 @@ t_printf	ft_form_o(t_printf save, int *j, unsigned long long nb)
 	}
 	if (!(save.flags & F_MINUS))
 	{
-		save = ft_print_pref(save, j);
+		save = ft_print_pref(save, j, nb);
 		if (save.width != 0 && (save.flags & F_ZERO))
 			while (s-- != 0)
 				save = ft_check_add(save, j, '0');
