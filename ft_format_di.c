@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 13:17:49 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/29 16:18:19 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/30 11:33:13 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_printf	ft_width_di(t_printf save, int *j, long type)
 		return (save);
 	if (save.flags & F_PLUS && type >= 0)
 	{
-		if (save.flags & F_ZERO && !(save.flags & F_MINUS))
+		if (save.flags & F_ZERO && !(save.flags & F_MINUS) && !(save.precision))
 			save = ft_check_add(save, j, '+');
 		count--;
 	}
