@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 15:33:24 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/30 17:31:35 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/31 14:21:28 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ int			ft_width(char *str, t_printf *save, int *i)
 		*i += 1;
 		while (str[*i] && str[*i] >= '0' && str[*i] <= '9')
 		{
-			save->precision = (save->precision * 10) + (str[*i] - '0');
+			save->pre = (save->pre * 10) + (str[*i] - '0');
 			*i += 1;
 		}
 		if (str[*i - 1] == '.' || (str[*i - 1] == '0' && str[*i - 2] == '.'))
-			save->precision = 0;
+			save->pre = 0;
 	}
 	if (str[*i] != 'd' && str[*i] != 'i' && str[*i] != 'o' && str[*i] != 'u'
 		&& str[*i] != 'x' && str[*i] != 'X' && str[*i] != 'f' && str[*i] != 'c'

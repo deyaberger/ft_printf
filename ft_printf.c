@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 19:48:39 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/29 16:27:59 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/31 14:33:24 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_printf	ft_init(t_printf save, char *str, va_list ap, int *j)
 	i = 0;
 	save.flags = 0;
 	save.width = 0;
-	save.precision = 0;
+	save.pre = 0;
 	save.modif = 0;
 	save.min = 0;
 	save.index = 1;
@@ -93,14 +93,34 @@ int			ft_printf(const char *restrict format, ...)
 	va_start(ap, format);
 	save = ft_process(save, format, ap);
 	write(1, save.buf, save.index);
-	//	printf("\nflags : [%d]\nwidth : [%d]\nprecision : [%d]\nmodif : [%d]\n", save.flags, save.width, save.precision, save.modif);
 	va_end(ap);
 	return (save.ret);
 }
 
 /*int		main(void)
-  {
-  ft_printf("%010s is a string", "this");
-  printf("%010s is a string", "this");
-  return (0);
-  }*/
+{
+	ft_printf("%llo\n", (unsigned long long)-125);
+	printf("%llo\n", (unsigned long long)-125);
+	printf("********\n");
+	ft_printf("@moulitest: %#.o %#.0o\n", 0, 0);
+	printf("@moulitest: %#.o %#.0o\n", 0, 0);
+	printf("********\n");
+	ft_printf("%#o\n", 0);
+	printf("%#o\n", 0);
+	printf("********\n");
+	ft_printf("t[%04.2o][%#2o]et [%#-8.3o] titi\n", 0, 0, 0);
+	printf("t[%04.2o][%#2o]et [%#-8.3o] titi\n", 0, 0, 0);
+	printf("********\n");
+	ft_printf("test[%#.4o] et [%#.5o] et [%#.o]\n", 13, 13, 13);
+	printf("test[%#.4o] et [%#.5o] et [%#.o]\n", 13, 13, 13);
+	printf("********\n");
+	ft_printf("m%#.9od\n", 123456789);
+	printf("m%#.9od\n", 123456789);
+	printf("********\n");
+	ft_printf("test%#.4o et %02o %0#14.0o!!\n", 012, 036, 12587499);
+	printf("test%#.4o et %02o %0#14.0o!!\n", 012, 036, 12587499);
+	printf("********\n");
+	ft_printf("%05.o\n", 42);
+	printf("%05.o\n", 42);
+	return (0);
+}*/

@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 18:04:24 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/29 17:23:48 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/31 14:20:37 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct		s_printf
 {
 	int				flags;
 	int				width;
-	int				precision;
+	int				pre;
 	int				modif;
 	int				index;
 	int				ret;

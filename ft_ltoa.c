@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/29 12:44:58 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/29 15:16:58 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/31 14:33:05 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 t_printf	ft_neg(t_printf save, int *j, long *type, long *s)
 {
-	if (!save.precision && save.width && !(save.flags & F_MINUS)
+	if (!save.pre && save.width && !(save.flags & F_MINUS)
 			&& !(save.flags & F_ZERO))
 		save = ft_check_add(save, j, '-');
-	if (!save.precision && save.width && (save.flags & F_MINUS))
+	if (!save.pre && save.width && (save.flags & F_MINUS))
 		save = ft_check_add(save, j, '-');
-	if (!save.precision && (save.flags & F_MINUS) && !save.width)
+	if (!save.pre && (save.flags & F_MINUS) && !save.width)
 		save = ft_check_add(save, j, '-');
-	if (!save.precision && !save.width && !(save.flags & F_ZERO))
+	if (!save.pre && !save.width && !(save.flags & F_ZERO))
 		save = ft_check_add(save, j, '-');
-	if (!save.precision && !(save.width) && (save.flags & F_ZERO)
+	if (!save.pre && !(save.width) && (save.flags & F_ZERO)
 			&& !(save.flags & F_MINUS))
 		save = ft_check_add(save, j, '-');
 	if (*type == -9223372036854775808)
@@ -85,11 +85,11 @@ t_printf	ft_ltoa(t_printf save, int *j, long type)
 	s = ft_sizenb_l(type);
 	if ((save.modif & M_H))
 		s = ft_sizenb_l(type);
-	if (type >= 0 && !save.precision && (save.flags & F_PLUS))
+	if (type >= 0 && !save.pre && (save.flags & F_PLUS))
 		save = ft_plus(save, j);
 	if (type == 0)
 	{
-		if (save.precision || save.flags & F_POINT)
+		if (save.pre || save.flags & F_POINT)
 			return (save);
 		return (ft_check_add(save, j, '0'));
 	}

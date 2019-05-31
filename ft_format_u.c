@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 18:11:54 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/29 17:41:12 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/31 14:23:04 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,32 @@ t_printf		ft_width_u(t_printf save, int *j, unsigned long type)
 	w = save.width;
 	s = ft_sizenb_u(type);
 	count = w - s;
-	if (save.precision && w > save.precision && (int)s < save.precision)
-		count = w - save.precision;
-	if (save.precision && (int)s < save.precision && w <= save.precision)
+	if (save.pre && w > save.pre && (int)s < save.pre)
+		count = w - save.pre;
+	if (save.pre && (int)s < save.pre && w <= save.pre)
 		return (save);
 	if (save.flags & F_PLUS)
 		count--;
-	if ((save.flags & F_ZERO) && !(save.precision) && !(save.flags & F_MINUS))
+	if ((save.flags & F_ZERO) && !(save.pre) && !(save.flags & F_MINUS))
 	{
 		while ((int)s < w && (count--) > 0)
 			save = ft_check_add(save, j, '0');
 		return (save);
 	}
-	if (type == 0 && !(save.precision) && save.flags & F_POINT)
+	if (type == 0 && !(save.pre) && save.flags & F_POINT)
 		save = ft_check_add(save, j, ' ');
 	while ((int)s < w && (count--) > 0)
 		save = ft_check_add(save, j, ' ');
 	return (save);
 }
 
-t_printf		ft_precision_u(t_printf save, int *j, unsigned long type)
+t_printf		ft_pre_u(t_printf save, int *j, unsigned long type)
 {
 	unsigned long	s;
 	int				p;
 
 	s = ft_sizenb_u(type);
-	p = save.precision;
+	p = save.pre;
 	if ((int)s < p)
 	{
 		while (p - s > 0)
@@ -55,7 +55,7 @@ t_printf		ft_precision_u(t_printf save, int *j, unsigned long type)
 			p--;
 		}
 	}
-	if (type == 0 && save.precision > 0)
+	if (type == 0 && save.pre > 0)
 		save = ft_check_add(save, j, '0');
 	return (save);
 }
@@ -82,8 +82,8 @@ t_printf		ft_format_u(t_printf save, va_list ap, int *j)
 	type = ft_modif_u(save, ap);
 	if (save.width && !(save.flags & F_MINUS))
 		save = ft_width_u(save, j, type);
-	if (save.precision)
-		save = ft_precision_u(save, j, type);
+	if (save.pre)
+		save = ft_pre_u(save, j, type);
 	if (save.flags & F_PLUS)
 		save.flags -= F_PLUS;
 	save = ft_utoa(save, j, type);

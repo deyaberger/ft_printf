@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 11:34:43 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/31 12:53:07 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/31 14:23:22 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,17 @@ int			ft_len(t_printf save, unsigned long long nb, int mode)
 	while (i % 4 != 0)
 		i++;
 	if (nb == 0)
-		i = ((save.precision == 0 && (save.flags & F_POINT)) ? -1 : 4);
+		i = ((save.pre == 0 && (save.flags & F_POINT)) ? -1 : 4);
 	if (mode == 0)
 	{
-		k = ((save.precision - (i / 4)) < 0 ? 0 : save.precision - (i / 4));
+		k = ((save.pre - (i / 4)) < 0 ? 0 : save.pre - (i / 4));
 		s = ((save.width - ((i / 4) - k)) < 0 ? 0 : save.width - ((i / 4) - k));
 		(nb == 0) ? (s += 2) : 0;
 		s = (save.flags & F_HASH)
-			|| (save.precision == 0 && (save.flags & F_POINT)) ? s - 2 : s;
+			|| (save.pre == 0 && (save.flags & F_POINT)) ? s - 2 : s;
 	}
 	else if (mode == 1)
-		s = ((save.precision - (i / 4)) < 0 ? 0 : save.precision - (i / 4));
+		s = ((save.pre - (i / 4)) < 0 ? 0 : save.pre - (i / 4));
 	else
 		s = (((i - 1) < 0) ? -1 : (i - 1));
 	return (s);
@@ -61,7 +61,7 @@ t_printf	ft_print_h(t_printf save, int *j, unsigned long long nb, int mode)
 
 	c = 0;
 	s2 = ft_len(save, nb, 1);
-	if (save.precision != 0)
+	if (save.pre != 0)
 		while (s2-- != 0)
 			save = ft_check_add(save, j, '0');
 	i = ft_len(save, nb, 2);

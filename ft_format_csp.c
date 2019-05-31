@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 20:37:05 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/31 14:08:06 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/31 14:22:20 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_printf	ft_print(t_printf save, int *j, char *str, int *i)
 	nul[6] = '\0';
 	if (!str)
 	{
-		while (nul[*i] && (*i != save.precision || !(save.flags & F_POINT)))
+		while (nul[*i] && (*i != save.pre || !(save.flags & F_POINT)))
 		{
 			save = ft_check_add(save, j, nul[*i]);
 			*i += 1;
@@ -55,7 +55,7 @@ t_printf	ft_print(t_printf save, int *j, char *str, int *i)
 	}
 	else
 	{
-		while (str[*i] && *i != save.precision)
+		while (str[*i] && *i != save.pre)
 		{
 			save = ft_check_add(save, j, str[*i]);
 			*i += 1;
@@ -70,12 +70,12 @@ t_printf	ft_form_s(t_printf save, int *j, char *str)
 
 	i = 0;
 	if (!(save.flags & F_POINT))
-		save.precision = -1;
+		save.pre = -1;
 	if (save.flags & F_MINUS)
 		save = ft_print(save, j, str, &i);
 	i = ((!str) ? 6 : ft_strlen(str));
-	if (save.precision >= 0 && i != 0)
-		save.width -= (i - (i - ((save.precision > i) ? i : save.precision)));
+	if (save.pre >= 0 && i != 0)
+		save.width -= (i - (i - ((save.pre > i) ? i : save.pre)));
 	else
 		save.width -= i;
 	i = 0;

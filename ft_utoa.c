@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/29 15:55:17 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/29 16:09:28 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/31 14:23:55 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_printf	ft_num_u(t_printf save, unsigned long s, unsigned long type, int *j)
 	ten = 0;
 	if (type >= 10 && (ten = 10) == 10)
 	{
-		while (t < s)
+		while (t < (int)s)
 		{
 			ten = ten * 10;
 			t++;
@@ -61,11 +61,11 @@ t_printf	ft_utoa(t_printf save, int *j, unsigned long type)
 	s = ft_sizenb_u(type);
 	if ((save.modif & M_H))
 		s = ft_sizenb_u(type);
-	if (!save.precision && (save.flags & F_PLUS))
+	if (!save.pre && (save.flags & F_PLUS))
 		save = ft_plus_u(save, j);
 	if (type == 0)
 	{
-		if (save.precision || save.flags & F_POINT)
+		if (save.pre || save.flags & F_POINT)
 			return (save);
 		return (ft_check_add(save, j, '0'));
 	}

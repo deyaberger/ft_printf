@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 13:17:49 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/30 11:33:13 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/31 14:22:35 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ t_printf	ft_w_add(t_printf save, long type, int *j, int count)
 	w = save.width;
 	s = ft_sizenb_l(type);
 	if (type < 0 && (save.flags & F_ZERO) && !(save.flags & F_MINUS)
-		&& !(save.precision))
+		&& !(save.pre))
 		save = ft_check_add(save, j, '-');
-	if ((save.flags & F_ZERO) && !(save.precision) && !(save.flags & F_MINUS))
+	if ((save.flags & F_ZERO) && !(save.pre) && !(save.flags & F_MINUS))
 	{
 		while (s < w && (count--) > 0)
 			save = ft_check_add(save, j, '0');
 		return (save);
 	}
-	if (type == 0 && !(save.precision) && save.flags & F_POINT)
+	if (type == 0 && !(save.pre) && save.flags & F_POINT)
 		save = ft_check_add(save, j, ' ');
 	while (s < w && (count--) > 0)
 		save = ft_check_add(save, j, ' ');
@@ -44,30 +44,30 @@ t_printf	ft_width_di(t_printf save, int *j, long type)
 	w = save.width;
 	s = ft_sizenb_l(type);
 	count = w - s;
-	if (save.precision && w > save.precision && s < save.precision)
-		count = w - save.precision;
-	if (save.precision && s < save.precision && w <= save.precision)
+	if (save.pre && w > save.pre && s < save.pre)
+		count = w - save.pre;
+	if (save.pre && s < save.pre && w <= save.pre)
 		return (save);
 	if (save.flags & F_PLUS && type >= 0)
 	{
-		if (save.flags & F_ZERO && !(save.flags & F_MINUS) && !(save.precision))
+		if (save.flags & F_ZERO && !(save.flags & F_MINUS) && !(save.pre))
 			save = ft_check_add(save, j, '+');
 		count--;
 	}
 	if ((type >= 0 && (save.flags & F_SPACE) && !(save.flags & F_PLUS))
-		|| (type < 0 && (save.precision)))
+		|| (type < 0 && (save.pre)))
 		count--;
 	save = ft_w_add(save, type, j, count);
 	return (save);
 }
 
-t_printf	ft_precision_di(t_printf save, int *j, long type)
+t_printf	ft_pre_di(t_printf save, int *j, long type)
 {
 	long	s;
 	int		p;
 
 	s = ft_sizenb_l(type);
-	p = save.precision;
+	p = save.pre;
 	if (type >= 0 && (save.flags & F_PLUS))
 		save = ft_check_add(save, j, '+');
 	if (type < 0)
@@ -84,7 +84,7 @@ t_printf	ft_precision_di(t_printf save, int *j, long type)
 			p--;
 		}
 	}
-	if (type == 0 && save.precision > 0)
+	if (type == 0 && save.pre > 0)
 		save = ft_check_add(save, j, '0');
 	return (save);
 }
@@ -110,8 +110,8 @@ t_printf	ft_format_di(t_printf save, va_list ap, int *j)
 		save = ft_check_add(save, j, ' ');
 	if (save.width && !(save.flags & F_MINUS))
 		save = ft_width_di(save, j, type);
-	if (save.precision)
-		save = ft_precision_di(save, j, type);
+	if (save.pre)
+		save = ft_pre_di(save, j, type);
 	save = ft_ltoa(save, j, type);
 	if (save.width && (save.flags & F_MINUS))
 		save = ft_width_di(save, j, type);
