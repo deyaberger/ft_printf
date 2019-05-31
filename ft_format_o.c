@@ -6,20 +6,26 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 18:13:39 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/30 18:19:50 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/31 10:58:41 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-t_printf	ft_print_pref(t_printf save, int *j, unsigned long long nb)
+t_printf	ft_print_pref(t_printf save, int *j, unsigned long nb)
 {
-	if ((save.flags & F_HASH) == F_HASH)
+	unsigned long s;
+
+	s = ft_sizenb_u(nb);
+	if ((save.flags & F_HASH) == F_HASH && (nb != 0) && (save.precision <= (int)s))
+		save = ft_check_add(save, j, '0');
+	if ((save.flags & F_HASH) == F_HASH && (nb == 0) && !(save.precision)
+		&& (save.flags & F_POINT))
 		save = ft_check_add(save, j, '0');
 	return (save);
 }
 
-int			ft_len3(t_printf save, unsigned long long nb, int mode, int i)
+int			ft_len3(t_printf save, unsigned long nb, int mode, int i)
 {
 	int		s;
 	int		k;
@@ -37,7 +43,7 @@ int			ft_len3(t_printf save, unsigned long long nb, int mode, int i)
 		k = ((save.precision - (i / 3)) < 0 ? 0 : save.precision - (i / 3));
 		s = ((save.width - (i / 3) - k) < 0 ? 0 : save.width - (i / 3) - k);
 		((nb == 0) && (save.flags & F_HASH)) ? (s--) : 0;
-		s = (save.flags & F_HASH)
+		s = (save.flags & F_HASH) 
 			|| (save.precision == 0 && (save.flags & F_POINT)) ? s-- : s;
 	}
 	else if (mode == 1)
@@ -47,7 +53,7 @@ int			ft_len3(t_printf save, unsigned long long nb, int mode, int i)
 	return (s);
 }
 
-t_printf	ft_print_o(t_printf save, int *j, unsigned long long nb)
+t_printf	ft_print_o(t_printf save, int *j, unsigned long nb)
 {
 	int		i;
 	int		c;
@@ -71,7 +77,7 @@ t_printf	ft_print_o(t_printf save, int *j, unsigned long long nb)
 	return (save);
 }
 
-t_printf	ft_form_o(t_printf save, int *j, unsigned long long nb)
+t_printf	ft_form_o(t_printf save, int *j, unsigned long nb)
 {
 	int		s;
 
@@ -81,19 +87,24 @@ t_printf	ft_form_o(t_printf save, int *j, unsigned long long nb)
 		save = ft_print_pref(save, j, nb);
 		save = ft_print_o(save, j, nb);
 	}
-	if (save.width != 0 && !(save.flags & F_ZERO))
+	if (save.width != 0)
 	{
 		if (save.flags & F_HASH && nb != 0)
 			s--;
-		while (s-- != 0)
+		if (nb == 0 && (save.flags & F_HASH))
+			s++;
+		while (s-- > 0)
 			save = ft_check_add(save, j, ' ');
 	}
 	if (!(save.flags & F_MINUS))
 	{
-		save = ft_print_pref(save, j, nb);
-		if (save.width != 0 && (save.flags & F_ZERO))
-			while (s-- != 0)
-				save = ft_check_add(save, j, '0');
+		if (!(save.flags & F_ZERO))
+			save = ft_print_pref(save, j, nb);
+		if (save.width != 0)
+			while (s-- > 0)
+				save = ft_check_add(save, j, ' ');
+		if (save.flags & F_ZERO)
+			save = ft_print_pref(save, j, nb);
 		save = ft_print_o(save, j, nb);
 	}
 	return (save);
@@ -101,7 +112,7 @@ t_printf	ft_form_o(t_printf save, int *j, unsigned long long nb)
 
 t_printf	ft_format_o(t_printf save, va_list ap, int *j)
 {
-	unsigned long long	number;
+	unsigned long	number;
 
 	if (save.modif && (save.modif & M_HH))
 		number = (unsigned char)va_arg(ap, int);
