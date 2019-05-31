@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 11:34:43 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/31 14:23:22 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/31 18:22:08 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int			ft_len(t_printf save, unsigned long long nb, int mode)
 	if (mode == 0)
 	{
 		k = ((save.pre - (i / 4)) < 0 ? 0 : save.pre - (i / 4));
-		s = ((save.width - ((i / 4) - k)) < 0 ? 0 : save.width - ((i / 4) - k));
-		(nb == 0) ? (s += 2) : 0;
+		s = ((save.width - ((i / 4) + k)) < 0 ? 0 : save.width - ((i / 4) + k));
+		((nb == 0) && save.width != 1) ? (s += 2) : 0;
 		s = (save.flags & F_HASH)
 			|| (save.pre == 0 && (save.flags & F_POINT)) ? s - 2 : s;
 	}
@@ -85,7 +85,8 @@ t_printf	ft_form_xx(t_printf save, int *j, unsigned long long nb, int mode)
 {
 	int		s;
 
-	s = ft_len(save, nb, 0);
+	if ((s = ft_len(save, nb, 0)) < 0)
+		s = 0;
 	if ((save.flags & F_MINUS))
 	{
 		save = ft_print_ox(save, j, nb, mode);
