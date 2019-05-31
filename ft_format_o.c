@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 18:13:39 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/31 11:07:45 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/31 11:36:40 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ t_printf	ft_print_o(t_printf save, int *j, unsigned long nb)
 		c = c | (((nb >> i) & 1) << 2);
 		c = c | (((nb >> (i - 1)) & 1) << 1);
 		c = c | (((nb >> (i - 2)) & 1) << 0);
-		save = ft_check_add(save, j, (c + '0'));
+		if (i > 64)
+			save = ft_check_add(save, j, '1');
+		else
+			save = ft_check_add(save, j, (c + '0'));
 		i -= 3;
 		c = 0;
 	}
