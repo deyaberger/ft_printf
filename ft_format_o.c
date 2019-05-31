@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 18:13:39 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/31 10:58:41 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/31 11:07:45 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,12 @@ t_printf	ft_form_o(t_printf save, int *j, unsigned long nb)
 		if (nb == 0 && (save.flags & F_HASH))
 			s++;
 		while (s-- > 0)
-			save = ft_check_add(save, j, ' ');
+		{
+			if (!(save.flags & F_ZERO) || (save.flags & F_ZERO && !(save.precision) && (save.flags & F_POINT)))
+				save = ft_check_add(save, j, ' ');
+			else if (save.flags & F_ZERO && !(save.precision) && !(save.flags & F_POINT))
+				save = ft_check_add(save, j, '0');
+		}
 	}
 	if (!(save.flags & F_MINUS))
 	{
