@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 13:17:49 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/31 14:22:35 by dberger          ###   ########.fr       */
+/*   Updated: 2019/05/31 15:11:29 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ t_printf	ft_w_add(t_printf save, long type, int *j, int count)
 
 	w = save.width;
 	s = ft_sizenb_l(type);
+	if (type < 0 && save.pre > 0 && save.pre < s && w > s)
+		count++;
 	if (type < 0 && (save.flags & F_ZERO) && !(save.flags & F_MINUS)
 		&& !(save.pre))
 		save = ft_check_add(save, j, '-');
@@ -55,7 +57,7 @@ t_printf	ft_width_di(t_printf save, int *j, long type)
 		count--;
 	}
 	if ((type >= 0 && (save.flags & F_SPACE) && !(save.flags & F_PLUS))
-		|| (type < 0 && (save.pre)))
+		|| (type < 0 && save.pre))
 		count--;
 	save = ft_w_add(save, type, j, count);
 	return (save);
