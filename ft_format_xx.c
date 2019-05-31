@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 11:34:43 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/27 15:53:10 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/05/31 12:53:07 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ t_printf	ft_format_xx(t_printf save, va_list ap, int *j, char c)
 		number = va_arg(ap, unsigned int);
 	if ((save.flags & F_MINUS) && (save.flags & F_ZERO))
 		save.flags -= F_ZERO;
-	if (save.precision != 0 && (save.flags & F_ZERO))
+	if ((save.flags & F_POINT) && (save.flags & F_ZERO))
 		save.flags -= F_ZERO;
 	if (c == 'x')
 		save = ft_form_xx(save, j, number, (int)'a');
