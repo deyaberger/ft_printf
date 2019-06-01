@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 11:50:41 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/27 15:24:36 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/01 22:25:36 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,44 @@ char		ft_bin_hexa(int a, int b, int c, int d)
 	return (res);
 }
 
+int			ft_len4(int i)
+{
+	int		a;
+
+	a = 0;
+	while (i >= 0)
+	{
+		a++;
+		i -= 4;
+	}
+	return (a);
+}
+
 t_printf	ft_dtoh(t_printf save, int *j, unsigned long int k, int i)
 {
 	char	c;
 
 	save = ft_check_add(save, j, '0');
 	save = ft_check_add(save, j, 'x');
-	while (i >= 0)
+	if (save.pre != 0)
 	{
-		c = ft_bin_hexa(k >> i, k >> (i - 1), k >> (i - 2), k >> (i - 3));
-		if (c >= 10)
-			save = ft_check_add(save, j, ((c - 10) + 'a'));
-		else
-			save = ft_check_add(save, j, (c + '0'));
-		i -= 4;
+		while ((save.pre - ft_len4(i)) > 0)
+		{
+			save = ft_check_add(save, j, '0');
+			save.pre--;
+		}
+	}
+	if (!(save.flags & F_POINT) || save.pre != 0)
+	{
+		while (i >= 0)
+		{
+			c = ft_bin_hexa(k >> i, k >> (i - 1), k >> (i - 2), k >> (i - 3));
+			if (c >= 10)
+				save = ft_check_add(save, j, ((c - 10) + 'a'));
+			else
+				save = ft_check_add(save, j, (c + '0'));
+			i -= 4;
+		}
 	}
 	return (save);
 }

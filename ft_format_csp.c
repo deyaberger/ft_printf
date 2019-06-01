@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 20:37:05 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/31 14:22:20 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/01 22:16:05 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_printf	ft_form_c(t_printf save, int *j, char c)
 		save.width--;
 	while (i < save.width)
 	{
-		save = ft_check_add(save, j, ' ');
+		save = ft_check_add(save, j, (save.flags & F_ZERO) ? '0' : ' ');
 		i++;
 	}
 	if ((save.flags & F_MINUS) != F_MINUS)
@@ -36,7 +36,7 @@ t_printf	ft_form_c(t_printf save, int *j, char c)
 
 t_printf	ft_print(t_printf save, int *j, char *str, int *i)
 {
-	char	nul[7];
+	char	nul[6];
 
 	nul[0] = '(';
 	nul[1] = 'n';
@@ -44,10 +44,9 @@ t_printf	ft_print(t_printf save, int *j, char *str, int *i)
 	nul[3] = 'l';
 	nul[4] = 'l';
 	nul[5] = ')';
-	nul[6] = '\0';
 	if (!str)
 	{
-		while (nul[*i] && (*i != save.pre || !(save.flags & F_POINT)))
+		while ((*i <= 5) && (*i != save.pre || !(save.flags & F_POINT)))
 		{
 			save = ft_check_add(save, j, nul[*i]);
 			*i += 1;
@@ -80,7 +79,7 @@ t_printf	ft_form_s(t_printf save, int *j, char *str)
 		save.width -= i;
 	i = 0;
 	while (i++ < save.width)
-		save = ft_check_add(save, j, ' ');
+		save = ft_check_add(save, j, ((save.flags & F_ZERO) ? '0' : ' '));
 	i = 0;
 	if (!(save.flags & F_MINUS))
 		save = ft_print(save, j, str, &i);
@@ -100,7 +99,7 @@ t_printf	ft_form_p(t_printf save, int *j, void *p)
 			i -= 4;
 	while (i % 4 != 0)
 		i++;
-	s = (save.width - ((i / 4) + 2));
+	s = (save.width - ((i / 4) + 2) - ((save.pre && k == 0) ? save.pre : 0));
 	s < 0 ? s = 0 : 0;
 	i--;
 	if (save.width == 0)
