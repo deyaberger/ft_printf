@@ -6,10 +6,11 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 19:48:39 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/31 14:33:24 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/03 08:17:36 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "ft_printf.h"
 
 t_printf	ft_format(char c, t_printf save, va_list ap, int *j)
@@ -97,30 +98,21 @@ int			ft_printf(const char *restrict format, ...)
 	return (save.ret);
 }
 
-/*int		main(void)
+int		main(int argc, char **argv)
 {
-	ft_printf("%llo\n", (unsigned long long)-125);
-	printf("%llo\n", (unsigned long long)-125);
-	printf("********\n");
-	ft_printf("@moulitest: %#.o %#.0o\n", 0, 0);
-	printf("@moulitest: %#.o %#.0o\n", 0, 0);
-	printf("********\n");
-	ft_printf("%#o\n", 0);
-	printf("%#o\n", 0);
-	printf("********\n");
-	ft_printf("t[%04.2o][%#2o]et [%#-8.3o] titi\n", 0, 0, 0);
-	printf("t[%04.2o][%#2o]et [%#-8.3o] titi\n", 0, 0, 0);
-	printf("********\n");
-	ft_printf("test[%#.4o] et [%#.5o] et [%#.o]\n", 13, 13, 13);
-	printf("test[%#.4o] et [%#.5o] et [%#.o]\n", 13, 13, 13);
-	printf("********\n");
-	ft_printf("m%#.9od\n", 123456789);
-	printf("m%#.9od\n", 123456789);
-	printf("********\n");
-	ft_printf("test%#.4o et %02o %0#14.0o!!\n", 012, 036, 12587499);
-	printf("test%#.4o et %02o %0#14.0o!!\n", 012, 036, 12587499);
-	printf("********\n");
-	ft_printf("%05.o\n", 42);
-	printf("%05.o\n", 42);
+	(void)argc;
+	printf("test 	: %%f 		: [%f]\n", strtof(argv[1], NULL));
+	printf("test 	: %%0f 		: [%0f]\n", strtof(argv[1], NULL));
+	printf("test 	: %% f 		: [% f]\n", strtof(argv[1], NULL));
+	printf("test 	: %%20f 		: [%20f]\n", strtof(argv[1], NULL));
+	printf("test 	: %%.20f 	: [%.20f]\n", strtof(argv[1], NULL));
+	printf("test 	: %%#f 		: [%#f]\n", strtof(argv[1], NULL));
+	printf("test 	: %%+f 		: [%+f]\n", strtof(argv[1], NULL));
+	printf("test 	: %%-f 		: [%-f]\n", strtof(argv[1], NULL));
+	printf("test 	: %%20.10f 	: [%20.10f]\n", strtof(argv[1], NULL));
+	printf("test 	: %%10.20f 	: [%10.20f]\n", strtof(argv[1], NULL));
+	printf("test 	: %%020f 	: [%020f]\n", strtof(argv[1], NULL));
+	printf("test 	: %%0.20f 	: [%0.20f]\n", strtof(argv[1], NULL));
+	printf("test 	: %%020.10f	: [%020.10f]\n", strtof(argv[1], NULL));
 	return (0);
-}*/
+}
