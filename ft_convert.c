@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 15:33:24 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/06/03 15:10:40 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/03 15:32:58 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,11 @@ t_printf	ft_convert(t_printf save, char *str, int *i, int *s)
 {
 	while (str[*i] && !ft_check_char(str, *i, 1))
 	{
-		if (!ft_check_char(str, *i, 2) && (*s = 1) == 1
-				&& (save.index += *i) == (save.index += *i))
+		if (!ft_check_char(str, *i, 2) && (*s = 1) == 1)
+		{
+			save.index = save.index + *i;
 			return (save);
+		}
 		*s = *i;
 		save = ft_flags(str, save, i);
 		ft_width(str, &save, i);
@@ -100,7 +102,7 @@ t_printf	ft_convert(t_printf save, char *str, int *i, int *s)
 	if (ft_width(str, &save, i) == 0 && ft_modif(str, &save, i) == 0)
 	{
 		*i = 0;
-		while (!ft_check_char(str, *i, 3))
+		while (str[*i] && !(ft_check_char(str, *i, 3)))
 		{
 			save.index++;
 			*i += 1;
