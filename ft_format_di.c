@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 13:17:49 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/31 15:11:29 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/03 08:37:25 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ t_printf	ft_w_add(t_printf save, long type, int *j, int count)
 	if (type < 0 && (save.flags & F_ZERO) && !(save.flags & F_MINUS)
 		&& !(save.pre))
 		save = ft_check_add(save, j, '-');
-	if ((save.flags & F_ZERO) && !(save.pre) && !(save.flags & F_MINUS))
+	if ((save.flags & F_ZERO) && !(save.pre) && !(save.flags & F_MINUS)
+		&& !(save.flags & F_POINT))
 	{
 		while (s < w && (count--) > 0)
 			save = ft_check_add(save, j, '0');
