@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 20:37:05 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/06/01 22:16:05 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/06/03 08:34:37 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ t_printf	ft_form_s(t_printf save, int *j, char *str)
 		save.width -= i;
 	i = 0;
 	while (i++ < save.width)
-		save = ft_check_add(save, j, ((save.flags & F_ZERO) ? '0' : ' '));
+		save = ft_check_add(save, j, (((save.flags & F_ZERO)
+						&& !(save.flags & F_MINUS)) ? '0' : ' '));
 	i = 0;
 	if (!(save.flags & F_MINUS))
 		save = ft_print(save, j, str, &i);
