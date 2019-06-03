@@ -6,7 +6,7 @@
 #    By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/30 19:03:50 by ncoursol          #+#    #+#              #
-#    Updated: 2019/05/29 16:01:26 by dberger          ###   ########.fr        #
+#    Updated: 2019/06/03 14:24:51 by dberger          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ ft_format_f.c\
 ft_format_u.c\
 ft_format_xx.c\
 ft_check_add.c\
+ft_check_char.c\
 ft_convert.c\
 ft_printf.c\
 ft_ltoa.c\

@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 15:33:24 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/31 14:21:28 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/03 15:10:40 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ int			ft_width(char *str, t_printf *save, int *i)
 		if (str[*i - 1] == '.' || (str[*i - 1] == '0' && str[*i - 2] == '.'))
 			save->pre = 0;
 	}
-	if (str[*i] != 'd' && str[*i] != 'i' && str[*i] != 'o' && str[*i] != 'u'
-		&& str[*i] != 'x' && str[*i] != 'X' && str[*i] != 'f' && str[*i] != 'c'
-		&& str[*i] != 's' && str[*i] != 'p' && str[*i] != '%' && str[*i] != 'b')
+	if (!ft_check_char(str, *i, 1))
 		return (0);
 	return (1);
 }
@@ -81,21 +79,18 @@ int			ft_modif(char *str, t_printf *save, int *i)
 		save->modif = save->modif | M_BIGL;
 	if (str[*i] == 'h' || str[*i] == 'l' || str[*i] == 'L')
 		*i += 1;
-	if (str[*i] != 'd' && str[*i] != 'i' && str[*i] != 'o'
-		&& str[*i] != 'u' && str[*i] != 'x' && str[*i] != 'X'
-		&& str[*i] != 'f' && str[*i] != 'c' && str[*i] != 's'
-		&& str[*i] != 'p' && str[*i] != '%' && str[*i] != 'b')
+	if (!ft_check_char(str, *i, 1))
 		return (0);
 	return (1);
 }
 
 t_printf	ft_convert(t_printf save, char *str, int *i, int *s)
 {
-	while (str[*i] && str[*i] != 'd' && str[*i] != 'i' && str[*i] != 'o'
-		&& str[*i] != 'u' && str[*i] != 'x' && str[*i] != 'X'
-		&& str[*i] != 'f' && str[*i] != 'c' && str[*i] != 's'
-		&& str[*i] != 'p' && str[*i] != '%' && str[*i] != 'b')
+	while (str[*i] && !ft_check_char(str, *i, 1))
 	{
+		if (!ft_check_char(str, *i, 2) && (*s = 1) == 1
+				&& (save.index += *i) == (save.index += *i))
+			return (save);
 		*s = *i;
 		save = ft_flags(str, save, i);
 		ft_width(str, &save, i);
@@ -105,8 +100,7 @@ t_printf	ft_convert(t_printf save, char *str, int *i, int *s)
 	if (ft_width(str, &save, i) == 0 && ft_modif(str, &save, i) == 0)
 	{
 		*i = 0;
-		while (str[*i] && (str[*i] == ' ' || str[*i] == 'h'
-					|| str[*i] == 'l' || str[*i] == 'L'))
+		while (!ft_check_char(str, *i, 3))
 		{
 			save.index++;
 			*i += 1;
