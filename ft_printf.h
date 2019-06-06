@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 18:04:24 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/03 15:10:16 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/06 08:45:16 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_printf			ft_check_add(t_printf save, int *j, char c);
 int					ft_printf(const char *restrict format, ...);
 t_printf			ft_convert(t_printf save, char *str, int *i, int *s);
 t_printf			ft_ltoa(t_printf save, int *j, long type);
+t_printf			ft_ftoa(t_printf save, int *j, char *fix, char *nb);
 t_printf			ft_utoa(t_printf save, int *j, unsigned long type);
 t_printf			ft_dtoh(t_printf save, int *j, unsigned long int k, int i);
 t_printf			ft_format_di(t_printf save, va_list ap, int *j);
