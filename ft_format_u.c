@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 18:11:54 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/31 14:23:04 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/08 16:36:14 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ t_printf		ft_width_u(t_printf save, int *j, unsigned long type)
 		return (save);
 	if (save.flags & F_PLUS)
 		count--;
-	if ((save.flags & F_ZERO) && !(save.pre) && !(save.flags & F_MINUS))
+	if ((save.flags & F_ZERO) && !(save.pre) && !(save.flags & F_POINT)
+			&& !(save.flags & F_MINUS))
 	{
 		while ((int)s < w && (count--) > 0)
 			save = ft_check_add(save, j, '0');
