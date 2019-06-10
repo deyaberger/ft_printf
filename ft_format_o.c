@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 18:13:39 by dberger           #+#    #+#             */
-/*   Updated: 2019/05/31 14:32:12 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/10 12:46:54 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,27 @@
 
 t_printf	ft_print_pref(t_printf save, int *j, unsigned long nb, int *mode)
 {
+	int		f;
+
+	f = save.flags;
 	if (*mode == -42)
 	{
-		if ((save.flags & F_HASH) == F_HASH && (nb != 0)
+		if ((f & F_HASH) == 2 && (nb != 0)
 			&& (save.pre <= (int)ft_sizenb_u(nb)))
-			save = ft_check_add(save, j, '0');
-		if ((save.flags & F_HASH) == F_HASH && (nb == 0) && !(save.pre)
-				&& (save.flags & F_POINT))
-			save = ft_check_add(save, j, '0');
-		return (save);
+			return (save = ft_check_add(save, j, '0'));
+		if ((f & F_HASH) == 2 && (nb == 0) && !(save.pre) && (f & F_POINT))
+			return (save = ft_check_add(save, j, '0'));
 	}
-	if (save.flags & F_HASH && nb != 0)
-		(*mode) -= 1;
-	if (nb == 0 && (save.flags & F_HASH))
+	((*mode) = (f & F_HASH && nb != 0) ? (*mode) -= 1 : (*mode));
+	if ((nb == 0 && save.width >= 6 && (f & F_HASH)
+		&& (save.pre || (!(save.pre) && !(f & F_POINT))))
+		|| (nb > 0 && save.pre > (int)ft_sizenb_u(nb) && (f == 38 || f == 34)))
 		(*mode) += 1;
 	while (*mode > 0)
 	{
-		if ((save.flags & F_ZERO && !(save.pre) && (save.flags & F_POINT))
-				|| !(save.flags & F_ZERO))
+		if ((f & F_ZERO && !(save.pre) && (f & F_POINT)) || !(f & F_ZERO))
 			save = ft_check_add(save, j, ' ');
-		else if (save.flags & F_ZERO && !(save.pre)
-				&& !(save.flags & F_POINT))
+		else if (f & F_ZERO && !(save.pre) && !(f & F_POINT))
 			save = ft_check_add(save, j, '0');
 		(*mode) -= 1;
 	}
@@ -77,8 +77,8 @@ t_printf	ft_print_o(t_printf save, int *j, unsigned long nb)
 
 	c = 0;
 	s2 = ft_len3(save, nb, 1, 63);
-	if (save.pre != 0)
-		while (s2-- != 0)
+	if (save.pre)
+		while (s2-- > 0)
 			save = ft_check_add(save, j, '0');
 	i = ft_len3(save, nb, 2, 63);
 	while (i > -1)
@@ -140,7 +140,7 @@ t_printf	ft_format_o(t_printf save, va_list ap, int *j)
 		number = va_arg(ap, unsigned int);
 	if ((save.flags & F_MINUS) && (save.flags & F_ZERO))
 		save.flags -= F_ZERO;
-	if (save.pre != 0 && (save.flags & F_ZERO))
+	if (save.pre && (save.flags & F_ZERO))
 		save.flags -= F_ZERO;
 	save = ft_form_o(save, j, number);
 	return (save);
