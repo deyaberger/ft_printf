@@ -6,7 +6,7 @@
 #    By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/30 19:03:50 by ncoursol          #+#    #+#              #
-#    Updated: 2019/06/05 15:28:15 by dberger          ###   ########.fr        #
+#    Updated: 2019/06/10 16:38:27 by ncoursol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ ft_dtoh.c\
 ft_format_pct.c\
 ft_format_b.c\
 ft_format_o.c\
+ft_float.c
 
 OBJ = $(SOURCES:.c=.o)
 
@@ -50,6 +51,7 @@ $(NAME): $(OBJ)
 	cp libft/libft.a ./$(NAME)
 	ar rc $(NAME) $(OBJ)
 	ranlib $(NAME)
+	$(CC) $(SOURCES) $(NAME) -o ft_printf
 	@echo "$(COMP_COLOR)   --- Compiled ! ---  $(NO_COLOR)"
 
 all: $(NAME)
