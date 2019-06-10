@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 19:48:39 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/03 17:01:26 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/06/10 12:47:28 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,48 +98,9 @@ int			ft_printf(const char *restrict format, ...)
 	return (save.ret);
 }
 
-int		main(int argc, char **argv)
+/*int		main(void)
 {
-	unsigned long int	tab[2];
-	(void)argc;
-	(void)argv;
-	printf("f : [%lu]\n", sizeof(float));
-	printf("f : [%lu]\n", sizeof(int));
-	printf("lf : [%lu]\n", sizeof(double));
-	printf("lf : [%lu]\n", sizeof(unsigned long int));
-	printf("Lf : [%lu]\n", sizeof(long double));
-	printf("Lf : [%lu]\n", sizeof(tab));
-	
-	printf("\ntest	 	: %%f 		: [%f]\n", strtof(argv[1], NULL));
-	printf("test 		: %%0f 		: [%0f]\n", strtof(argv[1], NULL));
-	printf("test 		: %% f 		: [% f]\n", strtof(argv[1], NULL));
-	printf("test 		: %%20f 		: [%20f]\n", strtof(argv[1], NULL));
-	printf("test 		: %%.20f 	: [%.20f]\n", strtof(argv[1], NULL));
-	printf("test 		: %%#f 		: [%#f]\n", strtof(argv[1], NULL));
-	printf("test 		: %%+f 		: [%+f]\n", strtof(argv[1], NULL));
-	printf("test 		: %%-f 		: [%-f]\n", strtof(argv[1], NULL));
-	printf("test 		: %%20.10f 	: [%20.10f]\n", strtof(argv[1], NULL));
-	printf("test 		: %%10.20f 	: [%10.20f]\n", strtof(argv[1], NULL));
-	printf("test 		: %%020f 	: [%020f]\n", strtof(argv[1], NULL));
-	printf("test 		: %%0.20f 	: [%0.20f]\n\n", strtof(argv[1], NULL));
-	printf("test 		: %%lf		: [%lf]\n", strtof(argv[1], NULL));
-	printf("test 		: %%Lf		: [%Lf]\n", strtold(argv[1], NULL));
-	printf("\n-------------------------------------------------------\n\n");
-	ft_printf("ft_test 	: %%f 		: [%f]\n", strtof(argv[1], NULL));
-	ft_printf("ft_test 	: %%0f 		: [%0f]\n", strtof(argv[1], NULL));
-	ft_printf("ft_test 	: %% f 		: [% f]\n", strtof(argv[1], NULL));
-	ft_printf("ft_test 	: %%20f 		: [%20f]\n", strtof(argv[1], NULL));
-	ft_printf("ft_test 	: %%.20f 	: [%.20f]\n", strtof(argv[1], NULL));
-	ft_printf("ft_test 	: %%#f 		: [%#f]\n", strtof(argv[1], NULL));
-	ft_printf("ft_test 	: %%+f 		: [%+f]\n", strtof(argv[1], NULL));
-	ft_printf("ft_test 	: %%-f 		: [%-f]\n", strtof(argv[1], NULL));
-	ft_printf("ft_test 	: %%20.10f 	: [%20.10f]\n", strtof(argv[1], NULL));
-	ft_printf("ft_test 	: %%10.20f 	: [%10.20f]\n", strtof(argv[1], NULL));
-	ft_printf("ft_test 	: %%020f 	: [%020f]\n", strtof(argv[1], NULL));
-	ft_printf("ft_test 	: %%0.20f 	: [%0.20f]\n\n", strtof(argv[1], NULL));
-	ft_printf("ft_test 	: %%lf		: [%lf]\n", strtof(argv[1], NULL));
-	ft_printf("ft_test 	: %%Lf		: [%Lf]\n\n", strtold(argv[1], NULL));
-	
-	ft_printf("ft_test 	: %%f 		: [%f]\n", strtof(argv[1], NULL));
+	ft_printf("%#o\n", 12);
+	printf("%#o\n", 12);
 	return (0);
-}
+}*/
