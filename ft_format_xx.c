@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 11:34:43 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/05/31 18:22:08 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/06/10 11:04:08 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ int			ft_len(t_printf save, unsigned long long nb, int mode)
 	{
 		k = ((save.pre - (i / 4)) < 0 ? 0 : save.pre - (i / 4));
 		s = ((save.width - ((i / 4) + k)) < 0 ? 0 : save.width - ((i / 4) + k));
-		((nb == 0) && save.width != 1) ? (s += 2) : 0;
-		s = (save.flags & F_HASH)
-			|| (save.pre == 0 && (save.flags & F_POINT)) ? s - 2 : s;
+		s = (save.pre == 0 && (save.flags & F_POINT) && !save.width)
+			|| (save.flags & F_HASH && nb != 0) ? s - 2 : s;
 	}
 	else if (mode == 1)
 		s = ((save.pre - (i / 4)) < 0 ? 0 : save.pre - (i / 4));
@@ -120,9 +119,7 @@ t_printf	ft_format_xx(t_printf save, va_list ap, int *j, char c)
 		number = va_arg(ap, unsigned long long);
 	else
 		number = va_arg(ap, unsigned int);
-	if ((save.flags & F_MINUS) && (save.flags & F_ZERO))
-		save.flags -= F_ZERO;
-	if ((save.flags & F_POINT) && (save.flags & F_ZERO))
+	if ((save.flags & F_MINUS || save.flags & F_POINT) && (save.flags & F_ZERO))
 		save.flags -= F_ZERO;
 	if (c == 'x')
 		save = ft_form_xx(save, j, number, (int)'a');
