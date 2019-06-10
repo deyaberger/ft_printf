@@ -6,7 +6,7 @@
 #    By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/30 19:03:50 by ncoursol          #+#    #+#              #
-#    Updated: 2019/06/10 16:38:27 by ncoursol         ###   ########.fr        #
+#    Updated: 2019/06/10 18:07:15 by ncoursol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,8 @@ ft_dtoh.c\
 ft_format_pct.c\
 ft_format_b.c\
 ft_format_o.c\
-ft_float.c
+ft_float.c\
+ft_float2.c
 
 OBJ = $(SOURCES:.c=.o)
 
