@@ -6,12 +6,11 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/30 10:26:09 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/06/10 16:39:35 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/06/10 17:43:32 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "ft_printf.h"
 
 char	*ft_zero2(char *add, unsigned long long p)
 {
@@ -85,7 +84,6 @@ char    *ft_add(char *add, char *tab)
 
 	j = 0;
 	rest = 0;
-//	printf("\033[32m add : [%s] \033[0m\n", add);
 	while(add[j])
 		j++;
 	while (j >= 0)
@@ -109,7 +107,6 @@ char    *ft_add(char *add, char *tab)
 	while(add[j])
 		j++;
 	tab[j - 1] = '\0';
-//	printf("\033[31m tab : [%s] \033[0m\n", tab);
 	return (tab);
 }
 
@@ -171,7 +168,7 @@ char	*ft_mode1(unsigned long long ent, char *tab, int size, char *add)
 	return (tab);
 }
 
-void	ft_float(long double f, char *tab, int m)
+void		ft_float(long double f, char *tab, int m)
 {
 	unsigned long long	*nb;
 	unsigned long long	ent;
@@ -180,29 +177,22 @@ void	ft_float(long double f, char *tab, int m)
 	char				add[2048];
 
 	nb = (unsigned long long*)&f;
-	ft_bzero(add, 2047);
+	ft_bzero(add, 2048);
 	p = (nb[1] & 0x7FFF) - 16382;
 	ent = nb[0] >> (64 - p);
 	vir = nb[0] << p;
 	tab = m == 1 ? ft_mode1(ent, tab, p, add) : ft_mode2(vir, tab, 63, add);
+	((ent == 0 && m == 1) || (vir == 0 && m == 2)) ? tab[0] = '0' : 0;
 	p = 0;
 	while (tab[p])
 		p++;
-	((ent == 0 && m == 1) || (vir == 0 && m == 2)) ? tab[0] = '0' : 0;
+	if ((nb[1] >> 15) & 1 && m == 1)
+	{
+		while (p != 0)
+		{
+			tab[p] = tab[p - 1];
+			p--;
+		}
+		tab[0] = '-';
+	}
 }
-/*
-int		main(int argc, char **argv)
-{
-	long double			f;
-	char				tab1[2048];
-	char				tab2[2048];
-
-	f = strtold(argv[1], NULL);
-	ft_bzero(tab1, 2047);
-	ft_bzero(tab2, 2047);
-	ft_nico(f, tab1, 1);
-	ft_nico(f, tab2, 2);
-	printf("tab[F] : [%s.%s]\n", tab1, tab2);
-	printf("tab[T] : [%.70Lf]\n", f);
-	return (0);
-}*/
