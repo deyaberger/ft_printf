@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 08:43:36 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/12 14:23:21 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/12 14:39:18 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ char		*ft_n_round(char *str, int n, t_printf *save)
 	int		ret;
 
 	ret = 0;
-	if (save->min != 3 || (save->min == 3 && (str[n] == '1' || str[n] == '3' || str[n] == '5' || str[n] == '7' || str[n] == '9')))
+	if (save->min != 3 || (save->min == 3 && (str[n] == '1' 
+		|| str[n] == '3' || str[n] == '5' || str[n] == '7' || str[n] == '9')))
 		str[n] += 1;
 	if (str[n] > '9')
 	{
@@ -74,7 +75,7 @@ char		*ft_nb(t_printf *save, char *nb, int *p)
 	while (s < *p || s < 6)
 		nb[s++] = '0';
 	nb[s] = '\0';
-	while (*p > 0 && nb[*p] == '0')
+	while (*p > ft_strlen(nb) && *p > 0 && nb[*p] == '0')
 		*p -= 1;
 	if (*p > 0 && (nb[*p] >= '5'))
 		nb = ft_n_round(nb, (*p - 1), save);
@@ -97,7 +98,7 @@ t_printf	ft_ftoa(t_printf save, int *j, char *fix, char *nb)
 	i = 0;
 	c = fix[0];
 	if ((fix[0] != '-' && fix[0] == '0' && fix[1] != '\0') 
-		|| (fix[0] == '-' && fix[1] == '0' && fix[2] != '\0'))
+			|| (fix[0] == '-' && fix[1] == '0' && fix[2] != '\0'))
 	{
 		if (fix[0] == '-')
 			i++;
@@ -114,9 +115,11 @@ t_printf	ft_ftoa(t_printf save, int *j, char *fix, char *nb)
 	if (ft_strlen(fix) > 0 && (nb[0] > '5' || (nb[0] == '5' && nb[1] != '\0')) && !(save.pre)
 			&& (save.flags & F_POINT))
 		fix = ft_n_round(fix, (ft_strlen(fix) - 1), &save);
-	if (ft_strlen(fix) > 0 && nb[0] == '5' && nb[1] == '\0' && !(save.pre)
-			&& (save.flags & F_POINT))
+	if (ft_strlen(fix) > 0 && (nb[0] == '5' && nb[1] == '\0' && !(save.pre) && (save.flags & F_POINT)))
+	{
 		save.min = 3;
+		fix = ft_n_round(fix, (ft_strlen(fix) - 1), &save);
+	}
 	nb = ft_nb(&save, nb, &p);
 	if (save.min == 2)
 		fix = ft_n_round(fix, (ft_strlen(fix) - 1), &save);
@@ -130,10 +133,8 @@ t_printf	ft_ftoa(t_printf save, int *j, char *fix, char *nb)
 	{
 		save = ft_check_add(save, j, '.');
 		if ((!(save.pre) && !(save.flags & F_POINT)) || (save.pre > 0))
-		{
 			while (nb[i] && i < p)
 				save = ft_check_add(save, j, nb[i++]);
-		}
 	}
 	return (save);
 }
