@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 08:43:36 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/12 12:33:03 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/12 14:23:21 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ t_printf	ft_ftoa(t_printf save, int *j, char *fix, char *nb)
 		fix[i] = '\0';
 	}
 	i = 0;
-	if (ft_strlen(fix) > 0 && nb[0] > '5' && !(save.pre)
+	if (ft_strlen(fix) > 0 && (nb[0] > '5' || (nb[0] == '5' && nb[1] != '\0')) && !(save.pre)
 			&& (save.flags & F_POINT))
 		fix = ft_n_round(fix, (ft_strlen(fix) - 1), &save);
 	if (ft_strlen(fix) > 0 && nb[0] == '5' && nb[1] == '\0' && !(save.pre)
