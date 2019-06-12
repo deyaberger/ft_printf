@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 08:43:36 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/10 17:48:51 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/12 12:33:03 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,13 @@ char		*ft_increase(char *str, int n)
 	return (str);
 }
 
-char		*ft_n_round(char *str, int n)
+char		*ft_n_round(char *str, int n, t_printf *save)
 {
 	int		ret;
 
 	ret = 0;
-	str[n] += 1;
+	if (save->min != 3 || (save->min == 3 && (str[n] == '1' || str[n] == '3' || str[n] == '5' || str[n] == '7' || str[n] == '9')))
+		str[n] += 1;
 	if (str[n] > '9')
 	{
 		ret = 1;
@@ -49,20 +50,26 @@ char		*ft_n_round(char *str, int n)
 			if (str[n] < '9')
 				ret = 0;
 		}
-		if (str[n] > '9')
+		if (str[n] > '9' && (save->min != 1 || (save->min == 1 && n != 0)))
 			str = ft_increase(str, n);
+		if (str[n] > '9' && save->min == 1 && n == 0)
+		{
+			str[n] = '0';
+			save->min = 2;
+		}
 	}
 	return (str);
 }
 
-char		*ft_nb(t_printf save, char *nb, int *p)
+char		*ft_nb(t_printf *save, char *nb, int *p)
 {
 	int		i;
 	int		s;
 
 	s = ft_strlen(nb);
 	i = 0;
-	if ((!(save.pre) && !(save.flags & F_POINT)))
+	save->min = 1;
+	if ((!(save->pre) && !(save->flags & F_POINT)))
 		*p = 6;
 	while (s < *p || s < 6)
 		nb[s++] = '0';
@@ -70,7 +77,7 @@ char		*ft_nb(t_printf save, char *nb, int *p)
 	while (*p > 0 && nb[*p] == '0')
 		*p -= 1;
 	if (*p > 0 && (nb[*p] >= '5'))
-		nb = ft_n_round(nb, (*p - 1));
+		nb = ft_n_round(nb, (*p - 1), save);
 	if (nb[0] == '0')
 	{
 		while (i < *p)
@@ -84,12 +91,35 @@ t_printf	ft_ftoa(t_printf save, int *j, char *fix, char *nb)
 {
 	int		i;
 	int		p;
+	char	c;
 
 	p = save.pre;
 	i = 0;
-	if (ft_strlen(fix) > 0 && nb[0] >= '5' && !(save.pre)
+	c = fix[0];
+	if ((fix[0] != '-' && fix[0] == '0' && fix[1] != '\0') 
+		|| (fix[0] == '-' && fix[1] == '0' && fix[2] != '\0'))
+	{
+		if (fix[0] == '-')
+			i++;
+		while (i < (int)ft_strlen(fix) && fix[i])
+		{
+			c = fix[i + 1];
+			fix[i] = fix[i + 1];
+			fix[i + 1] = c;
+			i++;
+		}
+		fix[i] = '\0';
+	}
+	i = 0;
+	if (ft_strlen(fix) > 0 && nb[0] > '5' && !(save.pre)
 			&& (save.flags & F_POINT))
-		fix = ft_n_round(fix, (ft_strlen(fix) - 1));
+		fix = ft_n_round(fix, (ft_strlen(fix) - 1), &save);
+	if (ft_strlen(fix) > 0 && nb[0] == '5' && nb[1] == '\0' && !(save.pre)
+			&& (save.flags & F_POINT))
+		save.min = 3;
+	nb = ft_nb(&save, nb, &p);
+	if (save.min == 2)
+		fix = ft_n_round(fix, (ft_strlen(fix) - 1), &save);
 	if (fix[0] == '-' && (save.width) && (save.flags & F_ZERO) && !(save.flags & F_MINUS))
 		i = 1;
 	while (fix[i])
@@ -101,7 +131,6 @@ t_printf	ft_ftoa(t_printf save, int *j, char *fix, char *nb)
 		save = ft_check_add(save, j, '.');
 		if ((!(save.pre) && !(save.flags & F_POINT)) || (save.pre > 0))
 		{
-			nb = ft_nb(save, nb, &p);
 			while (nb[i] && i < p)
 				save = ft_check_add(save, j, nb[i++]);
 		}
