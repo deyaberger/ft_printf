@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 13:37:41 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/13 10:27:21 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/13 12:38:41 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,13 @@ t_printf	ft_width_f(t_printf save, int *j, char *fix, char *nb)
 t_printf	ft_nan(t_printf save, int *j, char *str)
 {
 	int		i;
+	char	c;
 
 	i = 0;
+	if (str[0] == 'i' && (save.flags & F_SPACE))
+		save = ft_check_add(save, j, ' ');
+	if (str[0] == 'i' && (save.flags & F_PLUS))
+		str = "+inf";
 	if (!(save.flags & F_POINT))
 		save.pre = -1;
 	if (save.flags & F_MINUS)
@@ -96,23 +101,34 @@ t_printf	ft_format_f(t_printf save, va_list ap, int *j)
 	unsigned long *var;
 	int			i;
 
-	i = 63;
+	i = 64;
 	f = va_arg(ap, double);
 	var = (unsigned long*)&f;
-/*	while (i >= 0)
+/*	printf("var[1]={");
+	while (i >= 0)
+	{
+		printf("%lu", (var[1] >> i) & 1);
+		i--;
+	}
+	printf("}\n");
+	i = 64;
+	printf("var[0]={");
+	while (i >= 0)
 	{
 		printf("%lu", (var[0] >> i) & 1);
 		i--;
 	}
-	i = 63;
-	printf("\n");
+	printf("}\n");
+	i = 64;
+	printf("masque={");
 	while (i >= 0)
 	{
-		printf("%ld", (0xC000000000000000 >> i) & 1);
+		printf("%ld", (0x7FFFFFFFFFFFFFFF >> i) & 1);
+//		printf("%ld", (0xC000000000000000 >> i) & 1);
 		i--;
 	}
-
-	printf("\n");
+	printf("}\n");
+	printf("((var[1] << 63) & 1) = %lu\n", ((var[1] & 1)));
 */	ft_bzero(fix, 2048);
 	ft_bzero(nb, 2048);
 	if ((var[0] & 0xC000000000000000) == 0xC000000000000000)
@@ -120,6 +136,14 @@ t_printf	ft_format_f(t_printf save, va_list ap, int *j)
 		fix[0] = 'n';
 		fix[1] = 'a';
 		fix[2] = 'n';
+		fix[3] = '\0';
+		return (save = ft_nan(save, j, fix));
+	}
+	if ((((var[0] & 0x7FFFFFFFFFFFFFFF) == 0) && ((var[1] & 1) == 1)))
+	{
+		fix[0] = 'i';
+		fix[1] = 'n';
+		fix[2] = 'f';
 		fix[3] = '\0';
 		return (save = ft_nan(save, j, fix));
 	}
