@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 13:37:41 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/13 12:38:41 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/13 13:41:17 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,17 @@ t_printf	ft_nan(t_printf save, int *j, char *str)
 	char	c;
 
 	i = 0;
-	if (str[0] == 'i' && (save.flags & F_SPACE))
+	if (str[0] == 'i' && (save.flags & F_SPACE) && ((save.width <= ft_strlen(str) && !(save.flags & F_MINUS))))
 		save = ft_check_add(save, j, ' ');
 	if (str[0] == 'i' && (save.flags & F_PLUS))
 		str = "+inf";
 	if (!(save.flags & F_POINT))
 		save.pre = -1;
+	if ((str[0] == 'i') && (save.flags & F_SPACE) && (save.flags & F_MINUS) && (save.width))
+	{
+		save = ft_check_add(save, j, ' ');
+		save.width -= 1;
+	}
 	if (save.flags & F_MINUS)
 		while (str[i])
 			save = ft_check_add(save, j, str[i++]);
