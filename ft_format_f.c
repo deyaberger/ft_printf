@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 13:37:41 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/13 10:16:43 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/13 10:27:21 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,31 +74,17 @@ t_printf	ft_nan(t_printf save, int *j, char *str)
 	if (!(save.flags & F_POINT))
 		save.pre = -1;
 	if (save.flags & F_MINUS)
-	{
-		while (str[i] && i != save.pre)
-		{
-			save = ft_check_add(save, j, str[i]);
-			i++;
-		}
-	}
+		while (str[i])
+			save = ft_check_add(save, j, str[i++]);
 	i = ((!str) ? 6 : ft_strlen(str));
-	if (save.pre >= 0 && i != 0)
-		save.width -= (i - (i - ((save.pre > i) ? i : save.pre)));
-	else
-		save.width -= i;
+	save.width -= i;
 	i = 0;
 	while (i++ < save.width)
-		save = ft_check_add(save, j, (((save.flags & F_ZERO)
-						&& !(save.flags & F_MINUS)) ? '0' : ' '));
+		save = ft_check_add(save, j, ' ');
 	i = 0;
 	if (!(save.flags & F_MINUS))
-	{
-		while (str[i] && i != save.pre)
-		{
-			save = ft_check_add(save, j, str[i]);
-			i++;
-		}
-	}
+		while (str[i])
+			save = ft_check_add(save, j, str[i++]);
 	return (save);
 }
 
