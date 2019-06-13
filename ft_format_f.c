@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_format_di.c                                     :+:      :+:    :+:   */
+/*   ft_format_f.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/13 13:17:49 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/07 14:37:32 by dberger          ###   ########.fr       */
+/*   Created: 2019/06/08 13:37:41 by dberger           #+#    #+#             */
+/*   Updated: 2019/06/13 16:05:12 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <float.h>
 
 t_printf	ft_w_add_f(t_printf save, int *j, int count, char *fix)
 {
@@ -52,36 +53,88 @@ t_printf	ft_width_f(t_printf save, int *j, char *fix, char *nb)
 		return (save);
 	if (save.flags & F_PLUS && fix[0] != '-')
 	{
-		if (save.flags & F_ZERO && !(save.flags & F_MINUS) && !(save.pre))
+		if ((save.flags & F_ZERO) && !(save.flags & F_MINUS) && !(save.pre))
 			save = ft_check_add(save, j, '+');
 		count--;
 	}
 	if ((fix[0] != '-' && (save.flags & F_SPACE) && !(save.flags & F_PLUS))
-		|| (fix[0] == '-' && save.pre))
+			|| (fix[0] == '-' && save.pre))
 		count--;
-	if (fix[0] == '0' && nb[0] == '0' && !(save.pre) && (save.flags & F_POINT))
+	if (fix[0] == '0' && fix[1] == '\0' && nb[0] == '0' && nb[1] == '\0' && !(save.pre) && (save.flags & F_POINT))
 		count++;
 	save = ft_w_add_f(save, j, count, fix);
 	return (save);
 }
 
+t_printf	ft_nan_inf(t_printf save, int *j, char *str)
+{
+	int		i;
+
+	i = 0;
+	if (str[0] == 'i' && (save.flags & F_SPACE) && save.width <= (int)ft_strlen(str) && !(save.flags & F_MINUS) && !(save.min))
+		save = ft_check_add(save, j, ' ');
+	if (str[0] == 'i' && (save.flags & F_PLUS) && !(save.min))
+		str = "+inf";
+	if (str[0] == 'i' && (save.min))
+		str = "-inf";
+	if (!(save.flags & F_POINT))
+		save.pre = -1;
+	if ((str[0] == 'i') && (save.flags & F_SPACE) && (save.flags & F_MINUS) && (save.width))
+	{
+		save = ft_check_add(save, j, ' ');
+		save.width -= 1;
+	}
+	if (save.flags & F_MINUS)
+		while (str[i])
+			save = ft_check_add(save, j, str[i++]);
+	i = ((!str) ? 6 : ft_strlen(str));
+	save.width -= i;
+	i = 0;
+	while (i++ < save.width)
+		save = ft_check_add(save, j, ' ');
+	i = 0;
+	if (!(save.flags & F_MINUS))
+		while (str[i])
+			save = ft_check_add(save, j, str[i++]);
+	return (save);
+}
+
 t_printf	ft_format_f(t_printf save, va_list ap, int *j)
 {
-	char	*fix;
-	char	*fix2;
-	char	*nb;
-	char	*nb2;
+	long double	f;
+	char		fix[2048];
+	char		nb[2048];
+	unsigned long *var;
 
-	(void)ap;
-	fix2 = "6";
-	fix = ft_strndup(fix2, 4098);
-	nb2 = "62399999999999966604491419275291264057159423828125";
-	nb = ft_strndup(nb2, 4098);
+	f = va_arg(ap, double);
+	var = (unsigned long*)&f;
+	ft_bzero(fix, 2048);
+	ft_bzero(nb, 2048);
+	if ((0xC000000000000000 == var[0]) && f != 0)
+	{
+		fix[0] = 'n';
+		fix[1] = 'a';
+		fix[2] = 'n';
+		fix[3] = '\0';
+		return (save = ft_nan_inf(save, j, fix));
+	}
+	if ((var[0] == 0x8000000000000000) && ((var[1] & 1) == 1))
+	{
+			if (f < 0)
+				save.min = 1;
+			fix[0] = 'i';
+			fix[1] = 'n';
+			fix[2] = 'f';
+			fix[3] = '\0';
+		return (save = ft_nan_inf(save, j, fix));
+	}
+	ft_float(f, fix, 1);
+	ft_float(f, nb, 2);
 	if (fix[0] != '-' && (save.flags & F_SPACE) && !(save.flags & F_PLUS))
 		save = ft_check_add(save, j, ' ');
 	if (save.width && !(save.flags & F_MINUS))
 		save = ft_width_f(save, j, fix, nb);
-	if (save.pre && fix[0] != '-' && (save.flags & F_PLUS))
+	if (fix[0] != '-' && (save.flags & F_PLUS))
 		save = ft_check_add(save, j, '+');
 	save = ft_ftoa(save, j, fix, nb);
 	if (save.width && (save.flags & F_MINUS))

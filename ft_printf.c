@@ -6,12 +6,14 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 19:48:39 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/10 12:47:28 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/13 14:36:23 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "ft_printf.h"
+#include <limits.h>
+#include <float.h>
 
 t_printf	ft_format(char c, t_printf save, va_list ap, int *j)
 {
@@ -21,7 +23,7 @@ t_printf	ft_format(char c, t_printf save, va_list ap, int *j)
 		save = ft_format_di(save, ap, j);
 	else if (c == 'x' || c == 'X')
 		save = ft_format_xx(save, ap, j, c);
-	else if (c == 'f')
+	else if (c == 'f' || c == 'F')
 		save = ft_format_f(save, ap, j);
 	else if (c == 'o')
 		save = ft_format_o(save, ap, j);
@@ -98,9 +100,9 @@ int			ft_printf(const char *restrict format, ...)
 	return (save.ret);
 }
 
-/*int		main(void)
+int			main(void)
 {
-	ft_printf("%#o\n", 12);
-	printf("%#o\n", 12);
+	ft_printf("%1F\n", 1.42);
+	printf("%1F\n", 1.42);
 	return (0);
-}*/
+}

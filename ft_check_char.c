@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 14:17:50 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/03 15:11:37 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/13 14:34:50 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int		ft_check_char(char *str, int i, int mode)
 	{
 		if (str[i] != 'd' && str[i] != 'i' && str[i] != 'o' && str[i] != 'u'
 			&& str[i] != 'x' && str[i] != 'X' && str[i] != 'f' && str[i] != 'c'
-			&& str[i] != 's' && str[i] != 'p' && str[i] != '%' && str[i] != 'b')
+			&& str[i] != 's' && str[i] != 'p' && str[i] != '%' && str[i] != 'b'
+			&& str[i] != 'F')
 			return (0);
 	}
 	if (mode == 2)
