@@ -6,11 +6,12 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 13:37:41 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/10 18:05:59 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/13 10:16:43 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <float.h>
 
 t_printf	ft_w_add_f(t_printf save, int *j, int count, char *fix)
 {
@@ -65,15 +66,77 @@ t_printf	ft_width_f(t_printf save, int *j, char *fix, char *nb)
 	return (save);
 }
 
+t_printf	ft_nan(t_printf save, int *j, char *str)
+{
+	int		i;
+
+	i = 0;
+	if (!(save.flags & F_POINT))
+		save.pre = -1;
+	if (save.flags & F_MINUS)
+	{
+		while (str[i] && i != save.pre)
+		{
+			save = ft_check_add(save, j, str[i]);
+			i++;
+		}
+	}
+	i = ((!str) ? 6 : ft_strlen(str));
+	if (save.pre >= 0 && i != 0)
+		save.width -= (i - (i - ((save.pre > i) ? i : save.pre)));
+	else
+		save.width -= i;
+	i = 0;
+	while (i++ < save.width)
+		save = ft_check_add(save, j, (((save.flags & F_ZERO)
+						&& !(save.flags & F_MINUS)) ? '0' : ' '));
+	i = 0;
+	if (!(save.flags & F_MINUS))
+	{
+		while (str[i] && i != save.pre)
+		{
+			save = ft_check_add(save, j, str[i]);
+			i++;
+		}
+	}
+	return (save);
+}
+
 t_printf	ft_format_f(t_printf save, va_list ap, int *j)
 {
 	long double	f;
-	char	fix[2048];
-	char	nb[2048];
+	char		fix[2048];
+	char		nb[2048];
+	unsigned long *var;
+	int			i;
 
+	i = 63;
 	f = va_arg(ap, double);
-	ft_bzero(fix, 2048);
+	var = (unsigned long*)&f;
+/*	while (i >= 0)
+	{
+		printf("%lu", (var[0] >> i) & 1);
+		i--;
+	}
+	i = 63;
+	printf("\n");
+	while (i >= 0)
+	{
+		printf("%ld", (0xC000000000000000 >> i) & 1);
+		i--;
+	}
+
+	printf("\n");
+*/	ft_bzero(fix, 2048);
 	ft_bzero(nb, 2048);
+	if ((var[0] & 0xC000000000000000) == 0xC000000000000000)
+	{
+		fix[0] = 'n';
+		fix[1] = 'a';
+		fix[2] = 'n';
+		fix[3] = '\0';
+		return (save = ft_nan(save, j, fix));
+	}
 	ft_float(f, fix, 1);
 	ft_float(f, nb, 2);
 	if (fix[0] != '-' && (save.flags & F_SPACE) && !(save.flags & F_PLUS))
