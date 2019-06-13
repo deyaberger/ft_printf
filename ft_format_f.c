@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 13:37:41 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/13 14:50:18 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/13 16:05:12 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_printf	ft_width_f(t_printf save, int *j, char *fix, char *nb)
 	if ((fix[0] != '-' && (save.flags & F_SPACE) && !(save.flags & F_PLUS))
 			|| (fix[0] == '-' && save.pre))
 		count--;
-	if (fix[0] == '0' && nb[0] == '0' && !(save.pre) && (save.flags & F_POINT))
+	if (fix[0] == '0' && fix[1] == '\0' && nb[0] == '0' && nb[1] == '\0' && !(save.pre) && (save.flags & F_POINT))
 		count++;
 	save = ft_w_add_f(save, j, count, fix);
 	return (save);
@@ -105,39 +105,12 @@ t_printf	ft_format_f(t_printf save, va_list ap, int *j)
 	char		fix[2048];
 	char		nb[2048];
 	unsigned long *var;
-	int			i;
 
-	i = 64;
 	f = va_arg(ap, double);
 	var = (unsigned long*)&f;
-/*	printf("var[1]={");
-	while (i >= 0)
-	{
-		printf("%lu", (var[1] >> i) & 1);
-		i--;
-	}
-	printf("}\n");
-	i = 64;
-	printf("var[0]={");
-	while (i >= 0)
-	{
-		printf("%lu", (var[0] >> i) & 1);
-		i--;
-	}
-	printf("}\n");
-	i = 64;
-	printf("masque={");
-	while (i >= 0)
-	{
-		printf("%ld", (0x7FFFFFFFFFFFFFFF >> i) & 1);
-		//		printf("%ld", (0xC000000000000000 >> i) & 1);
-		i--;
-	}
-	printf("}\n");
-	printf("((var[1] >> 63) & 1) = %lu\n", ((var[1] >> 63) & 1));
-*/	ft_bzero(fix, 2048);
+	ft_bzero(fix, 2048);
 	ft_bzero(nb, 2048);
-	if ((var[0] & 0xC000000000000000) == 0xC000000000000000)
+	if ((0xC000000000000000 == var[0]) && f != 0)
 	{
 		fix[0] = 'n';
 		fix[1] = 'a';
@@ -145,7 +118,7 @@ t_printf	ft_format_f(t_printf save, va_list ap, int *j)
 		fix[3] = '\0';
 		return (save = ft_nan_inf(save, j, fix));
 	}
-	if (((var[0] & 0x7FFFFFFFFFFFFFFF) == 0) && ((var[1] & 1) == 1))
+	if ((var[0] == 0x8000000000000000) && ((var[1] & 1) == 1))
 	{
 			if (f < 0)
 				save.min = 1;
