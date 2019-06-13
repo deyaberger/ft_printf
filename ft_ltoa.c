@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/29 12:44:58 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/10 17:14:06 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/13 14:26:50 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_printf	ft_neg(t_printf save, int *j, long *type, long *s)
 		if (!(save.width))
 			save = ft_check_add(save, j, '-');
 	}
-	if (*type == -9223372036854775808)
+	if (*type < -9223372036854775807)
 	{
 		save.min = 1;
 		*type += 1;
