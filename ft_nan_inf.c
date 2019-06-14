@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 16:32:26 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/14 10:42:33 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/14 12:09:50 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_printf	ft_nan_inf(t_printf save, int *j, unsigned long *var, long double f)
 		fix[3] = '\0';
 		return (save = ft_print_infnan(save, j, fix));
 	}
-	if ((var[0] == 0x8000000000000000) && ((var[1] & 1) == 1))
+	if ((var[0] == 0x8000000000000000) && ((var[1] & 0x7FF) == 0x7FF))
 	{
 		if (f < 0)
 			save.min = 1;
