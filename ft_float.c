@@ -6,62 +6,12 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/30 10:26:09 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/06/13 17:33:46 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/06/14 12:07:35 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
-
-char    *ft_strrev(char *str)
-{
-	int length;
-	int i;
-	int swap;
-
-	length = 0;
-	while (str[length] != '\0')
-	{
-		length++;
-	}
-	length--;
-	i = 0;
-	while (i < length)
-	{
-		swap = str[i];
-		str[i] = str[length];
-		str[length] = swap;
-		length--;
-		i++;
-	}
-	return (str);
-}
-
-void    ft_bzero(void *s, size_t n)
-{
-	int i;
-
-	i = 0;
-	while (i != (int)n && n)
-	{
-		((char*)s)[i] = 0;
-		i++;
-	}
-}
-
-char    *ft_strcpy(char *dest, const char *src)
-{
-	int i;
-
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
 
 char    *ft_zero(char *add, int size)
 {
@@ -78,7 +28,7 @@ char    *ft_zero(char *add, int size)
 	return (ft_strrev(add));
 }
 
-char    *ft_add(char *add, char *tab)
+char    *ft_add2(char *add, char *tab)
 {
 	int     j;
 	int     rest;
@@ -94,7 +44,7 @@ char    *ft_add(char *add, char *tab)
 		tab[j] = ((tab[j] == '\0') ? '0' : tab[j]);
 		add[j] = ((add[j] == '\0' && j == 0) ? '0' : add[j]);
 		add[j] += rest;
-		if (((add[j] - '0') + (tab[j] - '0')) > 0)
+		if (((add[j] - '0') + (tab[j] - '0')) > 9)
 		{
 			rest = (((add[j] - '0') + (tab[j] - '0')) / 10);
 			tab[j] = ((((add[j] - '0') + (tab[j] - '0')) % 10) + '0');
@@ -107,6 +57,7 @@ char    *ft_add(char *add, char *tab)
 		j--;
 		if (rest != 0 && j < 0)
 		{
+			j = 0;
 			while (tab[j])
 				j++;
 			while (j > 0)
@@ -121,16 +72,53 @@ char    *ft_add(char *add, char *tab)
 	return (tab);
 }
 
-char    *ft_mult(int i, char *tab, char *add)
+char    *ft_add(char *add, char *tab)
+{
+	int     j;
+	int		k;
+	int     rest;
+
+	j = 0;
+	k = 0;
+	rest = 0;
+	while (add[k + 1])
+		k++;
+	while (j <= k)
+	{
+		tab[j] = ((tab[j] == '\0') ? '0' : tab[j]);
+		add[j] = ((add[j] == '\0' && j == 0) ? '0' : add[j]);
+		add[j] += rest;
+		if (((add[j] - '0') + (tab[j] - '0')) > 0)
+		{
+			rest = (((add[j] - '0') + (tab[j] - '0')) / 10);
+			tab[j] = ((((add[j] - '0') + (tab[j] - '0')) % 10) + '0');
+		}
+		else
+		{
+			tab[j] = (((add[j] - '0') + (tab[j] - '0')) + '0');
+			rest = 0;
+		}
+		j++;
+		if (rest != 0 && j > k)
+		{
+			j = 0;
+			while (tab[j])
+				j++;
+			tab[j] = (rest + '0');
+			j = k + 1;
+		}
+	}
+	return (ft_strrev(tab));
+}
+
+char    *ft_mult(int i, char *tab, char *add, unsigned long long bin)
 {
 	int		rest;
 	int		k;
 	int		j;
-	int		l;
 
-	l = i;
 	ft_bzero(add, 2048);
-	while (i >= 0)
+	while (i > 0)
 	{
 		j = 0;
 		rest = 0;
@@ -139,36 +127,36 @@ char    *ft_mult(int i, char *tab, char *add)
 			j++;
 		while (j >= 0)
 		{
-			if (((add[j] - '0') * 5) + rest > 9)
+			if (((add[j] - '0') * 2) + rest > 9)
 			{
 				k = rest;
-				rest = ((((add[j] - '0') * 5) + rest) / 10);
-				add[j] = ((((add[j] - '0') * 5) + k) % 10) + '0';
+				rest = ((((add[j] - '0') * 2) + rest) / 10);
+				add[j] = ((((add[j] - '0') * 2) + k) % 10) + '0';
 			}
 			else
 			{
-				add[j] = (((add[j] - '0') * 5) + rest) + '0';
+				add[j] = (((add[j] - '0') * 2) + rest) + '0';
 				rest = 0;
 			}
 			j--;
 			if (rest != 0 && j < 0)
 			{
-				j = 0;
-				while (add[j])
-					j++;
-				while (j > 0)
-				{
-					add[j] = add[j - 1];
-					j--;
-				}
-				add[0] = (rest + '0');
+					j = 0;
+					while (add[j])
+						j++;
+					while (j > 0)
+					{
+						add[j] = add[j - 1];
+						j--;
+					}
+					add[0] = (rest + '0');
 				j = -1;
 			}
 		}
 		i--;
 	}
-	add = ft_zero(ft_strrev(add), l);
-	return (ft_add(add, tab));
+	add[0] = (add[0] == '\0') ? '1' : add[0];
+	return (ft_add(ft_strrev(add), ft_strrev(tab)));
 }
 
 char    *ft_mult2(int i, char *tab, char *add)
@@ -218,7 +206,7 @@ char    *ft_mult2(int i, char *tab, char *add)
 		i--;
 	}
 	add = ft_zero(ft_strrev(add), l);
-	return (ft_add(add, tab));
+	return (ft_add2(add, tab));
 }
 
 char	*ft_float2(unsigned long long bin, char *tab, int size, int m)
@@ -232,10 +220,10 @@ char	*ft_float2(unsigned long long bin, char *tab, int size, int m)
 	ft_bzero(tab, 2048);
 	if (m == 1)
 	{
-		while (j <= size)
+		while (j < size)
 		{
 			if (((bin >> j) & 1) == 1)
-				tab = ft_mult(j, tab, add);
+				tab = ft_mult(j, tab, add, bin);
 			ft_bzero(add, 2048);
 			j++;
 		}
@@ -264,13 +252,14 @@ void	ft_float(long double f, char *tab, int m)
 	nb = (unsigned long long*)&f;
 	p = (nb[1] & 0x7FFF) - 16382;
 	ent = nb[0] >> (64 - p);
-	vir = nb[0] << p;
+	vir = (p < 0) ? ent : nb[0] << p;
+	ent = (p < 0) ? 0 : ent;
 	if (m == 1)
 		tab = ft_float2(ent, tab, p + 1, 1);
 	else
 		tab = ft_float2(vir, tab, 63, 2);
 }
-
+/*
 int		main(int argc, char **argv)
 {
 	char	tab1[2048];
@@ -284,4 +273,4 @@ int		main(int argc, char **argv)
 	printf("[%s.%s]\n", tab1, tab2);
 	printf("[%.70f]\n", strtof(argv[1], NULL));
 	return (0);
-}
+}*/
