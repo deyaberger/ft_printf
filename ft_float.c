@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/30 10:26:09 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/06/14 12:24:19 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/14 14:37:28 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,4 +256,16 @@ void	ft_float(long double f, char *tab, int m)
 		tab = ft_float2(ent, tab, p + 1, 1);
 	else
 		tab = ft_float2(vir, tab, 63, 2);
+	if (f < 0 && m == 1)
+	{
+		p = 0;
+		while (tab[p])
+			p++;
+		while (p > 0)
+		{
+			tab[p] = tab[p - 1];
+			p--;
+		}
+		tab[0] = '-';
+	}
 }
