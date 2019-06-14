@@ -6,7 +6,7 @@
 #    By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/30 19:03:50 by ncoursol          #+#    #+#              #
-#    Updated: 2019/06/10 18:07:15 by ncoursol         ###   ########.fr        #
+#    Updated: 2019/06/14 12:15:32 by dberger          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ LIB_DIR = ./libft
 
 SOURCES = ft_format_csp.c\
 ft_format_di.c\
+ft_nan_inf.c\
 ft_format_f.c\
 ft_format_u.c\
 ft_format_xx.c\
@@ -39,7 +40,6 @@ ft_format_pct.c\
 ft_format_b.c\
 ft_format_o.c\
 ft_float.c\
-ft_float2.c
 
 OBJ = $(SOURCES:.c=.o)
 
@@ -52,7 +52,6 @@ $(NAME): $(OBJ)
 	cp libft/libft.a ./$(NAME)
 	ar rc $(NAME) $(OBJ)
 	ranlib $(NAME)
-	$(CC) $(SOURCES) $(NAME) -o ft_printf
 	@echo "$(COMP_COLOR)   --- Compiled ! ---  $(NO_COLOR)"
 
 all: $(NAME)

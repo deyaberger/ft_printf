@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 19:48:39 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/13 14:36:23 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/14 14:17:11 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int			ft_printf(const char *restrict format, ...)
 
 int			main(void)
 {
-	ft_printf("%1F\n", 1.42);
-	printf("%1F\n", 1.42);
-	return (0);
+	ft_printf("%.7f\n", 0.000099);
+	printf("%.7f\n", 0.000099);
+return(0);	
 }

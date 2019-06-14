@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 08:43:36 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/12 16:17:56 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/14 14:16:59 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char		*ft_nb(t_printf *save, char *nb, int *p)
 	while (s < *p || s < 6)
 		nb[s++] = '0';
 	nb[s] = '\0';
-	while (*p > ft_strlen(nb) && *p > 0 && nb[*p] == '0')
+	while (*p > (int)ft_strlen(nb) && *p > 0 && nb[*p] == '0')
 		*p -= 1;
 	if (*p > 0 && (nb[*p] >= '5'))
 		nb = ft_n_round(nb, (*p - 1), save);

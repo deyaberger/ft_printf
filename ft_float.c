@@ -6,12 +6,11 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/30 10:26:09 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/06/14 12:07:35 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/06/14 12:24:19 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "ft_printf.h"
 
 char    *ft_zero(char *add, int size)
 {
@@ -111,13 +110,13 @@ char    *ft_add(char *add, char *tab)
 	return (ft_strrev(tab));
 }
 
-char    *ft_mult(int i, char *tab, char *add, unsigned long long bin)
+char    *ft_mult(int i, char *tab, char *add)
 {
 	int		rest;
 	int		k;
 	int		j;
 
-	ft_bzero(add, 2048);
+	ft_bzero(add, 5000);
 	while (i > 0)
 	{
 		j = 0;
@@ -167,7 +166,7 @@ char    *ft_mult2(int i, char *tab, char *add)
 	int		l;
 
 	l = i;
-	ft_bzero(add, 2048);
+	ft_bzero(add, 5000);
 	while (i >= 0)
 	{
 		j = 0;
@@ -211,20 +210,19 @@ char    *ft_mult2(int i, char *tab, char *add)
 
 char	*ft_float2(unsigned long long bin, char *tab, int size, int m)
 {
-	char				add[2048];
+	char				add[5000];
 	int					i;
 	int					j;
 
 	i = 0;
 	j = (m == 1) ? 0 : size;
-	ft_bzero(tab, 2048);
 	if (m == 1)
 	{
 		while (j < size)
 		{
 			if (((bin >> j) & 1) == 1)
-				tab = ft_mult(j, tab, add, bin);
-			ft_bzero(add, 2048);
+				tab = ft_mult(j, tab, add);
+			ft_bzero(add, 5000);
 			j++;
 		}
 	}
@@ -234,7 +232,7 @@ char	*ft_float2(unsigned long long bin, char *tab, int size, int m)
 		{
 			if (((bin >> j) & 1) == 1)
 				tab = ft_mult2(i, tab, add);
-			ft_bzero(add, 2048);
+			ft_bzero(add, 5000);
 			j--;
 			i++;
 		}
@@ -259,18 +257,3 @@ void	ft_float(long double f, char *tab, int m)
 	else
 		tab = ft_float2(vir, tab, 63, 2);
 }
-/*
-int		main(int argc, char **argv)
-{
-	char	tab1[2048];
-	char	tab2[2048];
-	float	f;
-
-	f = strtof(argv[1], NULL);
-	ft_float(f, tab1, 1);
-	ft_float(f, tab2, 2);
-	(void)argc;
-	printf("[%s.%s]\n", tab1, tab2);
-	printf("[%.70f]\n", strtof(argv[1], NULL));
-	return (0);
-}*/

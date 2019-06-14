@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 13:37:41 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/14 11:59:48 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/14 12:23:40 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,14 @@ t_printf	ft_width_f(t_printf save, int *j, char *fix, char *nb)
 t_printf	ft_format_f(t_printf save, va_list ap, int *j)
 {
 	long double		f;
-	char			fix[2048];
-	char			nb[2048];
+	char			fix[5000];
+	char			nb[5000];
 	unsigned long	*var;
 
 	f = va_arg(ap, double);
 	var = (unsigned long*)&f;
-	ft_bzero(fix, 2048);
-	ft_bzero(nb, 2048);
+	ft_bzero(fix, 5000);
+	ft_bzero(nb, 5000);
 	save = ft_nan_inf(save, j, var, f);
 	if (save.min != -42)
 		return (save);
