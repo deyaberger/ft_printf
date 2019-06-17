@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 08:43:36 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/17 17:54:02 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/17 18:53:25 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,19 +134,6 @@ t_printf	ft_ftoa(t_printf save, int *j, char *fix, char *nb)
 	}
 	if (save.p == 1)
 		return (save);
-	if (fix[0] == '-' && (save.width) && (f & F_ZERO) && !(f & F_MINUS))
-		i = 1;
-	while (fix[i])
-		save = ft_check_add(save, j, fix[i++]);
-	i = 0;
-	if ((!(save.pre) && !(f & F_POINT)) || (save.pre > 0) || (f & F_HASH))
-	{
-		if (!(save.pre) && !(f & F_POINT))
-			p = 6;
-		save = ft_check_add(save, j, '.');
-		if ((!(save.pre) && !(f & F_POINT)) || (save.pre > 0))
-			while (nb[i] && i < p)
-				save = ft_check_add(save, j, nb[i++]);
-	}
+	save = ft_print_float(save, j, fix, nb);
 	return (save);
 }

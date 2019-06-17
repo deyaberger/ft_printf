@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 18:04:24 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/17 18:42:18 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/17 18:51:52 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int					ft_check_char(char *str, int i, int mode);
 t_printf			ft_check_add(t_printf save, int *j, char c);
 int					ft_printf(const char *restrict format, ...);
 t_printf			ft_convert(t_printf save, char *str, int *i, int *s);
+t_printf			ft_print_float(t_printf save, int *j, char *str, char *nb);
 t_printf			ft_ltoa(t_printf save, int *j, long type);
 t_printf			ft_ftoa(t_printf save, int *j, char *fix, char *nb);
 t_printf			ft_utoa(t_printf save, int *j, unsigned long type);
