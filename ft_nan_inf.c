@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 16:32:26 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/14 12:09:50 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/17 18:45:09 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,12 @@ t_printf	ft_print_infnan(t_printf save, int *j, char *str)
 	return (save);
 }
 
-t_printf	ft_nan_inf(t_printf save, int *j, unsigned long *var, long double f)
+t_printf	ft_nan_inf(t_printf save, int *j, long double f)
 {
-	char	fix[2048];
+	char			fix[2048];
+	unsigned long	*var;
 
+	var = (unsigned long*)&f;
 	ft_bzero(fix, 2048);
 	if (0xC000000000000000 == var[0])
 	{

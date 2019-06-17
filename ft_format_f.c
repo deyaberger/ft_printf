@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 13:37:41 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/17 18:05:47 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/17 18:43:35 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_printf	ft_w_add_f(t_printf save, int *j, int count, char *fix)
 	return (save);
 }
 
-t_printf	ft_width_f(t_printf save, int *j, char *fix, char *nb)
+t_printf	ft_width1(t_printf save, int *j, char *fix, char *nb)
 {
 	int		count;
 	long	s;
@@ -53,6 +53,21 @@ t_printf	ft_width_f(t_printf save, int *j, char *fix, char *nb)
 	if (!(save.pre) && (save.flags & F_POINT) && !(save.flags & F_HASH))
 		s--;
 	count = save.width - s;
+	if (save.pre && save.width > save.pre && s < save.pre)
+		count = save.width - save.pre;
+	save.p = count;
+	save.min = s;
+	return (save);
+}
+
+t_printf	ft_width_f(t_printf save, int *j, char *fix, char *nb)
+{
+	int		count;
+	long	s;
+
+	save = ft_width1(save, j, fix, nb);
+	count = save.p;
+	s = save.min;
 	if (save.pre && save.width > save.pre && s < save.pre)
 		count = save.width - save.pre;
 	if (save.pre && s < save.pre && save.width <= save.pre)
@@ -73,8 +88,15 @@ t_printf	ft_width_f(t_printf save, int *j, char *fix, char *nb)
 	return (save);
 }
 
-void		ft_handlezero(char *fix, unsigned long *var, t_printf *save)
+void		ft_initiate(char *fix, char *nb, long double f, t_printf *save)
 {
+	unsigned long *var;
+
+	ft_bzero(fix, 2048);
+	ft_bzero(nb, 2048);
+	ft_float(f, fix, 1);
+	ft_float(f, nb, 2);
+	var = (unsigned long*)&f;
 	save->min = 0;
 	if (fix[0] == '\0' || (fix[0] == '-' && fix[1] == '\0'))
 	{
@@ -97,19 +119,12 @@ t_printf	ft_format_f(t_printf save, va_list ap, int *j)
 	long double		f;
 	char			fix[2048];
 	char			nb[2048];
-	unsigned long	*var;
 
 	f = va_arg(ap, double);
-	var = (unsigned long*)&f;
-	ft_bzero(fix, 2048);
-	ft_bzero(nb, 2048);
-	save = ft_nan_inf(save, j, var, f);
+	save = ft_nan_inf(save, j, f);
 	if (save.min != -42)
 		return (save);
-	ft_float(f, fix, 1);
-	ft_float(f, nb, 2);
-	printf("fix=%s, nb=%s\n", fix, nb);
-	ft_handlezero(fix, var, &save);
+	ft_initiate(fix, nb, f, &save);
 	if (fix[0] != '-' && (save.flags & F_SPACE) && !(save.flags & F_PLUS))
 		save = ft_check_add(save, j, ' ');
 	if (save.width && !(save.flags & F_MINUS))
