@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 18:04:24 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/17 12:50:48 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/06/17 17:17:13 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct		s_printf
 	int				index;
 	int				ret;
 	int				min;
+	int				p;
 	char			buf[BUFF_SIZE + 1];
 }					t_printf;
 
@@ -58,7 +59,8 @@ t_printf			ft_format_di(t_printf save, va_list ap, int *j);
 t_printf			ft_format_csp(t_printf save, va_list ap, int *j, char c);
 t_printf			ft_format_xx(t_printf save, va_list ap, int *j, char c);
 t_printf			ft_format_f(t_printf save, va_list ap, int *j);
-t_printf			ft_nan_inf(t_printf save, int *j, unsigned long *var, long double f);
+t_printf			ft_nan_inf(t_printf save, int *j, unsigned long *var,
+					long double f);
 t_printf			ft_format_u(t_printf save, va_list ap, int *j);
 t_printf			ft_format_o(t_printf save, va_list ap, int *j);
 t_printf			ft_format_pct(t_printf save, int *j);
