@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/30 10:26:09 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/06/17 17:03:44 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/06/17 18:23:41 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,24 +114,24 @@ char	*ft_float2(unsigned long long bin, char *tab, int size, int m)
 	int					j;
 
 	i = 0;
-	j = (m == 1) ? 0 : (size + 1);
+	j = (m == 1) ? -1 : size;
 	if (m == 1)
 	{
-		while (j < size)
+		while (j++ < size)
 		{
 			if (((bin >> j) & 1) == 1)
 				tab = ft_mult(j, tab, add);
 			ft_bzero(add, 5000);
-			j++;
 		}
 		j = -1;
 	}
-	while (j-- >= 0)
+	while (j >= 0)
 	{
 		if (((bin >> j) & 1) == 1)
 			tab = ft_mult2(i, tab, add);
 		ft_bzero(add, 5000);
 		i++;
+		j--;
 	}
 	return (tab);
 }
