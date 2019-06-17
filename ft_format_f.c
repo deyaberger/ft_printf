@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 13:37:41 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/14 12:23:40 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/14 15:04:09 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,25 +67,42 @@ t_printf	ft_width_f(t_printf save, int *j, char *fix, char *nb)
 	return (save);
 }
 
+void		ft_handlezero(char *fix, unsigned long *var, t_printf *save)
+{
+	save->min = 0;
+	if (fix[0] == '\0' || (fix[0] == '-' && fix[1] == '\0'))
+	{
+		if (((var[1] >> 15) & 1) == 1)
+		{
+			fix[0] = '-';
+			fix[1] = '0';
+			fix[2] = '\0';
+		}
+		else
+		{
+			fix[0] = '0';
+			fix[1] = '\0';
+		}
+	}
+}
+
 t_printf	ft_format_f(t_printf save, va_list ap, int *j)
 {
 	long double		f;
-	char			fix[5000];
-	char			nb[5000];
+	char			fix[2048];
+	char			nb[2048];
 	unsigned long	*var;
 
 	f = va_arg(ap, double);
 	var = (unsigned long*)&f;
-	ft_bzero(fix, 5000);
-	ft_bzero(nb, 5000);
+	ft_bzero(fix, 2048);
+	ft_bzero(nb, 2048);
 	save = ft_nan_inf(save, j, var, f);
 	if (save.min != -42)
 		return (save);
-	save.min = 0;
 	ft_float(f, fix, 1);
 	ft_float(f, nb, 2);
-	if (fix[0] == '\0' && ((fix[0] = '0') == '0'))
-		fix[1] = '\0';
+	ft_handlezero(fix, var, &save);
 	if (fix[0] != '-' && (save.flags & F_SPACE) && !(save.flags & F_PLUS))
 		save = ft_check_add(save, j, ' ');
 	if (save.width && !(save.flags & F_MINUS))
