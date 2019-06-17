@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 08:43:36 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/14 14:28:52 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/17 15:25:17 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char		*ft_increase(char *str, int n)
 	while (str[n])
 	{
 		str[n] = c;
-		if (n < ((int)ft_strlen(str) - 1))
+		if (n < (ft_strlen_l(str) - 1))
 			c = str[n + 1];
 		n++;
 	}
@@ -72,7 +72,7 @@ char		*ft_nb(t_printf *save, char *nb, int *p)
 	while (s < *p || s < 6)
 		nb[s++] = '0';
 	nb[s] = '\0';
-	while (*p > (int)ft_strlen(nb) && *p > 0 && nb[*p] == '0')
+	while (*p > ft_strlen_l(nb) && *p > 0 && nb[*p] == '0')
 		*p -= 1;
 	if (*p > 0 && (nb[*p] >= '5'))
 		nb = ft_n_round(nb, (*p - 1), save);
@@ -85,19 +85,17 @@ char		*ft_nb(t_printf *save, char *nb, int *p)
 	return (nb);
 }
 
-char		*ft_zerofix(char *fix)
+char		*ft_printchar(char *fix, int i)
 {
-	int		i;
 	char	c;
-
-	i = 0;
+	
 	c = fix[0];
 	if ((fix[0] != '-' && fix[0] == '0' && fix[1] != '\0')
 			|| (fix[0] == '-' && fix[1] == '0' && fix[2] != '\0'))
 	{
 		if (fix[0] == '-')
 			i++;
-		while (i < (int)ft_strlen(fix) && fix[i])
+		while (i < ft_strlen_l(fix) && fix[i])
 		{
 			c = fix[i + 1];
 			fix[i] = fix[i + 1];
@@ -114,19 +112,26 @@ t_printf	ft_ftoa(t_printf save, int *j, char *fix, char *nb)
 	int		i;
 	int		p;
 	int		f;
+	int		l;
 
+	l = ft_strlen_l(fix);
 	p = save.pre;
 	i = 0;
 	f = save.flags;
-	fix = ft_zerofix(fix);
-	if (ft_strlen(fix) > 0 && !(save.pre) && (f & F_POINT) && nb[0] >= '5')
+	fix = ft_printchar(fix, i);
+	if ((f & F_MINUS) || (save.p == 1) || !(save.width))
+	{
+	if (l > 0 && !(save.pre) && (f & F_POINT) && nb[0] >= '5')
 	{
 		(save.min = (nb[0] == '5' && nb[1] == '\0') ? 3 : save.min);
-		fix = ft_n_round(fix, (ft_strlen(fix) - 1), &save);
+		fix = ft_n_round(fix, (l - 1), &save);
 	}
 	nb = ft_nb(&save, nb, &p);
 	if (save.min == 2)
-		fix = ft_n_round(fix, (ft_strlen(fix) - 1), &save);
+		fix = ft_n_round(fix, (l - 1), &save);
+	}
+	if (save.p == 1)
+		return (save);
 	if (fix[0] == '-' && (save.width) && (f & F_ZERO) && !(f & F_MINUS))
 		i = 1;
 	while (fix[i])
@@ -134,6 +139,8 @@ t_printf	ft_ftoa(t_printf save, int *j, char *fix, char *nb)
 	i = 0;
 	if ((!(save.pre) && !(f & F_POINT)) || (save.pre > 0) || (f & F_HASH))
 	{
+		if (!(save.pre) && !(f & F_POINT))
+				p = 6;
 		save = ft_check_add(save, j, '.');
 		if ((!(save.pre) && !(f & F_POINT)) || (save.pre > 0))
 			while (nb[i] && i < p)

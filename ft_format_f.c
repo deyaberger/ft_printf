@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 13:37:41 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/14 15:04:09 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/17 15:21:22 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ t_printf	ft_w_add_f(t_printf save, int *j, int count, char *fix)
 {
 	long	s;
 	int		w;
+	long	l;
 
+	l = ft_strlen_l(fix);
 	w = save.width;
 	if ((!(save.pre) && !(save.flags & F_POINT)) || (save.pre == 6))
-		s = ft_strlen(fix) + 7;
+		s = l + 7;
 	else
-		s = ft_strlen(fix) + save.pre + 1;
+		s = l + save.pre + 1;
 	if (fix[0] == '-' && save.pre > 0 && save.pre < s && w > s)
 		count++;
 	if (fix[0] == '-' && (save.flags & F_ZERO) && !(save.flags & F_MINUS))
@@ -42,10 +44,14 @@ t_printf	ft_width_f(t_printf save, int *j, char *fix, char *nb)
 {
 	int		count;
 	long	s;
+	long	l;
 
-	s = ft_strlen(fix) + save.pre + 1;
+	l = ft_strlen_l(fix);
+	s = l + save.pre + 1;
 	if (!(save.pre) && !(save.flags & F_POINT))
-		s = ft_strlen(fix) + 7;
+		s = l + 7;
+	if (!(save.pre) && (save.flags & F_POINT) && !(save.flags & F_HASH))
+		s--;
 	count = save.width - s;
 	if (save.pre && save.width > save.pre && s < save.pre)
 		count = save.width - save.pre;
@@ -106,7 +112,12 @@ t_printf	ft_format_f(t_printf save, va_list ap, int *j)
 	if (fix[0] != '-' && (save.flags & F_SPACE) && !(save.flags & F_PLUS))
 		save = ft_check_add(save, j, ' ');
 	if (save.width && !(save.flags & F_MINUS))
+	{
+		save.p = 1;
+		save = ft_ftoa(save, j, fix, nb);
 		save = ft_width_f(save, j, fix, nb);
+		save.p = 0;
+	}
 	if (fix[0] != '-' && (save.flags & F_PLUS))
 		save = ft_check_add(save, j, '+');
 	save = ft_ftoa(save, j, fix, nb);
