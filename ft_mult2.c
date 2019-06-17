@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_add2.c                                          :+:      :+:    :+:   */
+/*   ft_mult2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/17 12:49:22 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/06/17 13:07:01 by ncoursol         ###   ########.fr       */
+/*   Created: 2019/06/17 16:44:01 by ncoursol          #+#    #+#             */
+/*   Updated: 2019/06/17 17:05:19 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char    *ft_zero(char *add, int size)
+char	*ft_zero(char *add, int size)
 {
-	int     i;
+	int		i;
 
 	i = 0;
 	while (size >= 0)
@@ -37,32 +37,27 @@ char	*ft_check_rest2(char *add, char *tab, int *rest, int *j)
 		*rest = (((add[*j] - '0') + (tab[*j] - '0')) / 10);
 		tab[*j] = ((((add[*j] - '0') + (tab[*j] - '0')) % 10) + '0');
 	}
-	else
-	{
+	else if ((*rest = 0) == 0)
 		tab[*j] = (((add[*j] - '0') + (tab[*j] - '0')) + '0');
-		*rest = 0;
-	}
 	*j -= 1;
 	if (*rest != 0 && *j < 0)
 	{
 		*j = 0;
 		while (tab[*j])
 			*j += 1;
-		while (*j > 0)
-		{
+		*j += 1;
+		while ((*j -= 1) > 0)
 			tab[*j] = tab[*j - 1];
-			*j -= 1;
-		}
 		tab[*j] = (*rest + '0');
 		*j -= 1;
 	}
 	return (tab);
 }
 
-char    *ft_add2(char *add, char *tab)
+char	*ft_add2(char *add, char *tab)
 {
-	int     j;
-	int     rest;
+	int		j;
+	int		rest;
 
 	j = 0;
 	rest = 0;
@@ -94,23 +89,21 @@ char	*ft_check_rest1(char *add, int *j, int *rest, int *k)
 		*j = 0;
 		while (add[*j])
 			*j += 1;
-		while (*j > 0)
-		{
+		*j += 1;
+		while ((*j -= 1) > 0)
 			add[*j] = add[*j - 1];
-			*j -= 1;
-		}
 		add[0] = (*rest + '0');
 		*j = -1;
 	}
 	return (add);
 }
 
-char    *ft_mult2(int i, char *tab, char *add)
+char	*ft_mult2(int i, char *tab, char *add)
 {
-	int     rest;
-	int     k;
-	int     j;
-	int     l;
+	int		rest;
+	int		k;
+	int		j;
+	int		l;
 
 	l = i;
 	ft_bzero(add, 5000);

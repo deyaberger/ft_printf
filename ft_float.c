@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/30 10:26:09 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/06/17 13:05:29 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/06/17 17:03:44 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ char	*ft_check_rest(char *add, char *tab, int *rest, int *j)
 	return (tab);
 }
 
-char    *ft_add(char *add, char *tab)
+char	*ft_add(char *add, char *tab)
 {
-	int     j;
+	int		j;
 	int		k;
-	int     rest;
+	int		rest;
 
 	j = 0;
 	k = 0;
@@ -76,18 +76,16 @@ char	*ft_check_rest3(char *add, int *rest, int *j, int *k)
 		*j = 0;
 		while (add[*j])
 			*j += 1;
-		while (*j > 0)
-		{
+		*j += 1;
+		while ((*j -= 1) > 0)
 			add[*j] = add[*j - 1];
-			*j -= 1;
-		}
 		add[0] = (*rest + '0');
 		*j = -1;
 	}
 	return (add);
 }
 
-char    *ft_mult(int i, char *tab, char *add)
+char	*ft_mult(int i, char *tab, char *add)
 {
 	int		rest;
 	int		k;
@@ -116,7 +114,7 @@ char	*ft_float2(unsigned long long bin, char *tab, int size, int m)
 	int					j;
 
 	i = 0;
-	j = (m == 1) ? 0 : size;
+	j = (m == 1) ? 0 : (size + 1);
 	if (m == 1)
 	{
 		while (j < size)
@@ -126,17 +124,14 @@ char	*ft_float2(unsigned long long bin, char *tab, int size, int m)
 			ft_bzero(add, 5000);
 			j++;
 		}
+		j = -1;
 	}
-	else
+	while (j-- >= 0)
 	{
-		while (j >= 0)
-		{
-			if (((bin >> j) & 1) == 1)
-				tab = ft_mult2(i, tab, add);
-			ft_bzero(add, 5000);
-			j--;
-			i++;
-		}
+		if (((bin >> j) & 1) == 1)
+			tab = ft_mult2(i, tab, add);
+		ft_bzero(add, 5000);
+		i++;
 	}
 	return (tab);
 }
@@ -152,7 +147,6 @@ void	ft_float(long double f, char *tab, int m)
 	p = (nb[1] & 0x7FFF) - 16382;
 	ent = nb[0] >> (64 - p);
 	vir = (p < 0) ? ent : nb[0] << p;
-	ent = (p < 0) ? 0 : ent;
 	if (m == 1)
 		tab = ft_float2(ent, tab, p + 1, 1);
 	else
