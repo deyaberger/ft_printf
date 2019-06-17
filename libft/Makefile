@@ -6,7 +6,7 @@
 #    By: dberger <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/08 10:16:12 by dberger           #+#    #+#              #
-#    Updated: 2019/05/29 15:57:34 by dberger          ###   ########.fr        #
+#    Updated: 2019/06/14 15:09:15 by dberger          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,6 +80,7 @@ ft_strjoin_f.c\
 ft_sqrt.c\
 ft_sizenb_l.c\
 ft_sizenb_u.c\
+ft_strlen_l.c\
 
 HEADERS = libft.h
 OBJECT = $(SOURCES:.c=.o)
