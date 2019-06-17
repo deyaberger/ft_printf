@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 13:37:41 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/17 15:21:22 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/17 18:05:47 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ t_printf	ft_format_f(t_printf save, va_list ap, int *j)
 		return (save);
 	ft_float(f, fix, 1);
 	ft_float(f, nb, 2);
+	printf("fix=%s, nb=%s\n", fix, nb);
 	ft_handlezero(fix, var, &save);
 	if (fix[0] != '-' && (save.flags & F_SPACE) && !(save.flags & F_PLUS))
 		save = ft_check_add(save, j, ' ');

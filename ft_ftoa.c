@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 08:43:36 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/17 15:25:17 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/17 17:54:02 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,12 @@ char		*ft_nb(t_printf *save, char *nb, int *p)
 	return (nb);
 }
 
-char		*ft_printchar(char *fix, int i)
+char		*ft_changechar(char *fix)
 {
 	char	c;
-	
+	int		i;
+
+	i = 0;
 	c = fix[0];
 	if ((fix[0] != '-' && fix[0] == '0' && fix[1] != '\0')
 			|| (fix[0] == '-' && fix[1] == '0' && fix[2] != '\0'))
@@ -118,17 +120,17 @@ t_printf	ft_ftoa(t_printf save, int *j, char *fix, char *nb)
 	p = save.pre;
 	i = 0;
 	f = save.flags;
-	fix = ft_printchar(fix, i);
+	fix = ft_changechar(fix);
 	if ((f & F_MINUS) || (save.p == 1) || !(save.width))
 	{
-	if (l > 0 && !(save.pre) && (f & F_POINT) && nb[0] >= '5')
-	{
-		(save.min = (nb[0] == '5' && nb[1] == '\0') ? 3 : save.min);
-		fix = ft_n_round(fix, (l - 1), &save);
-	}
-	nb = ft_nb(&save, nb, &p);
-	if (save.min == 2)
-		fix = ft_n_round(fix, (l - 1), &save);
+		if (l > 0 && !(save.pre) && (f & F_POINT) && nb[0] >= '5')
+		{
+			(save.min = (nb[0] == '5' && nb[1] == '\0') ? 3 : save.min);
+			fix = ft_n_round(fix, (l - 1), &save);
+		}
+		nb = ft_nb(&save, nb, &p);
+		if (save.min == 2)
+			fix = ft_n_round(fix, (l - 1), &save);
 	}
 	if (save.p == 1)
 		return (save);
@@ -140,7 +142,7 @@ t_printf	ft_ftoa(t_printf save, int *j, char *fix, char *nb)
 	if ((!(save.pre) && !(f & F_POINT)) || (save.pre > 0) || (f & F_HASH))
 	{
 		if (!(save.pre) && !(f & F_POINT))
-				p = 6;
+			p = 6;
 		save = ft_check_add(save, j, '.');
 		if ((!(save.pre) && !(f & F_POINT)) || (save.pre > 0))
 			while (nb[i] && i < p)
