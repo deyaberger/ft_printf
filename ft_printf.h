@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 18:04:24 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/14 12:14:48 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/17 12:50:48 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ t_printf			ft_format_u(t_printf save, va_list ap, int *j);
 t_printf			ft_format_o(t_printf save, va_list ap, int *j);
 t_printf			ft_format_pct(t_printf save, int *j);
 t_printf			ft_format_b(t_printf save, va_list ap, int *j);
+char				*ft_mult2(int i, char *tab, char *add);
 void				ft_float(long double f, char *tab, int m);
-char				*ft_add(char *add, char *tab);
 #endif
