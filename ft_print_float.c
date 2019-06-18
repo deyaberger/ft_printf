@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/17 18:47:27 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/17 18:52:24 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/17 19:03:16 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,23 @@ t_printf	ft_print_float(t_printf save, int *j, char *fix, char *nb)
 				save = ft_check_add(save, j, nb[i++]);
 	}
 	return (save);
+}
+
+char		*ft_check_rest(char *add, char *tab, int *rest, int *j)
+{
+	tab[*j] = ((tab[*j] == '\0') ? '0' : tab[*j]);
+	add[*j] = ((add[*j] == '\0' && *j == 0) ? '0' : add[*j]);
+	add[*j] += *rest;
+	if (((add[*j] - '0') + (tab[*j] - '0')) > 0)
+	{
+		*rest = (((add[*j] - '0') + (tab[*j] - '0')) / 10);
+		tab[*j] = ((((add[*j] - '0') + (tab[*j] - '0')) % 10) + '0');
+	}
+	else
+	{
+		tab[*j] = (((add[*j] - '0') + (tab[*j] - '0')) + '0');
+		*rest = 0;
+	}
+	*j += 1;
+	return (tab);
 }
