@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 19:48:39 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/14 14:17:11 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/18 16:26:21 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ t_printf	ft_process(t_printf save, const char *restrict format, va_list ap)
 	{
 		while (format[i] && format[i] != '%')
 		{
+			save = format[i] == '{' ? ft_color(&format[i], save, &j, &i) : save;
 			save = ft_check_add(save, &j, format[i]);
 			i++;
 		}
@@ -80,9 +81,8 @@ t_printf	ft_process(t_printf save, const char *restrict format, va_list ap)
 			i++;
 	}
 	save = ft_check_add(save, &j, '\0');
-	j--;
-	save.index = j;
-	save.ret += j;
+	save.index = (j - 1);
+	save.ret += (j - 1);
 	return (save);
 }
 
@@ -98,11 +98,4 @@ int			ft_printf(const char *restrict format, ...)
 	write(1, save.buf, save.index);
 	va_end(ap);
 	return (save.ret);
-}
-
-int			main(void)
-{
-	ft_printf("%.7f\n", 0.000099);
-	printf("%.7f\n", 0.000099);
-return(0);	
 }

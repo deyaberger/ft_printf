@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 18:04:24 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/17 19:03:36 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/06/18 16:23:26 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,21 @@
 # define M_BIGL		(1 << 3)
 # define M_LL		(1 << 4)
 
+# define PF_BLACK	"\033[30m"
+# define PF_RED		"\033[31m"
+# define PF_GREEN	"\033[32m"
+# define PF_YELLOW	"\033[33m"
+# define PF_BLUE	"\033[34m"
+# define PF_PINK	"\033[35m"
+# define PF_CYAN	"\033[36m"
+# define PF_GREY	"\033[37m"
+
+# define PF_EOC		"\033[0m"
+# define PF_BOLD	"\033[1m"
+# define PF_LINE	"\033[4m"
+# define PF_BLINK	"\033[5m"
+# define PF_HIGHL	"\033[7m"
+
 typedef struct		s_printf
 {
 	int				flags;
@@ -60,6 +75,7 @@ t_printf			ft_dtoh(t_printf save, int *j, unsigned long int k, int i);
 t_printf			ft_format_di(t_printf save, va_list ap, int *j);
 t_printf			ft_format_csp(t_printf save, va_list ap, int *j, char c);
 t_printf			ft_format_xx(t_printf save, va_list ap, int *j, char c);
+t_printf			ft_color(const char *format, t_printf save, int *j, int *i);
 t_printf			ft_format_f(t_printf save, va_list ap, int *j);
 t_printf			ft_nan_inf(t_printf save, int *j, long double f);
 t_printf			ft_format_u(t_printf save, va_list ap, int *j);

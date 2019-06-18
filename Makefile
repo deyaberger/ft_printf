@@ -6,7 +6,7 @@
 #    By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/30 19:03:50 by ncoursol          #+#    #+#              #
-#    Updated: 2019/06/17 18:57:28 by dberger          ###   ########.fr        #
+#    Updated: 2019/06/18 16:25:05 by ncoursol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ ft_dtoh.c\
 ft_format_pct.c\
 ft_format_b.c\
 ft_format_o.c\
+ft_color.c\
 ft_float.c\
 ft_mult2.c\
 
