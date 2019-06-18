@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 18:04:24 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/18 16:34:01 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/18 18:20:08 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@
 # define M_L		(1 << 2)
 # define M_BIGL		(1 << 3)
 # define M_LL		(1 << 4)
-# define M_Z		(1 << 5)
-# define M_J		(1 << 6)
 
 # define PF_BLACK	"\033[30m"
 # define PF_RED		"\033[31m"

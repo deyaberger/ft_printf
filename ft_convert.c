@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 15:33:24 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/06/18 16:40:04 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/18 18:19:59 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,6 @@ int			ft_modif(char *str, t_printf *save, int *i)
 		save->modif = save->modif | M_L;
 	else if (str[*i] == 'L')
 		save->modif = save->modif | M_BIGL;
-	else if (str[*i] == 'z')
-		save->modif = save->modif | M_Z;
-	else if (str[*i] == 'j')
-		save->modif = save->modif | M_J;
 	if (str[*i] == 'h' || str[*i] == 'l' || str[*i] == 'L')
 		*i += 1;
 	if (!ft_check_char(str, *i, 1))

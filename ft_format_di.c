@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 13:17:49 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/18 14:32:31 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/18 18:19:49 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,6 @@ long		ft_modif_di(t_printf save, va_list ap)
 		type = va_arg(ap, long);
 	if (save.modif && (save.modif & M_LL))
 		type = va_arg(ap, long long);
-	if (save.modif && (save.modif & M_Z))
-		type = va_arg(ap, size_t);
-	if (save.modif && (save.modif & M_J))
-		type = va_arg(ap, intmax_t);
 	else if (!save.modif)
 		type = va_arg(ap, int);
 	return (type);
