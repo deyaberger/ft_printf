@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 18:04:24 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/17 18:51:52 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/17 19:03:36 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct		s_printf
 }					t_printf;
 
 int					ft_check_char(char *str, int i, int mode);
+char				*ft_check_rest(char *add, char *tab, int *rest, int *j);
 t_printf			ft_check_add(t_printf save, int *j, char c);
 int					ft_printf(const char *restrict format, ...);
 t_printf			ft_convert(t_printf save, char *str, int *i, int *s);

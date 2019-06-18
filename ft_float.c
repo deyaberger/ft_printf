@@ -6,30 +6,11 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/30 10:26:09 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/06/17 18:23:41 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/06/17 19:02:42 by ncoursol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-char	*ft_check_rest(char *add, char *tab, int *rest, int *j)
-{
-	tab[*j] = ((tab[*j] == '\0') ? '0' : tab[*j]);
-	add[*j] = ((add[*j] == '\0' && *j == 0) ? '0' : add[*j]);
-	add[*j] += *rest;
-	if (((add[*j] - '0') + (tab[*j] - '0')) > 0)
-	{
-		*rest = (((add[*j] - '0') + (tab[*j] - '0')) / 10);
-		tab[*j] = ((((add[*j] - '0') + (tab[*j] - '0')) % 10) + '0');
-	}
-	else
-	{
-		tab[*j] = (((add[*j] - '0') + (tab[*j] - '0')) + '0');
-		*rest = 0;
-	}
-	*j += 1;
-	return (tab);
-}
 
 char	*ft_add(char *add, char *tab)
 {
