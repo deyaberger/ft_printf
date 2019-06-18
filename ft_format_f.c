@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 13:37:41 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/17 18:43:35 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/18 10:54:44 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_printf	ft_w_add_f(t_printf save, int *j, int count, char *fix)
 	return (save);
 }
 
-t_printf	ft_width1(t_printf save, int *j, char *fix, char *nb)
+t_printf	ft_width1(t_printf save, char *fix)
 {
 	int		count;
 	long	s;
@@ -65,7 +65,7 @@ t_printf	ft_width_f(t_printf save, int *j, char *fix, char *nb)
 	int		count;
 	long	s;
 
-	save = ft_width1(save, j, fix, nb);
+	save = ft_width1(save, fix);
 	count = save.p;
 	s = save.min;
 	if (save.pre && save.width > save.pre && s < save.pre)
