@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 11:34:43 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/06/10 11:04:08 by ncoursol         ###   ########.fr       */
+/*   Updated: 2019/06/19 11:08:20 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,10 @@ t_printf	ft_format_xx(t_printf save, va_list ap, int *j, char c)
 		number = va_arg(ap, unsigned long);
 	else if (save.modif && (save.modif & M_LL))
 		number = va_arg(ap, unsigned long long);
+	else if (save.modif && (save.modif & M_Z))
+		number = va_arg(ap, ssize_t);
+	else if (save.modif && (save.modif & M_J))
+		number = va_arg(ap, uintmax_t);
 	else
 		number = va_arg(ap, unsigned int);
 	if ((save.flags & F_MINUS || save.flags & F_POINT) && (save.flags & F_ZERO))

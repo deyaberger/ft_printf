@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 18:13:39 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/10 12:46:54 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/19 11:04:21 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_printf	ft_print_pref(t_printf save, int *j, unsigned long nb, int *mode)
 			return (save = ft_check_add(save, j, '0'));
 	}
 	((*mode) = (f & F_HASH && nb != 0) ? (*mode) -= 1 : (*mode));
-	if ((nb == 0 && save.width >= 6 && (f & F_HASH)
+	if ((nb == 0 && (f & F_HASH)
 		&& (save.pre || (!(save.pre) && !(f & F_POINT))))
 		|| (nb > 0 && save.pre > (int)ft_sizenb_u(nb) && (f == 38 || f == 34)))
 		(*mode) += 1;
@@ -136,6 +136,10 @@ t_printf	ft_format_o(t_printf save, va_list ap, int *j)
 		number = va_arg(ap, unsigned long);
 	else if (save.modif && (save.modif & M_LL))
 		number = va_arg(ap, unsigned long long);
+	else if (save.modif && (save.modif & M_Z))
+		number = va_arg(ap, ssize_t);
+	else if (save.modif && (save.modif & M_J))
+		number = va_arg(ap, uintmax_t);
 	else
 		number = va_arg(ap, unsigned int);
 	if ((save.flags & F_MINUS) && (save.flags & F_ZERO))

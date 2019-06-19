@@ -6,7 +6,7 @@
 /*   By: dberger <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/27 18:11:54 by dberger           #+#    #+#             */
-/*   Updated: 2019/06/08 16:36:14 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/19 11:05:16 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,10 @@ unsigned long	ft_modif_u(t_printf save, va_list ap)
 		return (number = va_arg(ap, unsigned long));
 	if (save.modif && (save.modif & M_LL))
 		return (number = va_arg(ap, unsigned long long));
+	if (save.modif && (save.modif & M_Z))
+		return (number = va_arg(ap, ssize_t));
+	if (save.modif && (save.modif & M_J))
+		return (number = va_arg(ap, uintmax_t));
 	return (number = va_arg(ap, unsigned int));
 }
 

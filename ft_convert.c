@@ -6,7 +6,7 @@
 /*   By: ncoursol <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 15:33:24 by ncoursol          #+#    #+#             */
-/*   Updated: 2019/06/18 16:40:04 by dberger          ###   ########.fr       */
+/*   Updated: 2019/06/19 11:21:10 by dberger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,19 @@ int			ft_width(char *str, t_printf *save, int *i)
 	return (1);
 }
 
+t_printf	ft_modif2(char *str, t_printf *save, int *i)
+{
+	if (str[*i] == 'l' && str[*i + 1] != 'l')
+		save->modif = save->modif | M_L;
+	else if (str[*i] == 'L')
+		save->modif = save->modif | M_BIGL;
+	else if (str[*i] == 'z')
+		save->modif = save->modif | M_Z;
+	else if (str[*i] == 'j')
+		save->modif = save->modif | M_J;
+	return (*save);
+}
+
 int			ft_modif(char *str, t_printf *save, int *i)
 {
 	if (str[*i] == 'h' && str[*i + 1] == 'h')
@@ -68,20 +81,16 @@ int			ft_modif(char *str, t_printf *save, int *i)
 	}
 	else if (str[*i] == 'h' && str[*i + 1] != 'h')
 		save->modif = save->modif | M_H;
+	else if (str[*i] == 'l' || str[*i] == 'L'
+			|| str[*i] == 'z' || str[*i] == 'j')
+		*save = ft_modif2(str, save, i);
 	else if (str[*i] == 'l' && str[*i + 1] == 'l')
 	{
 		save->modif = save->modif | M_LL;
 		*i += 1;
 	}
-	else if (str[*i] == 'l' && str[*i + 1] != 'l')
-		save->modif = save->modif | M_L;
-	else if (str[*i] == 'L')
-		save->modif = save->modif | M_BIGL;
-	else if (str[*i] == 'z')
-		save->modif = save->modif | M_Z;
-	else if (str[*i] == 'j')
-		save->modif = save->modif | M_J;
-	if (str[*i] == 'h' || str[*i] == 'l' || str[*i] == 'L')
+	if (str[*i] == 'h' || str[*i] == 'l' || str[*i] == 'L'
+		|| str[*i] == 'z' || str[*i] == 'j')
 		*i += 1;
 	if (!ft_check_char(str, *i, 1))
 		return (0);
