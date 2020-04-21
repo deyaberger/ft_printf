@@ -3,8 +3,9 @@
 ### Summary:
 At 42, printf is one of many functions of the libc that we are forbidden to use.
 It pushes us to create our own functions and really understand how it all works.
-Recoding "printf" is a chance to discover a feature of the C language – variadic
-functions – and to practice detailed management of the printing options.
+Recoding "printf" (from <stdio.h> library) is a chance to discover a feature of
+the C language – variadic functions – and to practice detailed management of the
+printing options.
 
 ### Prototype
 ```
